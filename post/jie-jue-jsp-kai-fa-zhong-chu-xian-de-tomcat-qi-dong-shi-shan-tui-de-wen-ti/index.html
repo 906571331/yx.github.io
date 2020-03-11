@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>WuXin</title>
+<title>解决JSP开发中出现的Tomcat启动时闪退的问题 | WuXin</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -18,8 +18,11 @@
 
 
 
-    <meta name="description" content="成千上万个门口，总有一个人要先走。">
-    
+    <meta name="description" content="出现的问题
+在下载完tomcat以后准备启动，点击tomcat安装目录bin/startup.bat，但是出现闪退的现象，原因在于jre环境变量没有设置在系统变量中。
+解决办法：
+找到jre的安装目录，复制jre的根路径，打开系统变量设置，..." />
+    <meta name="keywords" content="" />
   </head>
   <body>
     <div id="app" class="main">
@@ -89,42 +92,37 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://yxrongit.github.io/yx.github.io/post/jie-jue-jsp-kai-fa-zhong-chu-xian-de-tomcat-qi-dong-shi-shan-tui-de-wen-ti/">
-                  <h2 class="post-title">解决JSP开发中出现的Tomcat启动时闪退的问题</h2>
-                </a>
-                <div class="post-date">
-                  2020-03-11
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://yxrongit.github.io/yx.github.io/post/shi-yong-gridea-shi-fen-zhong-da-jian-ge-ren-bo-ke/">
-                  <h2 class="post-title">使用Gridea十分钟搭建个人博客</h2>
-                </a>
-                <div class="post-date">
-                  2020-03-07
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
+          <div class="post-detail">
+            <h2 class="post-title">解决JSP开发中出现的Tomcat启动时闪退的问题</h2>
+            <div class="post-date">2020-03-11</div>
+            
+            <div class="post-content" v-pre>
+              <h3 id="出现的问题">出现的问题</h3>
+<p>在下载完tomcat以后准备启动，点击tomcat安装目录bin/startup.bat，但是出现闪退的现象，原因在于jre环境变量没有设置在系统变量中。</p>
+<h3 id="解决办法">解决办法：</h3>
+<p>找到jre的安装目录，复制jre的根路径，打开系统变量设置，变量名填一个（最好见名知意），变量值为刚刚复制的jre的根路径，点击确定，再回去重启tomcat，即可恢复正常<br>
+<img src="https://img-blog.csdnimg.cn/20200311091957828.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20200311092352945.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+在浏览器中打开127.0.0.1:8081查看tomcat是否启动成功<br>
+<img src="https://img-blog.csdnimg.cn/20200311092326340.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+（这里的端口是自己设置的端口，默认8080端口，修改以后填自己修改的端口）</p>
 
-          <div class="pagination-container">
-  
-  
-</div>
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://yxrongit.github.io/yx.github.io/post/shi-yong-gridea-shi-fen-zhong-da-jian-ge-ren-bo-ke/">
+                  <h3 class="post-title">
+                    使用Gridea十分钟搭建个人博客
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
 
         </div>
       </div>
