@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://yxrongit.github.io/yx.github.io</id>
+    <id>https://906571331.github.io/yx.github.io</id>
     <title>WuXin</title>
-    <updated>2020-03-14T07:07:41.585Z</updated>
+    <updated>2020-03-14T07:08:16.045Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://yxrongit.github.io/yx.github.io"/>
-    <link rel="self" href="https://yxrongit.github.io/yx.github.io/atom.xml"/>
+    <link rel="alternate" href="https://906571331.github.io/yx.github.io"/>
+    <link rel="self" href="https://906571331.github.io/yx.github.io/atom.xml"/>
     <subtitle>成千上万个门口，总有一个人要先走。</subtitle>
-    <logo>https://yxrongit.github.io/yx.github.io/images/avatar.png</logo>
-    <icon>https://yxrongit.github.io/yx.github.io/favicon.ico</icon>
+    <logo>https://906571331.github.io/yx.github.io/images/avatar.png</logo>
+    <icon>https://906571331.github.io/yx.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, WuXin</rights>
     <entry>
         <title type="html"><![CDATA[解决JSP开发中出现的Tomcat启动时闪退的问题]]></title>
-        <id>https://yxrongit.github.io/yx.github.io/post/jie-jue-jsp-kai-fa-zhong-chu-xian-de-tomcat-qi-dong-shi-shan-tui-de-wen-ti/</id>
-        <link href="https://yxrongit.github.io/yx.github.io/post/jie-jue-jsp-kai-fa-zhong-chu-xian-de-tomcat-qi-dong-shi-shan-tui-de-wen-ti/">
+        <id>https://906571331.github.io/yx.github.io/post/jie-jue-jsp-kai-fa-zhong-chu-xian-de-tomcat-qi-dong-shi-shan-tui-de-wen-ti/</id>
+        <link href="https://906571331.github.io/yx.github.io/post/jie-jue-jsp-kai-fa-zhong-chu-xian-de-tomcat-qi-dong-shi-shan-tui-de-wen-ti/">
         </link>
         <updated>2020-03-11T01:25:30.000Z</updated>
         <content type="html"><![CDATA[<h3 id="出现的问题">出现的问题</h3>
@@ -29,8 +29,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[使用Gridea十分钟搭建个人博客]]></title>
-        <id>https://yxrongit.github.io/yx.github.io/post/shi-yong-gridea-shi-fen-zhong-da-jian-ge-ren-bo-ke/</id>
-        <link href="https://yxrongit.github.io/yx.github.io/post/shi-yong-gridea-shi-fen-zhong-da-jian-ge-ren-bo-ke/">
+        <id>https://906571331.github.io/yx.github.io/post/shi-yong-gridea-shi-fen-zhong-da-jian-ge-ren-bo-ke/</id>
+        <link href="https://906571331.github.io/yx.github.io/post/shi-yong-gridea-shi-fen-zhong-da-jian-ge-ren-bo-ke/">
         </link>
         <updated>2020-03-07T03:57:23.000Z</updated>
         <content type="html"><![CDATA[<h3 id="使用gridea十分钟搭建个人博客">使用Gridea十分钟搭建个人博客</h3>
