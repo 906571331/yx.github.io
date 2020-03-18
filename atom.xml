@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://906571331.github.io/yx.github.io/</id>
     <title>WuXin</title>
-    <updated>2020-03-18T04:16:34.643Z</updated>
+    <updated>2020-03-18T06:52:50.838Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://906571331.github.io/yx.github.io/"/>
     <link rel="self" href="https://906571331.github.io/yx.github.io/atom.xml"/>
@@ -16,7 +16,8 @@
         <link href="https://906571331.github.io/yx.github.io/post/chm-zai-ben-di-de-zheng-que-da-kai-fang-shi/">
         </link>
         <updated>2020-03-18T01:15:42.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="出现的情况">出现的情况</h3>
+        <content type="html"><![CDATA[<p>tags: [chm]</p>
+<h3 id="出现的情况">出现的情况</h3>
 <p>在本地直接打开chm文件可能出现加载不出来的情况<br>
 如下图所示（右边加载不出来）：<br>
 <img src="https://img-blog.csdnimg.cn/20200318090914868.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
