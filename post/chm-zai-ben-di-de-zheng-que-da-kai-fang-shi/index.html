@@ -1,118 +1,66 @@
-
-<!DOCTYPE html>
 <html>
   <head>
-    
-<meta charset="utf-8" >
-
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>chm在本地的正确打开方式 | WuXin</title>
-<meta name="description" content="成千上万个门口，总有一个人要先走。">
-
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
-
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://906571331.github.io/yx.github.io//favicon.ico?v=1584494156311">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="shortcut icon" href="https://906571331.github.io/yx.github.io//favicon.ico?v=1584504991995">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://906571331.github.io/yx.github.io//styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="chm在本地的正确打开方式 | WuXin - Atom Feed" href="https://906571331.github.io/yx.github.io//atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+    <meta name="description" content="出现的情况
+在本地直接打开chm文件可能出现加载不出来的情况
+如下图所示（右边加载不出来）：
 
-
-
+解决的办法
+根据chm文件的制作原理（链接网页，右击选择使用记事本打开时改文件时，发现该文件跳转到了一个一个的网页上），右击本地chm文件，选择..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
   <body>
-    <div id="app" class="main">
-      <div class="site-header-container">
-  <div class="site-header">
-    <div class="left">
-      <a href="https://906571331.github.io/yx.github.io/">
-        <img class="avatar" src="https://906571331.github.io/yx.github.io//images/avatar.png?v=1584494156311" alt="" width="32px" height="32px">
-      </a>
-      <a href="https://906571331.github.io/yx.github.io/">
-        <h1 class="site-title">WuXin</h1>
-      </a>
-    </div>
-    <div class="right">
-      <transition name="fade">
-        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
-      </transition>
-    </div>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://906571331.github.io/yx.github.io/">
+  <img class="avatar" src="https://906571331.github.io/yx.github.io//images/avatar.png?v=1584504991995" alt="">
+  </a>
+  <h1 class="site-title">
+    WuXin
+  </h1>
+  <p class="site-description">
+    成千上万个门口，总有一个人要先走。
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="https://yxrongit.github.io/yx.github.io" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="https://yxrongit.github.io/yx.github.io/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="https://yxrongit.github.io/yx.github.io/post/about" class="menu">
+          关于
+        </a>
+      
+    
   </div>
-</div>
-
-<transition name="fade">
-  <div class="menu-container" style="display: none;" v-show="menuVisible">
-    <div class="menu-list">
-      
-        
-          <a href="https://yxrongit.github.io/yx.github.io" class="menu purple-link">
-            首页
-          </a>
-        
-      
-        
-          <a href="/archives" class="menu purple-link">
-            归档
-          </a>
-        
-      
-        
-          <a href="https://yxrongit.github.io/yx.github.io/tags" class="menu purple-link">
-            标签
-          </a>
-        
-      
-        
-          <a href="https://yxrongit.github.io/yx.github.io/post/about" class="menu purple-link">
-            关于
-          </a>
-        
-      
-    </div>
-  </div>
-</transition>
-
-
-      <div class="content-container">
-        <div class="post-detail">
-          
-          <h2 class="post-title">chm在本地的正确打开方式</h2>
-          <div class="post-info post-detail-info">
-            <span><i class="icon-calendar-outline"></i> 2020-03-18</span>
-            
-          </div>
-          <div class="post-content">
-            <h3 id="出现的情况">出现的情况</h3>
-<p>在本地直接打开chm文件可能出现加载不出来的情况<br>
-如下图所示（右边加载不出来）：<br>
-<img src="https://img-blog.csdnimg.cn/20200318090914868.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
-<h3 id="解决的办法">解决的办法</h3>
-<p>根据chm文件的制作原理（链接网页，右击选择使用记事本打开时改文件时，发现该文件跳转到了一个一个的网页上），右击本地chm文件，选择打开方式，使用浏览器打开，即可正确打开<br>
-结果如图所示：<br>
-<img src="https://img-blog.csdnimg.cn/20200318091140616.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
-
-          </div>
-        </div>
-
-        
-          <div class="next-post">
-            <a class="purple-link" href="https://906571331.github.io/yx.github.io/post/jsp-kai-fa-zhong-tomcat-fang-wen-url-dai-you-zhong-wen-ming-cheng-de-html-wen-jian-xian-shi-404-cuo-wu/">
-              <h3 class="post-title">
-                下一篇：JSP开发中tomcat访问URL带有中文名称的HTML文件显示404错误
-              </h3>
-            </a>
-          </div>
-          
-      </div>
-
-      
-
-      <div class="site-footer">
-  <div class="slogan">成千上万个门口，总有一个人要先走。</div>
   <div class="social-container">
     
       
@@ -126,26 +74,116 @@
       
     
   </div>
-  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://906571331.github.io/yx.github.io//atom.xml" target="_blank">RSS</a>
 </div>
 
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              chm在本地的正确打开方式
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-03-18
+              </span>
+              <span>
+                1 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h3 id="出现的情况">出现的情况</h3>
+<p>在本地直接打开chm文件可能出现加载不出来的情况<br>
+如下图所示（右边加载不出来）：<br>
+<img src="https://img-blog.csdnimg.cn/20200318090914868.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
+<h3 id="解决的办法">解决的办法</h3>
+<p>根据chm文件的制作原理（链接网页，右击选择使用记事本打开时改文件时，发现该文件跳转到了一个一个的网页上），右击本地chm文件，选择打开方式，使用浏览器打开，即可正确打开<br>
+结果如图所示：<br>
+<img src="https://img-blog.csdnimg.cn/20200318091140616.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
 
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#%E5%87%BA%E7%8E%B0%E7%9A%84%E6%83%85%E5%86%B5">出现的情况</a></li>
+<li><a href="#%E8%A7%A3%E5%86%B3%E7%9A%84%E5%8A%9E%E6%B3%95">解决的办法</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://906571331.github.io/yx.github.io/post/jsp-kai-fa-zhong-tomcat-fang-wen-url-dai-you-zhong-wen-ming-cheng-de-html-wen-jian-xian-shi-404-cuo-wu/">
+              <h3 class="post-title">
+                JSP开发中tomcat访问URL带有中文名称的HTML文件显示404错误
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://906571331.github.io/yx.github.io//atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
     </div>
-    <script type="application/javascript">
 
-hljs.initHighlightingOnLoad()
+    <script>
+      hljs.initHighlightingOnLoad()
 
-var app = new Vue({
-  el: '#app',
-  data: {
-    menuVisible: false,
-  },
-})
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
 
-</script>
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
 
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
 
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
 
-
+    </script>
   </body>
 </html>

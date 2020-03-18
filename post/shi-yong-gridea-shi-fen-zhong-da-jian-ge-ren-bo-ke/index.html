@@ -1,92 +1,103 @@
-
-<!DOCTYPE html>
 <html>
   <head>
-    
-<meta charset="utf-8" >
-
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>使用Gridea十分钟搭建个人博客 | WuXin</title>
-<meta name="description" content="成千上万个门口，总有一个人要先走。">
-
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
-
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://906571331.github.io/yx.github.io//favicon.ico?v=1584494156311">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="shortcut icon" href="https://906571331.github.io/yx.github.io//favicon.ico?v=1584504991995">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://906571331.github.io/yx.github.io//styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="使用Gridea十分钟搭建个人博客 | WuXin - Atom Feed" href="https://906571331.github.io/yx.github.io//atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+    <meta name="description" content="使用Gridea十分钟搭建个人博客
+此教程简单并且实用，可供需要搭建博客的博主使用
 
+在Github申请账号
+配置Gridea客户端
+搭建博客，并访问博客
 
-
+第一步：在Github申请账号
+网址：https://github.com/
+申请..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
   <body>
-    <div id="app" class="main">
-      <div class="site-header-container">
-  <div class="site-header">
-    <div class="left">
-      <a href="https://906571331.github.io/yx.github.io/">
-        <img class="avatar" src="https://906571331.github.io/yx.github.io//images/avatar.png?v=1584494156311" alt="" width="32px" height="32px">
-      </a>
-      <a href="https://906571331.github.io/yx.github.io/">
-        <h1 class="site-title">WuXin</h1>
-      </a>
-    </div>
-    <div class="right">
-      <transition name="fade">
-        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
-      </transition>
-    </div>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://906571331.github.io/yx.github.io/">
+  <img class="avatar" src="https://906571331.github.io/yx.github.io//images/avatar.png?v=1584504991995" alt="">
+  </a>
+  <h1 class="site-title">
+    WuXin
+  </h1>
+  <p class="site-description">
+    成千上万个门口，总有一个人要先走。
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="https://yxrongit.github.io/yx.github.io" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="https://yxrongit.github.io/yx.github.io/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="https://yxrongit.github.io/yx.github.io/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
   </div>
 </div>
 
-<transition name="fade">
-  <div class="menu-container" style="display: none;" v-show="menuVisible">
-    <div class="menu-list">
-      
-        
-          <a href="https://yxrongit.github.io/yx.github.io" class="menu purple-link">
-            首页
-          </a>
-        
-      
-        
-          <a href="/archives" class="menu purple-link">
-            归档
-          </a>
-        
-      
-        
-          <a href="https://yxrongit.github.io/yx.github.io/tags" class="menu purple-link">
-            标签
-          </a>
-        
-      
-        
-          <a href="https://yxrongit.github.io/yx.github.io/post/about" class="menu purple-link">
-            关于
-          </a>
-        
-      
-    </div>
-  </div>
-</transition>
-
-
-      <div class="content-container">
         <div class="post-detail">
-          
-          <h2 class="post-title">使用Gridea十分钟搭建个人博客</h2>
-          <div class="post-info post-detail-info">
-            <span><i class="icon-calendar-outline"></i> 2020-03-07</span>
+          <article class="post">
+            <h2 class="post-title">
+              使用Gridea十分钟搭建个人博客
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-03-07
+              </span>
+              <span>
+                2 min read
+              </span>
+              
+            </div>
             
-          </div>
-          <div class="post-content">
-            <h3 id="使用gridea十分钟搭建个人博客">使用Gridea十分钟搭建个人博客</h3>
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h3 id="使用gridea十分钟搭建个人博客">使用Gridea十分钟搭建个人博客</h3>
 <h6 id="此教程简单并且实用可供需要搭建博客的博主使用">此教程简单并且实用，可供需要搭建博客的博主使用</h6>
 <ol>
 <li>在Github申请账号</li>
@@ -123,49 +134,91 @@
 <h5 id="我的博客httpsyxrongitgithubioyxgithubio">我的博客：https://yxrongit.github.io/yx.github.io/</h5>
 <h5 id="欢迎大家访问">欢迎大家访问</h5>
 
-          </div>
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#%E4%BD%BF%E7%94%A8gridea%E5%8D%81%E5%88%86%E9%92%9F%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2">使用Gridea十分钟搭建个人博客</a><br>
+*<br>
+*<br>
+* <a href="#%E6%AD%A4%E6%95%99%E7%A8%8B%E7%AE%80%E5%8D%95%E5%B9%B6%E4%B8%94%E5%AE%9E%E7%94%A8%E5%8F%AF%E4%BE%9B%E9%9C%80%E8%A6%81%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E7%9A%84%E5%8D%9A%E4%B8%BB%E4%BD%BF%E7%94%A8">此教程简单并且实用，可供需要搭建博客的博主使用</a>
+<ul>
+<li><a href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%E5%9C%A8github%E7%94%B3%E8%AF%B7%E8%B4%A6%E5%8F%B7">第一步：在Github申请账号</a></li>
+<li><a href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5-%E9%85%8D%E7%BD%AEgridea%E5%AE%A2%E6%88%B7%E7%AB%AF">第二步： 配置Gridea客户端</a>
+<ul>
+<li><a href="#%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2httpsyxrongitgithubioyxgithubio">我的博客：https://yxrongit.github.io/yx.github.io/</a></li>
+<li><a href="#%E6%AC%A2%E8%BF%8E%E5%A4%A7%E5%AE%B6%E8%AE%BF%E9%97%AE">欢迎大家访问</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
         </div>
 
         
-      </div>
 
-      
+        
 
-      <div class="site-footer">
-  <div class="slogan">成千上万个门口，总有一个人要先走。</div>
-  <div class="social-container">
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-  </div>
-  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://906571331.github.io/yx.github.io//atom.xml" target="_blank">RSS</a>
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://906571331.github.io/yx.github.io//atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
 </div>
 
-
+      </div>
     </div>
-    <script type="application/javascript">
 
-hljs.initHighlightingOnLoad()
+    <script>
+      hljs.initHighlightingOnLoad()
 
-var app = new Vue({
-  el: '#app',
-  data: {
-    menuVisible: false,
-  },
-})
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
 
-</script>
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
 
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
 
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
 
-
+    </script>
   </body>
 </html>
