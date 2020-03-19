@@ -1,94 +1,92 @@
+
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" >
+    
+<meta charset="utf-8" >
 
 <title>总结一些常用的C语言学习网站 | WuXin</title>
 <meta name="description" content="成千上万个门口，总有一个人要先走。">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<link rel="shortcut icon" href="https://906571331.github.io/yx.github.io//favicon.ico?v=1584627311367">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css" />
+<link rel="shortcut icon" href="https://906571331.github.io/yx.github.io//favicon.ico?v=1584628675927">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://906571331.github.io/yx.github.io//styles/main.css">
 
 
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 
-
-<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
 
   </head>
   <body>
-  
-    <nav class="navbar border fixed split-nav">
-  <div class="nav-brand">
-    <h3><a href="https://906571331.github.io/yx.github.io/">WuXin</a></h3>
-  </div>
-  <div class="collapsible">
-    <input id="collapsible1" type="checkbox" name="collapsible1">
-    <button>
-      <label for="collapsible1">
-        <div class="bar1"></div>
-        <div class="bar2"></div>
-        <div class="bar3"></div>
-      </label>
-    </button>
-    <div class="collapsible-body">
-      <ul class="inline">
-        
-          <li>
-            
-              <a href="https://906571331.github.io/yx.github.io/" class="menu">
-                首页
-              </a>
-            
-          </li>
-        
-          <li>
-            
-              <a href="/archives" class="menu">
-                归档
-              </a>
-            
-          </li>
-        
-          <li>
-            
-              <a href="https://yxrongit.github.io/yx.github.io/tags" class="menu">
-                标签
-              </a>
-            
-          </li>
-        
-          <li>
-            
-              <a href="https://yxrongit.github.io/yx.github.io/post/about" class="menu">
-                关于
-              </a>
-            
-          </li>
-        
-      </ul>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://906571331.github.io/yx.github.io/">
+        <img class="avatar" src="https://906571331.github.io/yx.github.io//images/avatar.png?v=1584628675927" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://906571331.github.io/yx.github.io/">
+        <h1 class="site-title">WuXin</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
     </div>
   </div>
-</nav>
+</div>
 
-    <div id="top" class="row site">
-      <div class="sm-12 md-8 col">
-        <div class="paper">
-          <article class="article">
-            <h1>总结一些常用的C语言学习网站</h1>
-            <p class="article-meta">
-              2020-03-19
-              
-            </p>
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="https://906571331.github.io/yx.github.io/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://yxrongit.github.io/yx.github.io/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="https://yxrongit.github.io/yx.github.io/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">总结一些常用的C语言学习网站</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2020-03-19</span>
             
-            <div class="post-content">
-              <h2 id="本篇博客总结一些比较好用的常用的c语言学习在线编程c语言的网站">本篇博客总结一些比较好用的，常用的C语言学习，在线编程C语言的网站</h2>
+          </div>
+          <div class="post-content">
+            <h2 id="本篇博客总结一些比较好用的常用的c语言学习在线编程c语言的网站">本篇博客总结一些比较好用的，常用的C语言学习，在线编程C语言的网站</h2>
 <h4 id="1c语言网">1.<a href="https://www.dotcpp.com/">C语言网</a></h4>
 <p>C语言网(www.dotcpp.com)不仅提供C语言，还包括C++、java、算法与数据结构等课程在内的各种入门教程、视频录像、编程经验、编译器教程及软件下载、题解博客，源码分享等优质资源，提倡边学边练边分享，同时提供对口的IT工作，是国内领先实用的综合性编程学习网站！<br>
 <img src="https://img-blog.csdnimg.cn/20200319205550508.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
@@ -155,119 +153,52 @@
 <img src="https://img-blog.csdnimg.cn/20200319221219580.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
 <h1 id="欢迎大家在评论区留言补充~~~~">欢迎大家在评论区留言补充~~~~</h1>
 
-            </div>
-          </article>
+          </div>
         </div>
-        <div class="paper" data-aos="fade-in">
-          
-            <div class="next-post">
-              <div class="next">
-                下一篇
-              </div>
-              <a href="https://906571331.github.io/yx.github.io/post/echarts-zhong-yin-ru-json-wen-jian/">
-                <h3 class="post-title">
-                  echarts中引入json文件
-                </h3>
-              </a>
-            </div>
-          
-        </div>
+
         
+          <div class="next-post">
+            <a class="purple-link" href="https://906571331.github.io/yx.github.io/post/echarts-zhong-yin-ru-json-wen-jian/">
+              <h3 class="post-title">
+                下一篇：echarts中引入json文件
+              </h3>
+            </a>
+          </div>
+          
       </div>
 
-      <div class="sm-12 md-4 col sidebar">
-  <div class="paper info-container">
-    <img src="https://906571331.github.io/yx.github.io//images/avatar.png?v=1584627311367" class="no-responsive avatar">
-    <div class="text-muted">成千上万个门口，总有一个人要先走。</div>
-    <div class="social-container">
       
-        
+
+      <div class="site-footer">
+  <div class="slogan">成千上万个门口，总有一个人要先走。</div>
+  <div class="social-container">
+    
       
-        
+    
       
-        
+    
       
-        
+    
       
-        
+    
       
-    </div>
+    
   </div>
-  <div class="paper">
-    <div class="sidebar-title">
-      最新文章
-    </div>
-    <div class="row">
-      <ul>
-        
-          
-            <li>
-              <a href="https://906571331.github.io/yx.github.io/post/zong-jie-yi-xie-chang-yong-de-c-yu-yan-xue-xi-wang-zhan/">总结一些常用的C语言学习网站</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://906571331.github.io/yx.github.io/post/echarts-zhong-yin-ru-json-wen-jian/">echarts中引入json文件</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://906571331.github.io/yx.github.io/post/chm-zai-ben-di-de-zheng-que-da-kai-fang-shi/">chm在本地的正确打开方式</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://906571331.github.io/yx.github.io/post/jsp-kai-fa-zhong-tomcat-fang-wen-url-dai-you-zhong-wen-ming-cheng-de-html-wen-jian-xian-shi-404-cuo-wu/">JSP开发中tomcat访问URL带有中文名称的HTML文件显示404错误</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://906571331.github.io/yx.github.io/post/jie-jue-jsp-kai-fa-zhong-chu-xian-de-tomcat-qi-dong-shi-shan-tui-de-wen-ti/">解决JSP开发中出现的Tomcat启动时闪退的问题</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://906571331.github.io/yx.github.io/post/shi-yong-gridea-shi-fen-zhong-da-jian-ge-ren-bo-ke/">使用Gridea十分钟搭建个人博客</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://906571331.github.io/yx.github.io/post/about/">关于</a>
-            </li>
-          
-        
-      </ul>
-    </div>
-  </div>
-  <div class="paper">
-    <div class="sidebar-title">
-      标签列表
-    </div>
-    <div class="row">
-      
-    </div>
-  </div>
-  <div class="paper">
-    Powered by <a href="https://blog.csdn.net/qq_42092076" target="_blank">Gridea</a> | <a class="rss" href="https://906571331.github.io/yx.github.io//atom.xml" target="_blank">RSS</a>
-  </div>
+  Powered by <a href="https://blog.csdn.net/qq_42092076" target="_blank">Gridea</a> | <a class="rss" href="https://906571331.github.io/yx.github.io//atom.xml" target="_blank">RSS</a>
 </div>
 
 
     </div>
-
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-
-<script type="application/javascript">
-
-AOS.init();
+    <script type="application/javascript">
 
 hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
 
 </script>
 
