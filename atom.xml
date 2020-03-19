@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://906571331.github.io/yx.github.io/</id>
     <title>WuXin</title>
-    <updated>2020-03-18T06:59:26.322Z</updated>
+    <updated>2020-03-19T09:30:16.514Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://906571331.github.io/yx.github.io/"/>
     <link rel="self" href="https://906571331.github.io/yx.github.io/atom.xml"/>
@@ -10,6 +10,80 @@
     <logo>https://906571331.github.io/yx.github.io/images/avatar.png</logo>
     <icon>https://906571331.github.io/yx.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, WuXin</rights>
+    <entry>
+        <title type="html"><![CDATA[echarts中引入json文件]]></title>
+        <id>https://906571331.github.io/yx.github.io/post/echarts-zhong-yin-ru-json-wen-jian/</id>
+        <link href="https://906571331.github.io/yx.github.io/post/echarts-zhong-yin-ru-json-wen-jian/">
+        </link>
+        <updated>2020-03-19T09:29:35.000Z</updated>
+        <content type="html"><![CDATA[<h4 id="1-datajson文件中的数据书写格式">1、data.json文件中的数据书写格式</h4>
+<pre><code class="language-bash">{
+	&quot;data&quot;:[5, 20, 36, 10, 12, 20],//纵坐标数据
+	&quot;category&quot;:[&quot;衬衫&quot;,&quot;羊毛衫&quot;,&quot;雪纺衫&quot;,&quot;裤子&quot;,&quot;高跟鞋&quot;,&quot;袜子&quot;]//横坐标数据
+}
+</code></pre>
+<h4 id="2-在headhead标签中引入jquery类库注意使用15版本以上类库因为done函数适用于15版本以上">2、在<head></head>标签中引入jQuery类库，（注意使用1.5版本以上类库，因为done()函数适用于1.5版本以上）；</h4>
+<h5 id="链接json文件">链接json文件：</h5>
+<pre><code class="language-python">&lt;script src=&quot;js/jquery-1.10.1.min.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;incubator-echarts-master/dist/echarts.min.js&quot; &gt;&lt;/script&gt;
+&lt;script src=&quot;data.json&quot;&gt;&lt;/script&gt;
+</code></pre>
+<h4 id="3-在bodybody标签中创建一块区域用于存放图表">3、在<body></body>标签中创建一块区域，用于存放图表。</h4>
+<pre><code class="language-bash">&lt;body&gt;
+    &lt;div id = &quot;main&quot; style=&quot;width: 700px; height: 400px;&quot;&gt;&lt;/div&gt;
+&lt;/body&gt;
+</code></pre>
+<h4 id="4-在-script-script中">4、在 &lt; script &gt; &lt;/ script&gt;中</h4>
+<pre><code class="language-bash">$(document).ready(function(){
+        //echarts进行初始化
+		var myChart = echarts.init(document.getElementById(&quot;main&quot;));
+		myChart.setOption({
+            //图标题
+			title:{text: '异步加载的数据'},
+            //图提示框
+			tootip:{},
+            //图例
+			legend:{
+				data:['销售']
+			},
+            //x轴属性
+			xAxis:{
+				data:[]
+			},
+            //y轴属性
+			yAxis:{},
+			//图属性
+			series:[
+				{
+					name:'销售',
+					type:'bar',//图类型：柱状图
+					color:['#C0FF3E'],//设置图像颜色
+					data:[]//图表的数值
+				}
+			]
+		});
+        //使用jQuery中的$.get()获取data.json文件，使用done函数;
+        //done(function(data))中data表示调用的函数返回的数据
+		$.get('data.json').done(function(data){
+			myChart.setOption({
+				xAxis:{
+					data:data.category
+				},
+				series:{
+					name:'销售',
+					data:data.data
+				}
+			});			
+		});						
+		});
+
+</code></pre>
+<p>5、最终效果图<br>
+<img src="https://img-blog.csdnimg.cn/20200319172158863.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+原文链接：<br>
+https://blog.csdn.net/sinat_34234837/article/details/90203899</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[chm在本地的正确打开方式]]></title>
         <id>https://906571331.github.io/yx.github.io/post/chm-zai-ben-di-de-zheng-que-da-kai-fang-shi/</id>
