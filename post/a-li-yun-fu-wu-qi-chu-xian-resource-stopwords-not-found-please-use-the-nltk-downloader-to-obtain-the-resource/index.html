@@ -1,0 +1,265 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>阿里云服务器出现  Resource stopwords not found.   Please use the NLTK Downloader to obtain the resource: | WuXin</title>
+<meta name="description" content="成千上万个门口，总有一个人要先走。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://906571331.github.io/yx.github.io//favicon.ico?v=1585560139583">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://906571331.github.io/yx.github.io//styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://906571331.github.io/yx.github.io/">
+        <img class="avatar" src="https://906571331.github.io/yx.github.io//images/avatar.png?v=1585560139583" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://906571331.github.io/yx.github.io/">
+        <h1 class="site-title">WuXin</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="https://906571331.github.io/yx.github.io/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://yxrongit.github.io/yx.github.io/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="https://yxrongit.github.io/yx.github.io/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">阿里云服务器出现  Resource stopwords not found.   Please use the NLTK Downloader to obtain the resource:</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2020-03-30</span>
+            
+          </div>
+          <div class="post-content">
+            <h3 id="出现的问题">出现的问题</h3>
+<p>在阿里云ubuntu服务器布置Django项目中出现如下错误：</p>
+<pre><code class="language-bash">  Resource stopwords not found.
+  Please use the NLTK Downloader to obtain the resource:
+</code></pre>
+<p>具体如下所示：</p>
+<pre><code class="language-bash">Watching for file changes with StatReloader
+Performing system checks...
+
+Exception in thread django-main-thread:
+Traceback (most recent call last):
+  File &quot;/root/.virtualenvs/T/lib/python3.5/site-packages/nltk/corpus/util.py&quot;, line 86, in __load
+    root = nltk.data.find('{}/{}'.format(self.subdir, zip_name))
+  File &quot;/root/.virtualenvs/T/lib/python3.5/site-packages/nltk/data.py&quot;, line 701, in find
+    raise LookupError(resource_not_found)
+LookupError: 
+**********************************************************************
+  Resource stopwords not found.
+  Please use the NLTK Downloader to obtain the resource:
+
+  &gt;&gt;&gt; import nltk
+  &gt;&gt;&gt; nltk.download('stopwords')
+  
+  For more information see: https://www.nltk.org/data.html
+
+  Attempted to load corpora/stopwords.zip/stopwords/
+
+  Searched in:
+    - '/root/nltk_data'
+    - '/root/.virtualenvs/T/nltk_data'
+    - '/root/.virtualenvs/T/share/nltk_data'
+    - '/root/.virtualenvs/T/lib/nltk_data'
+    - '/usr/share/nltk_data'
+    - '/usr/local/share/nltk_data'
+    - '/usr/lib/nltk_data'
+    - '/usr/local/lib/nltk_data'
+**********************************************************************
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File &quot;/usr/lib/python3.5/threading.py&quot;, line 914, in _bootstrap_inner
+    self.run()
+  File &quot;/usr/lib/python3.5/threading.py&quot;, line 862, in run
+    self._target(*self._args, **self._kwargs)
+  File &quot;/root/.virtualenvs/T/lib/python3.5/site-packages/django/utils/autoreload.py&quot;, line 54, in wrapper
+    fn(*args, **kwargs)
+  File &quot;/root/.virtualenvs/T/lib/python3.5/site-packages/django/core/management/commands/runserver.py&quot;, line 117, in inner_run
+    self.check(display_num_errors=True)
+  File &quot;/root/.virtualenvs/T/lib/python3.5/site-packages/django/core/management/base.py&quot;, line 390, in check
+    include_deployment_checks=include_deployment_checks,
+  File &quot;/root/.virtualenvs/T/lib/python3.5/site-packages/django/core/management/base.py&quot;, line 377, in _run_checks
+    return checks.run_checks(**kwargs)
+  File &quot;/root/.virtualenvs/T/lib/python3.5/site-packages/django/core/checks/registry.py&quot;, line 72, in run_checks
+    new_errors = check(app_configs=app_configs)
+  File &quot;/root/.virtualenvs/T/lib/python3.5/site-packages/django/core/checks/urls.py&quot;, line 13, in check_url_config
+    return check_resolver(resolver)
+  File &quot;/root/.virtualenvs/T/lib/python3.5/site-packages/django/core/checks/urls.py&quot;, line 23, in check_resolver
+    return check_method()
+  File &quot;/root/.virtualenvs/T/lib/python3.5/site-packages/django/urls/resolvers.py&quot;, line 399, in check
+    for pattern in self.url_patterns:
+  File &quot;/root/.virtualenvs/T/lib/python3.5/site-packages/django/utils/functional.py&quot;, line 80, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File &quot;/root/.virtualenvs/T/lib/python3.5/site-packages/django/urls/resolvers.py&quot;, line 584, in url_patterns
+    patterns = getattr(self.urlconf_module, &quot;urlpatterns&quot;, self.urlconf_module)
+  File &quot;/root/.virtualenvs/T/lib/python3.5/site-packages/django/utils/functional.py&quot;, line 80, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File &quot;/root/.virtualenvs/T/lib/python3.5/site-packages/django/urls/resolvers.py&quot;, line 577, in urlconf_module
+    return import_module(self.urlconf_name)
+  File &quot;/root/.virtualenvs/T/lib/python3.5/importlib/__init__.py&quot;, line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File &quot;&lt;frozen importlib._bootstrap&gt;&quot;, line 986, in _gcd_import
+  File &quot;&lt;frozen importlib._bootstrap&gt;&quot;, line 969, in _find_and_load
+  File &quot;&lt;frozen importlib._bootstrap&gt;&quot;, line 958, in _find_and_load_unlocked
+  File &quot;&lt;frozen importlib._bootstrap&gt;&quot;, line 673, in _load_unlocked
+  File &quot;&lt;frozen importlib._bootstrap_external&gt;&quot;, line 665, in exec_module
+  File &quot;&lt;frozen importlib._bootstrap&gt;&quot;, line 222, in _call_with_frames_removed
+  File &quot;/home/recommend_system-master/recommend_system/urls.py&quot;, line 18, in &lt;module&gt;
+    import movie_recommend.views
+  File &quot;/home/recommend_system-master/movie_recommend/views.py&quot;, line 15, in &lt;module&gt;
+    from movie_recommend.load_data import *
+  File &quot;/home/recommend_system-master/movie_recommend/load_data.py&quot;, line 19, in &lt;module&gt;
+    stoplist = stopwords.words('english')
+  File &quot;/root/.virtualenvs/T/lib/python3.5/site-packages/nltk/corpus/util.py&quot;, line 123, in __getattr__
+    self.__load()
+  File &quot;/root/.virtualenvs/T/lib/python3.5/site-packages/nltk/corpus/util.py&quot;, line 88, in __load
+    raise e
+  File &quot;/root/.virtualenvs/T/lib/python3.5/site-packages/nltk/corpus/util.py&quot;, line 83, in __load
+    root = nltk.data.find('{}/{}'.format(self.subdir, self.__name))
+  File &quot;/root/.virtualenvs/T/lib/python3.5/site-packages/nltk/data.py&quot;, line 701, in find
+    raise LookupError(resource_not_found)
+LookupError: 
+**********************************************************************
+  Resource stopwords not found.
+  Please use the NLTK Downloader to obtain the resource:
+
+  &gt;&gt;&gt; import nltk
+  &gt;&gt;&gt; nltk.download('stopwords')
+  
+  For more information see: https://www.nltk.org/data.html
+
+  Attempted to load corpora/stopwords
+
+  Searched in:
+    - '/root/nltk_data'
+    - '/root/.virtualenvs/T/nltk_data'
+    - '/root/.virtualenvs/T/share/nltk_data'
+    - '/root/.virtualenvs/T/lib/nltk_data'
+    - '/usr/share/nltk_data'
+    - '/usr/local/share/nltk_data'
+    - '/usr/lib/nltk_data'
+    - '/usr/local/lib/nltk_data'
+**********************************************************************
+</code></pre>
+<h3 id="解决的思路">解决的思路：</h3>
+<p>ubuntu中打开python3解释器</p>
+<pre><code class="language-bash">  &gt;&gt;&gt;python3 
+  &gt;&gt;&gt; import nltk
+  &gt;&gt;&gt; nltk.download('stopwords')
+</code></pre>
+<p>再次重启Django项目即可正确运行</p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://906571331.github.io/yx.github.io/post/djangocoreexceptionsimproperlyconfigured-mysqlclient-1313-or-newer-is-required-you-have-093/">
+              <h3 class="post-title">
+                下一篇：django.core.exceptions.ImproperlyConfigured: mysqlclient 1.3.13 or newer is required; you have 0.9.3.
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">成千上万个门口，总有一个人要先走。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://blog.csdn.net/qq_42092076" target="_blank">Gridea</a> | <a class="rss" href="https://906571331.github.io/yx.github.io//atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

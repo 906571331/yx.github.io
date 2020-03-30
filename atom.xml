@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://906571331.github.io/yx.github.io/</id>
     <title>WuXin</title>
-    <updated>2020-03-30T09:07:34.685Z</updated>
+    <updated>2020-03-30T09:22:22.770Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://906571331.github.io/yx.github.io/"/>
     <link rel="self" href="https://906571331.github.io/yx.github.io/atom.xml"/>
@@ -10,6 +10,136 @@
     <logo>https://906571331.github.io/yx.github.io/images/avatar.png</logo>
     <icon>https://906571331.github.io/yx.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, WuXin</rights>
+    <entry>
+        <title type="html"><![CDATA[阿里云服务器出现  Resource stopwords not found.   Please use the NLTK Downloader to obtain the resource:]]></title>
+        <id>https://906571331.github.io/yx.github.io/post/a-li-yun-fu-wu-qi-chu-xian-resource-stopwords-not-found-please-use-the-nltk-downloader-to-obtain-the-resource/</id>
+        <link href="https://906571331.github.io/yx.github.io/post/a-li-yun-fu-wu-qi-chu-xian-resource-stopwords-not-found-please-use-the-nltk-downloader-to-obtain-the-resource/">
+        </link>
+        <updated>2020-03-30T09:22:06.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="出现的问题">出现的问题</h3>
+<p>在阿里云ubuntu服务器布置Django项目中出现如下错误：</p>
+<pre><code class="language-bash">  Resource stopwords not found.
+  Please use the NLTK Downloader to obtain the resource:
+</code></pre>
+<p>具体如下所示：</p>
+<pre><code class="language-bash">Watching for file changes with StatReloader
+Performing system checks...
+
+Exception in thread django-main-thread:
+Traceback (most recent call last):
+  File &quot;/root/.virtualenvs/T/lib/python3.5/site-packages/nltk/corpus/util.py&quot;, line 86, in __load
+    root = nltk.data.find('{}/{}'.format(self.subdir, zip_name))
+  File &quot;/root/.virtualenvs/T/lib/python3.5/site-packages/nltk/data.py&quot;, line 701, in find
+    raise LookupError(resource_not_found)
+LookupError: 
+**********************************************************************
+  Resource stopwords not found.
+  Please use the NLTK Downloader to obtain the resource:
+
+  &gt;&gt;&gt; import nltk
+  &gt;&gt;&gt; nltk.download('stopwords')
+  
+  For more information see: https://www.nltk.org/data.html
+
+  Attempted to load corpora/stopwords.zip/stopwords/
+
+  Searched in:
+    - '/root/nltk_data'
+    - '/root/.virtualenvs/T/nltk_data'
+    - '/root/.virtualenvs/T/share/nltk_data'
+    - '/root/.virtualenvs/T/lib/nltk_data'
+    - '/usr/share/nltk_data'
+    - '/usr/local/share/nltk_data'
+    - '/usr/lib/nltk_data'
+    - '/usr/local/lib/nltk_data'
+**********************************************************************
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File &quot;/usr/lib/python3.5/threading.py&quot;, line 914, in _bootstrap_inner
+    self.run()
+  File &quot;/usr/lib/python3.5/threading.py&quot;, line 862, in run
+    self._target(*self._args, **self._kwargs)
+  File &quot;/root/.virtualenvs/T/lib/python3.5/site-packages/django/utils/autoreload.py&quot;, line 54, in wrapper
+    fn(*args, **kwargs)
+  File &quot;/root/.virtualenvs/T/lib/python3.5/site-packages/django/core/management/commands/runserver.py&quot;, line 117, in inner_run
+    self.check(display_num_errors=True)
+  File &quot;/root/.virtualenvs/T/lib/python3.5/site-packages/django/core/management/base.py&quot;, line 390, in check
+    include_deployment_checks=include_deployment_checks,
+  File &quot;/root/.virtualenvs/T/lib/python3.5/site-packages/django/core/management/base.py&quot;, line 377, in _run_checks
+    return checks.run_checks(**kwargs)
+  File &quot;/root/.virtualenvs/T/lib/python3.5/site-packages/django/core/checks/registry.py&quot;, line 72, in run_checks
+    new_errors = check(app_configs=app_configs)
+  File &quot;/root/.virtualenvs/T/lib/python3.5/site-packages/django/core/checks/urls.py&quot;, line 13, in check_url_config
+    return check_resolver(resolver)
+  File &quot;/root/.virtualenvs/T/lib/python3.5/site-packages/django/core/checks/urls.py&quot;, line 23, in check_resolver
+    return check_method()
+  File &quot;/root/.virtualenvs/T/lib/python3.5/site-packages/django/urls/resolvers.py&quot;, line 399, in check
+    for pattern in self.url_patterns:
+  File &quot;/root/.virtualenvs/T/lib/python3.5/site-packages/django/utils/functional.py&quot;, line 80, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File &quot;/root/.virtualenvs/T/lib/python3.5/site-packages/django/urls/resolvers.py&quot;, line 584, in url_patterns
+    patterns = getattr(self.urlconf_module, &quot;urlpatterns&quot;, self.urlconf_module)
+  File &quot;/root/.virtualenvs/T/lib/python3.5/site-packages/django/utils/functional.py&quot;, line 80, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File &quot;/root/.virtualenvs/T/lib/python3.5/site-packages/django/urls/resolvers.py&quot;, line 577, in urlconf_module
+    return import_module(self.urlconf_name)
+  File &quot;/root/.virtualenvs/T/lib/python3.5/importlib/__init__.py&quot;, line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File &quot;&lt;frozen importlib._bootstrap&gt;&quot;, line 986, in _gcd_import
+  File &quot;&lt;frozen importlib._bootstrap&gt;&quot;, line 969, in _find_and_load
+  File &quot;&lt;frozen importlib._bootstrap&gt;&quot;, line 958, in _find_and_load_unlocked
+  File &quot;&lt;frozen importlib._bootstrap&gt;&quot;, line 673, in _load_unlocked
+  File &quot;&lt;frozen importlib._bootstrap_external&gt;&quot;, line 665, in exec_module
+  File &quot;&lt;frozen importlib._bootstrap&gt;&quot;, line 222, in _call_with_frames_removed
+  File &quot;/home/recommend_system-master/recommend_system/urls.py&quot;, line 18, in &lt;module&gt;
+    import movie_recommend.views
+  File &quot;/home/recommend_system-master/movie_recommend/views.py&quot;, line 15, in &lt;module&gt;
+    from movie_recommend.load_data import *
+  File &quot;/home/recommend_system-master/movie_recommend/load_data.py&quot;, line 19, in &lt;module&gt;
+    stoplist = stopwords.words('english')
+  File &quot;/root/.virtualenvs/T/lib/python3.5/site-packages/nltk/corpus/util.py&quot;, line 123, in __getattr__
+    self.__load()
+  File &quot;/root/.virtualenvs/T/lib/python3.5/site-packages/nltk/corpus/util.py&quot;, line 88, in __load
+    raise e
+  File &quot;/root/.virtualenvs/T/lib/python3.5/site-packages/nltk/corpus/util.py&quot;, line 83, in __load
+    root = nltk.data.find('{}/{}'.format(self.subdir, self.__name))
+  File &quot;/root/.virtualenvs/T/lib/python3.5/site-packages/nltk/data.py&quot;, line 701, in find
+    raise LookupError(resource_not_found)
+LookupError: 
+**********************************************************************
+  Resource stopwords not found.
+  Please use the NLTK Downloader to obtain the resource:
+
+  &gt;&gt;&gt; import nltk
+  &gt;&gt;&gt; nltk.download('stopwords')
+  
+  For more information see: https://www.nltk.org/data.html
+
+  Attempted to load corpora/stopwords
+
+  Searched in:
+    - '/root/nltk_data'
+    - '/root/.virtualenvs/T/nltk_data'
+    - '/root/.virtualenvs/T/share/nltk_data'
+    - '/root/.virtualenvs/T/lib/nltk_data'
+    - '/usr/share/nltk_data'
+    - '/usr/local/share/nltk_data'
+    - '/usr/lib/nltk_data'
+    - '/usr/local/lib/nltk_data'
+**********************************************************************
+</code></pre>
+<h3 id="解决的思路">解决的思路：</h3>
+<p>ubuntu中打开python3解释器</p>
+<pre><code class="language-bash">  &gt;&gt;&gt;python3 
+  &gt;&gt;&gt; import nltk
+  &gt;&gt;&gt; nltk.download('stopwords')
+</code></pre>
+<p>再次重启Django项目即可正确运行</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[django.core.exceptions.ImproperlyConfigured: mysqlclient 1.3.13 or newer is required; you have 0.9.3.]]></title>
         <id>https://906571331.github.io/yx.github.io/post/djangocoreexceptionsimproperlyconfigured-mysqlclient-1313-or-newer-is-required-you-have-093/</id>
@@ -78,11 +208,11 @@ python manage.py migrate
 usbrip是用Python 3编写的软件，它解析Linux日志文件（/var/log/syslog<em>或/var/log/messages</em>）以构建USB事件历史表。此类表格可能包含以下列：“已连接”（日期和时间），“用户”，“VID”（供应商ID），“PID”（产品ID），“产品”，“制造商”，“序列号”， “端口”和“断开连接”（日期和时间）。</p>
 <p>此外，它还可以：</p>
 <ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-3149973"><label class="task-list-item-label" for="task-item-3149973"> 导出收集的信息作为JSON转储;</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-663050"><label class="task-list-item-label" for="task-item-663050"> 生成一个授权（可信）USB设备列表作为JSON（称之为auth.json）;</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-7905227"><label class="task-list-item-label" for="task-item-7905227"> 根据以下内容搜索“违规事件” auth.json：show（或生成另一个JSON）USB设备出现在历史记录中并且不会出现在auth.json;</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-3799539"><label class="task-list-item-label" for="task-item-3799539"> *使用-sflag * 安装时，创建加密存储（7zip存档），以便在crontab调度程序的帮助下自动备份和累积USB事件;</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-2507173"><label class="task-list-item-label" for="task-item-2507173"> 根据其VID和/或PID搜索有关特定USB设备的其他详细信息。</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-9301982"><label class="task-list-item-label" for="task-item-9301982"> 导出收集的信息作为JSON转储;</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-1393805"><label class="task-list-item-label" for="task-item-1393805"> 生成一个授权（可信）USB设备列表作为JSON（称之为auth.json）;</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-6767017"><label class="task-list-item-label" for="task-item-6767017"> 根据以下内容搜索“违规事件” auth.json：show（或生成另一个JSON）USB设备出现在历史记录中并且不会出现在auth.json;</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-156508"><label class="task-list-item-label" for="task-item-156508"> *使用-sflag * 安装时，创建加密存储（7zip存档），以便在crontab调度程序的帮助下自动备份和累积USB事件;</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-3041254"><label class="task-list-item-label" for="task-item-3041254"> 根据其VID和/或PID搜索有关特定USB设备的其他详细信息。</label></li>
 </ul>
 <pre><code class="language-c"># 下载
 ~$ git clone https://github.com/snovvcrash/usbrip.git usbrip &amp;&amp; cd usbrip
@@ -438,23 +568,6 @@ https://blog.csdn.net/sinat_34234837/article/details/90203899</p>
 <pre><code class="language-bash">&lt;Connector connectionTimeout=&quot;20000&quot; port=&quot;8081&quot; protocol=&quot;HTTP/1.1&quot; redirectPort=&quot;8443&quot; useBodyEncodingForURI=&quot;true&quot; URIEncoding=&quot;UTF-8&quot;/&gt;
 </code></pre>
 <p>保存该文件，重新启动tomcat，再次打开带有中文的URL时即可正确访问</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[解决JSP开发中出现的Tomcat启动时闪退的问题]]></title>
-        <id>https://906571331.github.io/yx.github.io/post/jie-jue-jsp-kai-fa-zhong-chu-xian-de-tomcat-qi-dong-shi-shan-tui-de-wen-ti/</id>
-        <link href="https://906571331.github.io/yx.github.io/post/jie-jue-jsp-kai-fa-zhong-chu-xian-de-tomcat-qi-dong-shi-shan-tui-de-wen-ti/">
-        </link>
-        <updated>2020-03-11T01:25:30.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="出现的问题">出现的问题</h3>
-<p>在下载完tomcat以后准备启动，点击tomcat安装目录bin/startup.bat，但是出现闪退的现象，原因在于jre环境变量没有设置在系统变量中。</p>
-<h3 id="解决办法">解决办法：</h3>
-<p>找到jre的安装目录，复制jre的根路径，打开系统变量设置，变量名填一个（最好见名知意），变量值为刚刚复制的jre的根路径，点击确定，再回去重启tomcat，即可恢复正常<br>
-<img src="https://img-blog.csdnimg.cn/20200311091957828.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-<img src="https://img-blog.csdnimg.cn/20200311092352945.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-在浏览器中打开127.0.0.1:8081查看tomcat是否启动成功<br>
-<img src="https://img-blog.csdnimg.cn/20200311092326340.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-（这里的端口是自己设置的端口，默认8080端口，修改以后填自己修改的端口）</p>
 ]]></content>
     </entry>
 </feed>
