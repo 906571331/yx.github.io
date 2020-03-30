@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://906571331.github.io/yx.github.io/</id>
     <title>WuXin</title>
-    <updated>2020-03-30T09:22:22.770Z</updated>
+    <updated>2020-03-30T09:55:50.032Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://906571331.github.io/yx.github.io/"/>
     <link rel="self" href="https://906571331.github.io/yx.github.io/atom.xml"/>
@@ -10,6 +10,25 @@
     <logo>https://906571331.github.io/yx.github.io/images/avatar.png</logo>
     <icon>https://906571331.github.io/yx.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, WuXin</rights>
+    <entry>
+        <title type="html"><![CDATA[使用gitee解决github下载仓库下载速度缓慢的问题]]></title>
+        <id>https://906571331.github.io/yx.github.io/post/shi-yong-gitee-jie-jue-github-xia-zai-cang-ku-xia-zai-su-du-huan-man-de-wen-ti/</id>
+        <link href="https://906571331.github.io/yx.github.io/post/shi-yong-gitee-jie-jue-github-xia-zai-cang-ku-xia-zai-su-du-huan-man-de-wen-ti/">
+        </link>
+        <updated>2020-03-30T09:55:12.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="出现的问题">出现的问题</h3>
+<p>在github下载代码时总是出现网络延时等问题导致下载失败或下载缓慢</p>
+<h3 id="解决的办法">解决的办法</h3>
+<p>将github中的仓库导入到gitee中，然后从gitee中下载仓库<br>
+复制github中的仓库地址：<br>
+<img src="https://img-blog.csdnimg.cn/20200330175055393.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+在gitee中新建仓库：<img src="https://img-blog.csdnimg.cn/20200330175256587.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+选择导入已有仓库，将刚刚复制的github地址填入<br>
+<img src="https://img-blog.csdnimg.cn/20200330175320401.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+打开刚刚新建的仓库，点击下载，即可高速下载github中的仓库<br>
+<img src="https://img-blog.csdnimg.cn/20200330174943211.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[阿里云服务器出现  Resource stopwords not found.   Please use the NLTK Downloader to obtain the resource:]]></title>
         <id>https://906571331.github.io/yx.github.io/post/a-li-yun-fu-wu-qi-chu-xian-resource-stopwords-not-found-please-use-the-nltk-downloader-to-obtain-the-resource/</id>
@@ -208,11 +227,11 @@ python manage.py migrate
 usbrip是用Python 3编写的软件，它解析Linux日志文件（/var/log/syslog<em>或/var/log/messages</em>）以构建USB事件历史表。此类表格可能包含以下列：“已连接”（日期和时间），“用户”，“VID”（供应商ID），“PID”（产品ID），“产品”，“制造商”，“序列号”， “端口”和“断开连接”（日期和时间）。</p>
 <p>此外，它还可以：</p>
 <ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-9301982"><label class="task-list-item-label" for="task-item-9301982"> 导出收集的信息作为JSON转储;</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-1393805"><label class="task-list-item-label" for="task-item-1393805"> 生成一个授权（可信）USB设备列表作为JSON（称之为auth.json）;</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-6767017"><label class="task-list-item-label" for="task-item-6767017"> 根据以下内容搜索“违规事件” auth.json：show（或生成另一个JSON）USB设备出现在历史记录中并且不会出现在auth.json;</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-156508"><label class="task-list-item-label" for="task-item-156508"> *使用-sflag * 安装时，创建加密存储（7zip存档），以便在crontab调度程序的帮助下自动备份和累积USB事件;</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-3041254"><label class="task-list-item-label" for="task-item-3041254"> 根据其VID和/或PID搜索有关特定USB设备的其他详细信息。</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-6907719"><label class="task-list-item-label" for="task-item-6907719"> 导出收集的信息作为JSON转储;</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-3780769"><label class="task-list-item-label" for="task-item-3780769"> 生成一个授权（可信）USB设备列表作为JSON（称之为auth.json）;</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-6938599"><label class="task-list-item-label" for="task-item-6938599"> 根据以下内容搜索“违规事件” auth.json：show（或生成另一个JSON）USB设备出现在历史记录中并且不会出现在auth.json;</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-7654867"><label class="task-list-item-label" for="task-item-7654867"> *使用-sflag * 安装时，创建加密存储（7zip存档），以便在crontab调度程序的帮助下自动备份和累积USB事件;</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-6311187"><label class="task-list-item-label" for="task-item-6311187"> 根据其VID和/或PID搜索有关特定USB设备的其他详细信息。</label></li>
 </ul>
 <pre><code class="language-c"># 下载
 ~$ git clone https://github.com/snovvcrash/usbrip.git usbrip &amp;&amp; cd usbrip
@@ -512,62 +531,6 @@ https://blog.csdn.net/sinat_34234837/article/details/90203899</p>
 <p>根据chm文件的制作原理（链接网页，右击选择使用记事本打开时改文件时，发现该文件跳转到了一个一个的网页上），右击本地chm文件，选择打开方式，使用浏览器打开，即可正确打开<br>
 结果如图所示：<br>
 <img src="https://img-blog.csdnimg.cn/20200318091140616.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[JSP开发中tomcat访问URL带有中文名称的HTML文件显示404错误]]></title>
-        <id>https://906571331.github.io/yx.github.io/post/jsp-kai-fa-zhong-tomcat-fang-wen-url-dai-you-zhong-wen-ming-cheng-de-html-wen-jian-xian-shi-404-cuo-wu/</id>
-        <link href="https://906571331.github.io/yx.github.io/post/jsp-kai-fa-zhong-tomcat-fang-wen-url-dai-you-zhong-wen-ming-cheng-de-html-wen-jian-xian-shi-404-cuo-wu/">
-        </link>
-        <updated>2020-03-18T00:40:46.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="出现的情况">出现的情况</h3>
-<p>在JSP开发中，可能会出现tomcat访问带有中文名称的HTML文件显示404错误的情况，如下图所示：<img src="https://img-blog.csdnimg.cn/20200318082855499.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
-<h3 id="出现这种状况的原因">出现这种状况的原因：</h3>
-<p>出现这种状况的原因是tomcat将URL中的中文字符经过Base64解析</p>
-<h3 id="解决思路">解决思路：</h3>
-<p>打开Eclipse，点击Servers，找到Server.xml，打开这个文件<br>
-<img src="https://img-blog.csdnimg.cn/2020031808333285.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-找到如下代码：</p>
-<pre><code class="language-bash"> &lt;Service name=&quot;Catalina&quot;&gt;
-
-    &lt;!--The connectors can use a shared executor, you can define one or more named thread pools--&gt;
-    &lt;!--
-    &lt;Executor name=&quot;tomcatThreadPool&quot; namePrefix=&quot;catalina-exec-&quot;
-        maxThreads=&quot;150&quot; minSpareThreads=&quot;4&quot;/&gt;
-    --&gt;
-
-
-    &lt;!-- A &quot;Connector&quot; represents an endpoint by which requests are received
-         and responses are returned. Documentation at :
-         Java HTTP Connector: /docs/config/http.html (blocking &amp; non-blocking)
-         Java AJP  Connector: /docs/config/ajp.html
-         APR (HTTP/AJP) Connector: /docs/apr.html
-         Define a non-SSL HTTP/1.1 Connector on port 8080
-    --&gt;
-    &lt;Connector connectionTimeout=&quot;20000&quot; port=&quot;8081&quot; protocol=&quot;HTTP/1.1&quot; redirectPort=&quot;8443&quot; /&gt;
-    &lt;!-- A &quot;Connector&quot; using the shared thread pool--&gt;
-    &lt;!--
-    &lt;Connector executor=&quot;tomcatThreadPool&quot;
-               port=&quot;8080&quot; protocol=&quot;HTTP/1.1&quot;
-               connectionTimeout=&quot;20000&quot;
-               redirectPort=&quot;8443&quot; /&gt;
-    --&gt;
-    &lt;!-- Define an SSL HTTP/1.1 Connector on port 8443
-         This connector uses the BIO implementation that requires the JSSE
-         style configuration. When using the APR/native implementation, the
-         OpenSSL style configuration is required as described in the APR/native
-         documentation --&gt;
-    &lt;!--
-    &lt;Connector port=&quot;8443&quot; protocol=&quot;org.apache.coyote.http11.Http11Protocol&quot;
-               maxThreads=&quot;150&quot; SSLEnabled=&quot;true&quot; scheme=&quot;https&quot; secure=&quot;true&quot;
-               clientAuth=&quot;false&quot; sslProtocol=&quot;TLS&quot; /&gt;
-    --&gt;
-</code></pre>
-<p>在如下代码中插入一下代码：<br>
-结果如图所示：</p>
-<pre><code class="language-bash">&lt;Connector connectionTimeout=&quot;20000&quot; port=&quot;8081&quot; protocol=&quot;HTTP/1.1&quot; redirectPort=&quot;8443&quot; useBodyEncodingForURI=&quot;true&quot; URIEncoding=&quot;UTF-8&quot;/&gt;
-</code></pre>
-<p>保存该文件，重新启动tomcat，再次打开带有中文的URL时即可正确访问</p>
 ]]></content>
     </entry>
 </feed>
