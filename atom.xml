@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://906571331.github.io/yx.github.io/</id>
     <title>WuXin</title>
-    <updated>2020-03-29T09:58:06.299Z</updated>
+    <updated>2020-03-30T09:07:34.685Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://906571331.github.io/yx.github.io/"/>
     <link rel="self" href="https://906571331.github.io/yx.github.io/atom.xml"/>
@@ -10,6 +10,64 @@
     <logo>https://906571331.github.io/yx.github.io/images/avatar.png</logo>
     <icon>https://906571331.github.io/yx.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, WuXin</rights>
+    <entry>
+        <title type="html"><![CDATA[django.core.exceptions.ImproperlyConfigured: mysqlclient 1.3.13 or newer is required; you have 0.9.3.]]></title>
+        <id>https://906571331.github.io/yx.github.io/post/djangocoreexceptionsimproperlyconfigured-mysqlclient-1313-or-newer-is-required-you-have-093/</id>
+        <link href="https://906571331.github.io/yx.github.io/post/djangocoreexceptionsimproperlyconfigured-mysqlclient-1313-or-newer-is-required-you-have-093/">
+        </link>
+        <updated>2020-03-30T09:06:24.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="出现的问题">出现的问题：</h3>
+<p>阿里云ubuntu服务器Django项目开发中出现</p>
+<pre><code class="language-bash">    raise ImproperlyConfigured('mysqlclient 1.3.13 or newer is required; you have %s.' % Database.__version__)
+django.core.exceptions.ImproperlyConfigured: mysqlclient 1.3.13 or newer is required; you have 0.9.3.
+</code></pre>
+<h3 id="解决的思路">解决的思路：</h3>
+<h4 id="一修改basepy">一.修改base.py</h4>
+<pre><code class="language-bash">cd /root/.virtualenvs/T/lib/python3.5/site-packages/django/db/backends/mysql
+</code></pre>
+<p>打开base.py</p>
+<pre><code class="language-bash">vi base.py
+</code></pre>
+<p>知道到下图所示位置：<br>
+<img src="https://img-blog.csdnimg.cn/20200330165529285.png" alt="在这里插入图片描述" loading="lazy"><br>
+将下面两行注释掉，结果如图所示：</p>
+<pre><code class="language-bash">version = Database.version_info
+#if version &lt; (1, 3, 13):
+ #   raise ImproperlyConfigured('mysqlclient 1.3.13 or newer is required; you have %s.' % Database.__version__)
+</code></pre>
+<h4 id="二修改__init__py">二.修改__init__.py</h4>
+<p>添加如下代码：</p>
+<pre><code class="language-bash">import pymysql
+pymysql.install_as_MySQLdb()
+</code></pre>
+<p>第二步完成之后若出现如下报错，则进行第三步：</p>
+<pre><code class="language-bash">    query = query.decode(errors='replace')
+AttributeError: 'str' object has no attribute 'decode'
+</code></pre>
+<h4 id="第三步修改operationspy">第三步.修改operations.py</h4>
+<p>打开operations.py所在的文件夹</p>
+<pre><code class="language-bash">cd /root/.virtualenvs/T/lib/python3.5/site-packages/django/db/backends/mysql/
+</code></pre>
+<p>打开operations.py，并找到如下代码</p>
+<pre><code class="language-bash">        if query is not None:
+            query = query.decode(errors='replace')
+        return query
+</code></pre>
+<p>修改decode为enconde,结果如图所示：</p>
+<pre><code class="language-bash">        if query is not None:
+            query = query.encode(errors='replace')
+        return query
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20200330170302985.png" alt="在这里插入图片描述" loading="lazy"></figure>
+<h4 id="第四步迁移数据库">第四步：迁移数据库</h4>
+<pre><code class="language-bash">python manage.py makemigrations
+python manage.py migrate
+</code></pre>
+<h4 id="重启django项目">重启Django项目：</h4>
+<pre><code class="language-bash">python manage.py runserver 0:8000
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[uebrip安装]]></title>
         <id>https://906571331.github.io/yx.github.io/post/uebrip-an-zhuang/</id>
@@ -20,11 +78,11 @@
 usbrip是用Python 3编写的软件，它解析Linux日志文件（/var/log/syslog<em>或/var/log/messages</em>）以构建USB事件历史表。此类表格可能包含以下列：“已连接”（日期和时间），“用户”，“VID”（供应商ID），“PID”（产品ID），“产品”，“制造商”，“序列号”， “端口”和“断开连接”（日期和时间）。</p>
 <p>此外，它还可以：</p>
 <ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-6020550"><label class="task-list-item-label" for="task-item-6020550"> 导出收集的信息作为JSON转储;</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-6904291"><label class="task-list-item-label" for="task-item-6904291"> 生成一个授权（可信）USB设备列表作为JSON（称之为auth.json）;</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-671187"><label class="task-list-item-label" for="task-item-671187"> 根据以下内容搜索“违规事件” auth.json：show（或生成另一个JSON）USB设备出现在历史记录中并且不会出现在auth.json;</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-5143990"><label class="task-list-item-label" for="task-item-5143990"> *使用-sflag * 安装时，创建加密存储（7zip存档），以便在crontab调度程序的帮助下自动备份和累积USB事件;</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-7971940"><label class="task-list-item-label" for="task-item-7971940"> 根据其VID和/或PID搜索有关特定USB设备的其他详细信息。</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-3149973"><label class="task-list-item-label" for="task-item-3149973"> 导出收集的信息作为JSON转储;</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-663050"><label class="task-list-item-label" for="task-item-663050"> 生成一个授权（可信）USB设备列表作为JSON（称之为auth.json）;</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-7905227"><label class="task-list-item-label" for="task-item-7905227"> 根据以下内容搜索“违规事件” auth.json：show（或生成另一个JSON）USB设备出现在历史记录中并且不会出现在auth.json;</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-3799539"><label class="task-list-item-label" for="task-item-3799539"> *使用-sflag * 安装时，创建加密存储（7zip存档），以便在crontab调度程序的帮助下自动备份和累积USB事件;</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-2507173"><label class="task-list-item-label" for="task-item-2507173"> 根据其VID和/或PID搜索有关特定USB设备的其他详细信息。</label></li>
 </ul>
 <pre><code class="language-c"># 下载
 ~$ git clone https://github.com/snovvcrash/usbrip.git usbrip &amp;&amp; cd usbrip
@@ -397,50 +455,6 @@ https://blog.csdn.net/sinat_34234837/article/details/90203899</p>
 在浏览器中打开127.0.0.1:8081查看tomcat是否启动成功<br>
 <img src="https://img-blog.csdnimg.cn/20200311092326340.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
 （这里的端口是自己设置的端口，默认8080端口，修改以后填自己修改的端口）</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[使用Gridea十分钟搭建个人博客]]></title>
-        <id>https://906571331.github.io/yx.github.io/post/shi-yong-gridea-shi-fen-zhong-da-jian-ge-ren-bo-ke/</id>
-        <link href="https://906571331.github.io/yx.github.io/post/shi-yong-gridea-shi-fen-zhong-da-jian-ge-ren-bo-ke/">
-        </link>
-        <updated>2020-03-07T03:57:23.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="使用gridea十分钟搭建个人博客">使用Gridea十分钟搭建个人博客</h3>
-<h6 id="此教程简单并且实用可供需要搭建博客的博主使用">此教程简单并且实用，可供需要搭建博客的博主使用</h6>
-<ol>
-<li>在Github申请账号</li>
-<li>配置Gridea客户端</li>
-<li>搭建博客，并访问博客</li>
-</ol>
-<h4 id="第一步在github申请账号">第一步：在Github申请账号</h4>
-<p>网址：<a href="https://github.com/">https://github.com/</a><br>
-申请完账号以后，新建一个仓库：<br>
-<img src="https://img-blog.csdnimg.cn/2020030711191742.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-<img src="https://img-blog.csdnimg.cn/20200307112343741.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-进入刚刚创建的仓库，点击settings<br>
-<img src="https://img-blog.csdnimg.cn/20200307112537143.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-进入settiings以后往下滑，如图所示：<br>
-<img src="https://img-blog.csdnimg.cn/20200307112903423.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-复制那个网址，在浏览器中打开，就可以看到刚刚创建的仓库。<br>
-设置token<br>
-在github点击个人头像进入settings<br>
-<img src="https://img-blog.csdnimg.cn/20200307113308968.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-<img src="https://img-blog.csdnimg.cn/20200307113345836.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-<img src="https://img-blog.csdnimg.cn/20200307113407883.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-<img src="https://img-blog.csdnimg.cn/20200307113432568.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-<img src="https://img-blog.csdnimg.cn/20200307113601281.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-<img src="https://img-blog.csdnimg.cn/20200307113654510.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-生成Token,复制下来，一会在客户端配置中使用</p>
-<h4 id="第二步-配置gridea客户端">第二步： 配置Gridea客户端</h4>
-<p>下载Gridea客户端，网址：<a href="https://gridea.dev">https://gridea.dev</a><br>
-进行安装。<br>
-打开Gridea客户端，按照如下进行配置<br>
-<img src="https://img-blog.csdnimg.cn/20200307113901182.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-检测远程连接，查看是否能连接到，这里速度可能比较慢，因为github是国外的网址，稍等会就可以<br>
-打开url，即可访问到你的博客<br>
-在主题菜单可以配置主题，或者去官网下载新主题等等</p>
-<h5 id="我的博客httpsyxrongitgithubioyxgithubio">我的博客：https://yxrongit.github.io/yx.github.io/</h5>
-<h5 id="欢迎大家访问">欢迎大家访问</h5>
 ]]></content>
     </entry>
 </feed>

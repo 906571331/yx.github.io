@@ -5,7 +5,7 @@
     
 <meta charset="utf-8" >
 
-<title>echarts中引入json文件 | WuXin</title>
+<title>django.core.exceptions.ImproperlyConfigured: mysqlclient 1.3.13 or newer is required; you have 0.9.3. | WuXin</title>
 <meta name="description" content="成千上万个门口，总有一个人要先走。">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -80,87 +80,71 @@
       <div class="content-container">
         <div class="post-detail">
           
-          <h2 class="post-title">echarts中引入json文件</h2>
+          <h2 class="post-title">django.core.exceptions.ImproperlyConfigured: mysqlclient 1.3.13 or newer is required; you have 0.9.3.</h2>
           <div class="post-info post-detail-info">
-            <span><i class="icon-calendar-outline"></i> 2020-03-19</span>
+            <span><i class="icon-calendar-outline"></i> 2020-03-30</span>
             
           </div>
           <div class="post-content">
-            <h4 id="1-datajson文件中的数据书写格式">1、data.json文件中的数据书写格式</h4>
-<pre><code class="language-bash">{
-	&quot;data&quot;:[5, 20, 36, 10, 12, 20],//纵坐标数据
-	&quot;category&quot;:[&quot;衬衫&quot;,&quot;羊毛衫&quot;,&quot;雪纺衫&quot;,&quot;裤子&quot;,&quot;高跟鞋&quot;,&quot;袜子&quot;]//横坐标数据
-}
+            <h3 id="出现的问题">出现的问题：</h3>
+<p>阿里云ubuntu服务器Django项目开发中出现</p>
+<pre><code class="language-bash">    raise ImproperlyConfigured('mysqlclient 1.3.13 or newer is required; you have %s.' % Database.__version__)
+django.core.exceptions.ImproperlyConfigured: mysqlclient 1.3.13 or newer is required; you have 0.9.3.
 </code></pre>
-<h4 id="2-在headhead标签中引入jquery类库注意使用15版本以上类库因为done函数适用于15版本以上">2、在<head></head>标签中引入jQuery类库，（注意使用1.5版本以上类库，因为done()函数适用于1.5版本以上）；</h4>
-<h5 id="链接json文件">链接json文件：</h5>
-<pre><code class="language-python">&lt;script src=&quot;js/jquery-1.10.1.min.js&quot;&gt;&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;incubator-echarts-master/dist/echarts.min.js&quot; &gt;&lt;/script&gt;
-&lt;script src=&quot;data.json&quot;&gt;&lt;/script&gt;
+<h3 id="解决的思路">解决的思路：</h3>
+<h4 id="一修改basepy">一.修改base.py</h4>
+<pre><code class="language-bash">cd /root/.virtualenvs/T/lib/python3.5/site-packages/django/db/backends/mysql
 </code></pre>
-<h4 id="3-在bodybody标签中创建一块区域用于存放图表">3、在<body></body>标签中创建一块区域，用于存放图表。</h4>
-<pre><code class="language-bash">&lt;body&gt;
-    &lt;div id = &quot;main&quot; style=&quot;width: 700px; height: 400px;&quot;&gt;&lt;/div&gt;
-&lt;/body&gt;
+<p>打开base.py</p>
+<pre><code class="language-bash">vi base.py
 </code></pre>
-<h4 id="4-在-script-script中">4、在 &lt; script &gt; &lt;/ script&gt;中</h4>
-<pre><code class="language-bash">$(document).ready(function(){
-        //echarts进行初始化
-		var myChart = echarts.init(document.getElementById(&quot;main&quot;));
-		myChart.setOption({
-            //图标题
-			title:{text: '异步加载的数据'},
-            //图提示框
-			tootip:{},
-            //图例
-			legend:{
-				data:['销售']
-			},
-            //x轴属性
-			xAxis:{
-				data:[]
-			},
-            //y轴属性
-			yAxis:{},
-			//图属性
-			series:[
-				{
-					name:'销售',
-					type:'bar',//图类型：柱状图
-					color:['#C0FF3E'],//设置图像颜色
-					data:[]//图表的数值
-				}
-			]
-		});
-        //使用jQuery中的$.get()获取data.json文件，使用done函数;
-        //done(function(data))中data表示调用的函数返回的数据
-		$.get('data.json').done(function(data){
-			myChart.setOption({
-				xAxis:{
-					data:data.category
-				},
-				series:{
-					name:'销售',
-					data:data.data
-				}
-			});			
-		});						
-		});
-
+<p>知道到下图所示位置：<br>
+<img src="https://img-blog.csdnimg.cn/20200330165529285.png" alt="在这里插入图片描述" loading="lazy"><br>
+将下面两行注释掉，结果如图所示：</p>
+<pre><code class="language-bash">version = Database.version_info
+#if version &lt; (1, 3, 13):
+ #   raise ImproperlyConfigured('mysqlclient 1.3.13 or newer is required; you have %s.' % Database.__version__)
 </code></pre>
-<p>5、最终效果图<br>
-<img src="https://img-blog.csdnimg.cn/20200319172158863.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-原文链接：<br>
-https://blog.csdn.net/sinat_34234837/article/details/90203899</p>
+<h4 id="二修改__init__py">二.修改__init__.py</h4>
+<p>添加如下代码：</p>
+<pre><code class="language-bash">import pymysql
+pymysql.install_as_MySQLdb()
+</code></pre>
+<p>第二步完成之后若出现如下报错，则进行第三步：</p>
+<pre><code class="language-bash">    query = query.decode(errors='replace')
+AttributeError: 'str' object has no attribute 'decode'
+</code></pre>
+<h4 id="第三步修改operationspy">第三步.修改operations.py</h4>
+<p>打开operations.py所在的文件夹</p>
+<pre><code class="language-bash">cd /root/.virtualenvs/T/lib/python3.5/site-packages/django/db/backends/mysql/
+</code></pre>
+<p>打开operations.py，并找到如下代码</p>
+<pre><code class="language-bash">        if query is not None:
+            query = query.decode(errors='replace')
+        return query
+</code></pre>
+<p>修改decode为enconde,结果如图所示：</p>
+<pre><code class="language-bash">        if query is not None:
+            query = query.encode(errors='replace')
+        return query
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20200330170302985.png" alt="在这里插入图片描述" loading="lazy"></figure>
+<h4 id="第四步迁移数据库">第四步：迁移数据库</h4>
+<pre><code class="language-bash">python manage.py makemigrations
+python manage.py migrate
+</code></pre>
+<h4 id="重启django项目">重启Django项目：</h4>
+<pre><code class="language-bash">python manage.py runserver 0:8000
+</code></pre>
 
           </div>
         </div>
 
         
           <div class="next-post">
-            <a class="purple-link" href="https://906571331.github.io/yx.github.io/post/chm-zai-ben-di-de-zheng-que-da-kai-fang-shi/">
+            <a class="purple-link" href="https://906571331.github.io/yx.github.io/post/uebrip-an-zhuang/">
               <h3 class="post-title">
-                下一篇：chm在本地的正确打开方式
+                下一篇：uebrip安装
               </h3>
             </a>
           </div>
