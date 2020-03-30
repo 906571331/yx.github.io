@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://906571331.github.io/yx.github.io/</id>
     <title>WuXin</title>
-    <updated>2020-03-30T11:55:40.013Z</updated>
+    <updated>2020-03-30T14:00:24.824Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://906571331.github.io/yx.github.io/"/>
     <link rel="self" href="https://906571331.github.io/yx.github.io/atom.xml"/>
@@ -10,6 +10,85 @@
     <logo>https://906571331.github.io/yx.github.io/images/avatar.png</logo>
     <icon>https://906571331.github.io/yx.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, WuXin</rights>
+    <entry>
+        <title type="html"><![CDATA[解决Django与echarts结合出现Uncaught SyntaxError: Unexpected token &和&#39;的问题]]></title>
+        <id>https://906571331.github.io/yx.github.io/post/jie-jue-django-yu-echarts-jie-he-chu-xian-uncaught-syntaxerror-unexpected-token-andhe-and39de-wen-ti/</id>
+        <link href="https://906571331.github.io/yx.github.io/post/jie-jue-django-yu-echarts-jie-he-chu-xian-uncaught-syntaxerror-unexpected-token-andhe-and39de-wen-ti/">
+        </link>
+        <updated>2020-03-30T13:52:27.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="出现的问题">出现的问题</h3>
+<p>在Django与echarts结合中，出现了<br>
+data:[&amp;#39];和Uncaught SyntaxError: Unexpected token &amp;的问题<br>
+<img src="https://img-blog.csdnimg.cn/20200330214902150.png" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20200330214925997.png" alt="在这里插入图片描述" loading="lazy"></p>
+<h3 id="出错的代码">出错的代码</h3>
+<pre><code class="language-bash">    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: {{ name_list}}
+    },
+</code></pre>
+<p>原因是前端页面echarts接收数据时，没有添加|safe</p>
+<h3 id="解决的方法">解决的方法</h3>
+<p>在echarts页面data接收来自views.py的数据时，加上|safe,具体效果如下：</p>
+<pre><code class="language-bash">    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: {{ name_list|safe }}
+    },
+</code></pre>
+<p>重启Django应用即可正确显示echarts图表</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Django中引入echarts图表做数据可视化]]></title>
+        <id>https://906571331.github.io/yx.github.io/post/django-zhong-yin-ru-echarts-tu-biao-zuo-shu-ju-ke-shi-hua/</id>
+        <link href="https://906571331.github.io/yx.github.io/post/django-zhong-yin-ru-echarts-tu-biao-zuo-shu-ju-ke-shi-hua/">
+        </link>
+        <updated>2020-03-30T13:45:21.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="本篇博客将详细介绍django中如何引入echarts库">本篇博客将详细介绍Django中如何引入echarts库：</h3>
+<h4 id="从echarts官网中选择所需要的图表的样式">从echarts官网中选择所需要的图表的样式</h4>
+<p><img src="https://img-blog.csdnimg.cn/20200330212900765.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+选择好样式打开此页面，将红框中代码放入前端页面中<br>
+<img src="https://img-blog.csdnimg.cn/2020033021302261.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+需要放入的位置：</p>
+<pre><code class="language-bash">&lt;script type=&quot;text/javascript&quot;&gt;
+var myChart = echarts.init(document.getElementById('chart_1'));
+#将option代码放入这个位置
+ myChart.setOption(option);   
+ &lt;/script&gt;
+</code></pre>
+<p>在html文件&lt; head&gt;&lt; /head&gt;标签中引入echats库</p>
+<pre><code class="language-bash">&lt;script src=&quot;{% static 'js/echarts.min.js' %}&quot;  charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>views.py设置方法,前提是models.py中有User这个表,name和base_ mark是表中的两个字段</p>
+<pre><code class="language-bash">def anaylize(request):
+    users=User.objects.all()#获取表中的所有对象
+    base_list = [] #设置为list类型，一会儿将其填入data中
+    name_list= []#设置为list类型，一会儿将其填入data中
+    for user in users:# 遍历
+        name_list.append(user.name)
+        base_list.append(user.base_mark)
+    return render(request,&quot;anaylize.html&quot;,{'name_list':name_list,'base_list':base_list})#在anaylize.html中接收两个参数，一个是name_list,一个是base_list
+</code></pre>
+<p>anaylize.html中data接收的方法：</p>
+<h4 id="注意name是字符串对象这里必须加上safe否则将会报错uncaught-syntaxerror-unexpected-token-同时data中的数据被js解析为-39">注意：name是字符串对象，这里必须加上|safe，否则将会报错（Uncaught SyntaxError: Unexpected token &amp;），同时data中的数据被js解析为： &amp; #39;</h4>
+<pre><code class="language-bash">    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: {{ name_list|safe }}
+    },
+</code></pre>
+<p>而普通的int型的数据接收方法：（不需要|safe）</p>
+<pre><code class="language-bash">    series: [{
+        data:{{base_list}},
+        type: 'line',
+        areaStyle: {}
+    }]
+</code></pre>
+<p>向数据库中输入两条数据，重启Django应用，即可正确显示图表</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[使用gitee解决github下载仓库下载速度缓慢的问题]]></title>
         <id>https://906571331.github.io/yx.github.io/post/shi-yong-gitee-jie-jue-github-xia-zai-cang-ku-xia-zai-su-du-huan-man-de-wen-ti/</id>
@@ -228,11 +307,11 @@ python manage.py migrate
 usbrip是用Python 3编写的软件，它解析Linux日志文件（/var/log/syslog<em>或/var/log/messages</em>）以构建USB事件历史表。此类表格可能包含以下列：“已连接”（日期和时间），“用户”，“VID”（供应商ID），“PID”（产品ID），“产品”，“制造商”，“序列号”， “端口”和“断开连接”（日期和时间）。</p>
 <p>此外，它还可以：</p>
 <ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-9415790"><label class="task-list-item-label" for="task-item-9415790"> 导出收集的信息作为JSON转储;</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-4013191"><label class="task-list-item-label" for="task-item-4013191"> 生成一个授权（可信）USB设备列表作为JSON（称之为auth.json）;</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-3195036"><label class="task-list-item-label" for="task-item-3195036"> 根据以下内容搜索“违规事件” auth.json：show（或生成另一个JSON）USB设备出现在历史记录中并且不会出现在auth.json;</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-5892948"><label class="task-list-item-label" for="task-item-5892948"> *使用-sflag * 安装时，创建加密存储（7zip存档），以便在crontab调度程序的帮助下自动备份和累积USB事件;</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-8525256"><label class="task-list-item-label" for="task-item-8525256"> 根据其VID和/或PID搜索有关特定USB设备的其他详细信息。</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-8290756"><label class="task-list-item-label" for="task-item-8290756"> 导出收集的信息作为JSON转储;</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-9321670"><label class="task-list-item-label" for="task-item-9321670"> 生成一个授权（可信）USB设备列表作为JSON（称之为auth.json）;</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-4268372"><label class="task-list-item-label" for="task-item-4268372"> 根据以下内容搜索“违规事件” auth.json：show（或生成另一个JSON）USB设备出现在历史记录中并且不会出现在auth.json;</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-3930312"><label class="task-list-item-label" for="task-item-3930312"> *使用-sflag * 安装时，创建加密存储（7zip存档），以便在crontab调度程序的帮助下自动备份和累积USB事件;</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-6821456"><label class="task-list-item-label" for="task-item-6821456"> 根据其VID和/或PID搜索有关特定USB设备的其他详细信息。</label></li>
 </ul>
 <pre><code class="language-c"># 下载
 ~$ git clone https://github.com/snovvcrash/usbrip.git usbrip &amp;&amp; cd usbrip
@@ -441,97 +520,6 @@ pip 要么 setup.py<br>
 <p>提供了与蓝桥杯相关的题库<br>
 <img src="https://img-blog.csdnimg.cn/20200319221219580.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
 <h1 id="欢迎大家在评论区留言补充~~~~">欢迎大家在评论区留言补充~~~~</h1>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[echarts中引入json文件]]></title>
-        <id>https://906571331.github.io/yx.github.io/post/echarts-zhong-yin-ru-json-wen-jian/</id>
-        <link href="https://906571331.github.io/yx.github.io/post/echarts-zhong-yin-ru-json-wen-jian/">
-        </link>
-        <updated>2020-03-19T09:29:35.000Z</updated>
-        <content type="html"><![CDATA[<h4 id="1-datajson文件中的数据书写格式">1、data.json文件中的数据书写格式</h4>
-<pre><code class="language-bash">{
-	&quot;data&quot;:[5, 20, 36, 10, 12, 20],//纵坐标数据
-	&quot;category&quot;:[&quot;衬衫&quot;,&quot;羊毛衫&quot;,&quot;雪纺衫&quot;,&quot;裤子&quot;,&quot;高跟鞋&quot;,&quot;袜子&quot;]//横坐标数据
-}
-</code></pre>
-<h4 id="2-在headhead标签中引入jquery类库注意使用15版本以上类库因为done函数适用于15版本以上">2、在<head></head>标签中引入jQuery类库，（注意使用1.5版本以上类库，因为done()函数适用于1.5版本以上）；</h4>
-<h5 id="链接json文件">链接json文件：</h5>
-<pre><code class="language-python">&lt;script src=&quot;js/jquery-1.10.1.min.js&quot;&gt;&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;incubator-echarts-master/dist/echarts.min.js&quot; &gt;&lt;/script&gt;
-&lt;script src=&quot;data.json&quot;&gt;&lt;/script&gt;
-</code></pre>
-<h4 id="3-在bodybody标签中创建一块区域用于存放图表">3、在<body></body>标签中创建一块区域，用于存放图表。</h4>
-<pre><code class="language-bash">&lt;body&gt;
-    &lt;div id = &quot;main&quot; style=&quot;width: 700px; height: 400px;&quot;&gt;&lt;/div&gt;
-&lt;/body&gt;
-</code></pre>
-<h4 id="4-在-script-script中">4、在 &lt; script &gt; &lt;/ script&gt;中</h4>
-<pre><code class="language-bash">$(document).ready(function(){
-        //echarts进行初始化
-		var myChart = echarts.init(document.getElementById(&quot;main&quot;));
-		myChart.setOption({
-            //图标题
-			title:{text: '异步加载的数据'},
-            //图提示框
-			tootip:{},
-            //图例
-			legend:{
-				data:['销售']
-			},
-            //x轴属性
-			xAxis:{
-				data:[]
-			},
-            //y轴属性
-			yAxis:{},
-			//图属性
-			series:[
-				{
-					name:'销售',
-					type:'bar',//图类型：柱状图
-					color:['#C0FF3E'],//设置图像颜色
-					data:[]//图表的数值
-				}
-			]
-		});
-        //使用jQuery中的$.get()获取data.json文件，使用done函数;
-        //done(function(data))中data表示调用的函数返回的数据
-		$.get('data.json').done(function(data){
-			myChart.setOption({
-				xAxis:{
-					data:data.category
-				},
-				series:{
-					name:'销售',
-					data:data.data
-				}
-			});			
-		});						
-		});
-
-</code></pre>
-<p>5、最终效果图<br>
-<img src="https://img-blog.csdnimg.cn/20200319172158863.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-原文链接：<br>
-https://blog.csdn.net/sinat_34234837/article/details/90203899</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[chm在本地的正确打开方式]]></title>
-        <id>https://906571331.github.io/yx.github.io/post/chm-zai-ben-di-de-zheng-que-da-kai-fang-shi/</id>
-        <link href="https://906571331.github.io/yx.github.io/post/chm-zai-ben-di-de-zheng-que-da-kai-fang-shi/">
-        </link>
-        <updated>2020-03-18T01:15:42.000Z</updated>
-        <content type="html"><![CDATA[<p>tags: [chm]</p>
-<h3 id="出现的情况">出现的情况</h3>
-<p>在本地直接打开chm文件可能出现加载不出来的情况<br>
-如下图所示（右边加载不出来）：<br>
-<img src="https://img-blog.csdnimg.cn/20200318090914868.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
-<h3 id="解决的办法">解决的办法</h3>
-<p>根据chm文件的制作原理（链接网页，右击选择使用记事本打开时改文件时，发现该文件跳转到了一个一个的网页上），右击本地chm文件，选择打开方式，使用浏览器打开，即可正确打开<br>
-结果如图所示：<br>
-<img src="https://img-blog.csdnimg.cn/20200318091140616.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
 ]]></content>
     </entry>
 </feed>
