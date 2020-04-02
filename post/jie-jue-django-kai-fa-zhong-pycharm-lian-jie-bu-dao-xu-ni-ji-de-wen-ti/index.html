@@ -5,7 +5,7 @@
     
 <meta charset="utf-8" >
 
-<title>博客 | WuXin</title>
+<title>解决Django开发中pycharm连接不到虚拟机的问题 | WuXin</title>
 <meta name="description" content="成千上万个门口，总有一个人要先走。">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -78,53 +78,60 @@
 
 
       <div class="content-container">
-
-        <div class="current-tag-container">
-          <h2 class="title">
-            <i class="icon icon-pricetags-outline"></i> 博客
-          </h2> 
-        </div>
-
-        
-<section class="post-item">
-    <div class="content">
-      <a href="https://906571331.github.io/yx.github.io/post/shi-yong-gridea-shi-fen-zhong-da-jian-ge-ren-bo-ke/">
-        <h2 class="post-title">使用Gridea十分钟搭建个人博客</h2>
-      </a>
-      <div class="post-abstract">
-        
-      </div>
-      <div class="post-info">
-        <span><i class="icon icon-calendar-outline"></i> 2020-03-07</span>
-        
-          <span>
-            <i class="icon icon-pricetags-outline"></i>
+        <div class="post-detail">
+          
+            <div class="feature-container" style="background-image: url('https://906571331.github.io/yx.github.io//post-images/jie-jue-django-kai-fa-zhong-pycharm-lian-jie-bu-dao-xu-ni-ji-de-wen-ti.jpg')">
+            </div>
+          
+          <h2 class="post-title">解决Django开发中pycharm连接不到虚拟机的问题</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2020-04-02</span>
             
-              <a href="https://906571331.github.io/yx.github.io/tag/yav--AgjH/">
-                博客
+              <span>
+                <i class="icon-pricetags-outline"></i>
                 
-              </a>
+                  <a href="https://906571331.github.io/yx.github.io/tag/IOUFjN4sc/">
+                    解决问题
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://906571331.github.io/yx.github.io/tag/sR-2jrK5Z/">
+                    Django
+                    
+                  </a>
+                
+              </span>
             
-          </span>
-        
-      </div>
-    </div>
-    
-      <a href="https://906571331.github.io/yx.github.io/post/shi-yong-gridea-shi-fen-zhong-da-jian-ge-ren-bo-ke/">
-        <div class="feature-container" style="background-image: url('https://906571331.github.io/yx.github.io//post-images/shi-yong-gridea-shi-fen-zhong-da-jian-ge-ren-bo-ke.jpg')">
+          </div>
+          <div class="post-content">
+            <h4 id="出现的问题">出现的问题</h4>
+<p>在pycharm连接ubuntu时，出现了：</p>
+<pre><code class="language-bash">Connection to '192.168.168.141' failed.
+Session.connect：java.netConnectException: Connection timed out connect
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20200402101036518.png" alt="在这里插入图片描述" loading="lazy"></figure>
+<h4 id="解决的方法">解决的方法</h4>
+<p>查看虚拟机的ip时，发现虚拟机的ip已经更换，所以在pycharm中，点击工具----&gt;Deployment----&gt;Configuration，以下三处分别改为虚拟机新的ip地址，（我的是从192.168.168.141改为192.168.168.145），点击Test SFTP connection，即可解决连接超时的问题<br>
+<img src="https://img-blog.csdnimg.cn/20200402101531809.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/2020040210172163.png" alt="在这里插入图片描述" loading="lazy"></p>
+
+          </div>
         </div>
-      </a>
-    
-  </section>
 
-
-<div class="pagination-container">
-  
-  
-</div>
-
-
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://906571331.github.io/yx.github.io/post/django-chang-yong-xue-xi-wang-zhan/">
+              <h3 class="post-title">
+                下一篇：Django常用学习网站
+              </h3>
+            </a>
+          </div>
+          
       </div>
+
+      
 
       <div class="site-footer">
   <div class="slogan">成千上万个门口，总有一个人要先走。</div>

@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://906571331.github.io/yx.github.io/</id>
     <title>WuXin</title>
-    <updated>2020-03-31T04:19:38.708Z</updated>
+    <updated>2020-04-02T02:19:13.653Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://906571331.github.io/yx.github.io/"/>
     <link rel="self" href="https://906571331.github.io/yx.github.io/atom.xml"/>
@@ -10,6 +10,24 @@
     <logo>https://906571331.github.io/yx.github.io/images/avatar.png</logo>
     <icon>https://906571331.github.io/yx.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, WuXin</rights>
+    <entry>
+        <title type="html"><![CDATA[解决Django开发中pycharm连接不到虚拟机的问题]]></title>
+        <id>https://906571331.github.io/yx.github.io/post/jie-jue-django-kai-fa-zhong-pycharm-lian-jie-bu-dao-xu-ni-ji-de-wen-ti/</id>
+        <link href="https://906571331.github.io/yx.github.io/post/jie-jue-django-kai-fa-zhong-pycharm-lian-jie-bu-dao-xu-ni-ji-de-wen-ti/">
+        </link>
+        <updated>2020-04-02T02:18:36.000Z</updated>
+        <content type="html"><![CDATA[<h4 id="出现的问题">出现的问题</h4>
+<p>在pycharm连接ubuntu时，出现了：</p>
+<pre><code class="language-bash">Connection to '192.168.168.141' failed.
+Session.connect：java.netConnectException: Connection timed out connect
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20200402101036518.png" alt="在这里插入图片描述" loading="lazy"></figure>
+<h4 id="解决的方法">解决的方法</h4>
+<p>查看虚拟机的ip时，发现虚拟机的ip已经更换，所以在pycharm中，点击工具----&gt;Deployment----&gt;Configuration，以下三处分别改为虚拟机新的ip地址，（我的是从192.168.168.141改为192.168.168.145），点击Test SFTP connection，即可解决连接超时的问题<br>
+<img src="https://img-blog.csdnimg.cn/20200402101531809.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/2020040210172163.png" alt="在这里插入图片描述" loading="lazy"></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Django常用学习网站]]></title>
         <id>https://906571331.github.io/yx.github.io/post/django-chang-yong-xue-xi-wang-zhan/</id>
@@ -331,11 +349,11 @@ python manage.py migrate
 usbrip是用Python 3编写的软件，它解析Linux日志文件（/var/log/syslog<em>或/var/log/messages</em>）以构建USB事件历史表。此类表格可能包含以下列：“已连接”（日期和时间），“用户”，“VID”（供应商ID），“PID”（产品ID），“产品”，“制造商”，“序列号”， “端口”和“断开连接”（日期和时间）。</p>
 <p>此外，它还可以：</p>
 <ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-918098"><label class="task-list-item-label" for="task-item-918098"> 导出收集的信息作为JSON转储;</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-7227011"><label class="task-list-item-label" for="task-item-7227011"> 生成一个授权（可信）USB设备列表作为JSON（称之为auth.json）;</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-8642172"><label class="task-list-item-label" for="task-item-8642172"> 根据以下内容搜索“违规事件” auth.json：show（或生成另一个JSON）USB设备出现在历史记录中并且不会出现在auth.json;</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-2923504"><label class="task-list-item-label" for="task-item-2923504"> *使用-sflag * 安装时，创建加密存储（7zip存档），以便在crontab调度程序的帮助下自动备份和累积USB事件;</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-7080061"><label class="task-list-item-label" for="task-item-7080061"> 根据其VID和/或PID搜索有关特定USB设备的其他详细信息。</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-1426480"><label class="task-list-item-label" for="task-item-1426480"> 导出收集的信息作为JSON转储;</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-92567"><label class="task-list-item-label" for="task-item-92567"> 生成一个授权（可信）USB设备列表作为JSON（称之为auth.json）;</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-5079744"><label class="task-list-item-label" for="task-item-5079744"> 根据以下内容搜索“违规事件” auth.json：show（或生成另一个JSON）USB设备出现在历史记录中并且不会出现在auth.json;</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-5585827"><label class="task-list-item-label" for="task-item-5585827"> *使用-sflag * 安装时，创建加密存储（7zip存档），以便在crontab调度程序的帮助下自动备份和累积USB事件;</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-2705161"><label class="task-list-item-label" for="task-item-2705161"> 根据其VID和/或PID搜索有关特定USB设备的其他详细信息。</label></li>
 </ul>
 <pre><code class="language-c"># 下载
 ~$ git clone https://github.com/snovvcrash/usbrip.git usbrip &amp;&amp; cd usbrip
@@ -430,46 +448,6 @@ pip 要么 setup.py<br>
 <h4 id="8良许资源网">8.<a href="http://www.liangxu.co/resource">良许资源网</a></h4>
 <p>本网站提供了编程类的资源<br>
 <img src="https://img-blog.csdnimg.cn/20200325080123238.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[搜索引擎]]></title>
-        <id>https://906571331.github.io/yx.github.io/post/sou-suo-yin-qing/</id>
-        <link href="https://906571331.github.io/yx.github.io/post/sou-suo-yin-qing/">
-        </link>
-        <updated>2020-03-22T02:24:11.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="本篇博客总结一些常用的搜索引擎">本篇博客总结一些常用的搜索引擎</h3>
-<h4 id="1谷歌">1.<a href="https://www.google.com">谷歌</a></h4>
-<p>谷歌搜索在全球的占比最高，当然在国内是不能使用的</p>
-<h4 id="2百度">2.<a href="https://baidu.com">百度</a></h4>
-<p>全球最大的中文搜索引擎及最大的中文网站<br>
-<img src="https://img-blog.csdnimg.cn/20200322095513356.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
-<h4 id="3搜搜">3.<a href="https://www.soso.com/">搜搜</a></h4>
-<p>搜搜是腾讯旗下的搜索网站，是腾讯主要的业务单元之一。网站于2006年3月正式发布并开始运营。搜搜目前已成为中国网民首选的三大搜索引擎之一，主要为网民提供实用便捷的搜索服务，同时承担腾讯全部搜索业务，是腾讯整体在线生活战略中重要的组成部分之一。<br>
-<img src="https://img-blog.csdnimg.cn/20200322100052722.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
-<h4 id="4360综合搜索">4.<a href="https://www.so.com/?src=zh">360综合搜索</a></h4>
-<p>360综合搜索，属于元搜索引擎，是搜索引擎的一种，是通过一个统一的用户界面帮助用户在多个搜索引擎中选择和利用合适的（甚至是同时利用若干个）搜索引擎来实现检索操作，是对分布于网络的多种检索工具的全局控制机制。<br>
-<img src="https://img-blog.csdnimg.cn/20200322100216630.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
-<h4 id="5搜狗搜索">5.<a href="https://www.sogou.com">搜狗搜索</a></h4>
-<p>搜狗是搜狐公司的旗下子公司，于2004年8月3日推出，目的是增强搜狐网的搜索技能，主要经营搜狐公司的搜索业务。在搜索业务的同时，也推出搜狗输入法、搜狗高速浏览器。<br>
-<img src="https://img-blog.csdnimg.cn/2020032210030066.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
-<h4 id="6必应">6.<a href="https://cn.bing.com/">必应</a></h4>
-<p>必应（Bing）是微软公司于2009年5月28日推出的全新搜索引擎服务。必应集成了多个独特功能，包括每日首页美图，与Windows 8.1深度融合的超级搜索功能，以及崭新的搜索结果导航模式等。用户可登录微软必应首页，打开内置于Windows8操作系统的必应应用，或直接按下Windows Phone手机搜索按钮，均可直达必应的网页、图片、视频、词典、翻译、资讯、地图等全球信息搜索服务。作为最贴近中国用户的全球搜索引擎，微软必应一直致力于为中国用户提供了美观、高质量、国际化的中英文搜索服务<br>
-<img src="https://img-blog.csdnimg.cn/20200322100853735.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
-<h4 id="7夸克">7.<a href="https://www.myquark.cn/">夸克</a></h4>
-<p>夸克是夸克浏览器的升级。 夸克是阿里旗下的智能搜索APP，搭载极速AI引擎。<br>
-<img src="https://img-blog.csdnimg.cn/20200322101120495.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
-<h4 id="8阿里巴巴">8.<a href="">阿里巴巴</a></h4>
-<p>阿里巴巴全能搜索引擎，不仅是智能型中文搜索引擎，而且是一个内容一流的综合性站点，受到全球华人的喜爱。“alibaba”能自动收集英文、中文国际码和大五码的网页，用户使用支持一种中文码的浏览器，便可搜索和阅读所有网页</p>
-<h4 id="9雅虎搜索">9.<a href="https://www.yahoo.com/">雅虎搜索</a></h4>
-<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20200322101715697.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
-<h4 id="10百度谷歌一起搜">10.<a href="http://www.zxsou.com/">百度谷歌一起搜</a></h4>
-<figure data-type="image" tabindex="2"><img src="https://img-blog.csdnimg.cn/2020032210185267.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
-<h4 id="11百度谷歌必应360一起搜">11.<a href="https://www.gobaidugle.com/s">百度谷歌必应360一起搜</a></h4>
-<figure data-type="image" tabindex="3"><img src="https://img-blog.csdnimg.cn/20200322102013262.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
-<h4 id="12magi搜索">12.<a href="https://magi.com/">Magi搜索</a></h4>
-<p>Magi 是由 Peak Labs 研发的基于机器学习的信息抽取和检索系统，它能将任何领域的自然语言文本中的知识提取成结构化的数据，通过终身学习持续聚合和纠错，进而为人类用户和其他人工智能提供可解析、可检索、可溯源的知识体系。<br>
-<img src="https://img-blog.csdnimg.cn/20200322102131940.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
 ]]></content>
     </entry>
 </feed>
