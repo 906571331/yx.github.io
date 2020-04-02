@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://906571331.github.io/yx.github.io/</id>
     <title>WuXin</title>
-    <updated>2020-04-02T02:19:57.925Z</updated>
+    <updated>2020-04-02T14:35:07.480Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://906571331.github.io/yx.github.io/"/>
     <link rel="self" href="https://906571331.github.io/yx.github.io/atom.xml"/>
@@ -10,6 +10,249 @@
     <logo>https://906571331.github.io/yx.github.io/images/avatar.png</logo>
     <icon>https://906571331.github.io/yx.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, WuXin</rights>
+    <entry>
+        <title type="html"><![CDATA[django学习笔记URL篇]]></title>
+        <id>https://906571331.github.io/yx.github.io/post/django-xue-xi-bi-ji-url-pian/</id>
+        <link href="https://906571331.github.io/yx.github.io/post/django-xue-xi-bi-ji-url-pian/">
+        </link>
+        <updated>2020-04-02T14:33:37.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="本篇博客记录了博主平时django的一些学习笔记">本篇博客记录了博主平时Django的一些学习笔记：</h3>
+<h4 id="1在urlpy中使用httpresponse">1.在Url.py中使用HttpResponse</h4>
+<p>urls.py</p>
+<pre><code class="language-bash">from django.http import HttpResponse
+from django.urls import path, include
+def index1(request):
+    return HttpResponse(&quot;这才是首页&quot;)
+def book(request):
+	return HttpResponse(&quot;书籍首页&quot;)
+urlpatterns = [
+    path(&quot;&quot;,index1),
+    path(&quot;book/&quot;,book),
+]
+</code></pre>
+<p>开启debug模式可以在访问错误页面的时候发现运行中的错误，<br>
+当Debug设置为False时，必须设置能够访问本网站的主机地址<br>
+同时，在本页面出现错误时会返回Server Error (500)<br>
+在生产环境中一定要关闭Debug模式，否则可能造成信息泄露<br>
+<img src="https://img-blog.csdnimg.cn/20200401181539431.png" alt="在这里插入图片描述" loading="lazy"></p>
+<h4 id="2project与app分开写视图函数">2.project与app分开写视图函数</h4>
+<p>projetc/url.py</p>
+<pre><code class="language-python">from book.views import book
+urlpatterns = [
+    path(&quot;book/&quot;,book),
+]
+</code></pre>
+<p>book/views.py</p>
+<pre><code class="language-python">from django.http import HttpResponse
+def book(request):
+	return HttpResponse(&quot;这是book首页&quot;)
+</code></pre>
+<h4 id="3url传递参数给视图函数">3.URL传递参数给视图函数</h4>
+<p>一个参数views.py</p>
+<pre><code class="language-python">def booklist(request,book_id):
+    #可以根据数据库中的数据提取book的信息
+    text = &quot;您获取的图书的id是：%s&quot; % book_id
+    return HttpResponse(text)
+</code></pre>
+<p>一个参数urls.py</p>
+<pre><code class="language-python">from book import booklist
+urlpatterns = [
+	path(&quot;book/&lt;book_id&gt;&quot;,booklist),
+]
+</code></pre>
+<p>两个参数views.py</p>
+<pre><code class="language-python">def booklist(request,book_id,book_name):
+    #可以根据数据库中的数据提取book的信息
+    text = &quot;您获取的图书的id是：%s ,您的图书的名字是：%s&quot; % (book_id,book_name)
+    return HttpResponse(text)
+</code></pre>
+<p>两个参数urls.py</p>
+<pre><code class="language-python">from book import booklist
+urlpatterns = [
+	path(&quot;book/&lt;book_id&gt;/&lt;book_name&gt;&quot;,booklist),
+]
+</code></pre>
+<h4 id="4查询">4.查询</h4>
+<p>views.py</p>
+<pre><code class="language-python">def author(request):
+	author_id=request.Get.get(&quot;id&quot;)
+	text = &quot;作者的id为%s &quot; % author_id
+	return HttpResponse(text)
+</code></pre>
+<p>urls.py</p>
+<pre><code class="language-python">	path(&quot;author/&quot;,author)
+</code></pre>
+<p>查询时<br>
+http://192.168.168.141:8000/author/?id=2<br>
+<img src="https://img-blog.csdnimg.cn/2020040121074461.png" alt="在这里插入图片描述" loading="lazy"><br>
+因为查询字符串使用的是GET请求，所以我们使用request.GET来获取参数，且因为GET是一个类似于字典的数类型，所以获取值跟字典的方式都是一样的</p>
+<h4 id="5uuid的使用">5.uuid的使用</h4>
+<p>uuid根据实际情况也可以换成int,或者str</p>
+<pre><code class="language-python">from book import booklist
+urlpatterns = [
+	path(&quot;book/&lt;uuid:book_id&gt;&quot;,booklist),
+]
+</code></pre>
+<p>使用uuid，只能访问uuid类型的字符串，其他的都是错误的<br>
+在Python环境中导入一个uuid</p>
+<pre><code class="language-python">import uuid
+print(uuid.uuid4())
+</code></pre>
+<p>from django.urls import converters<br>
+str不能加/，但是改为path就可以显示斜杠，具体使用看converters.py</p>
+<h4 id="6url参数的转化器">6.url参数的转化器</h4>
+<pre><code class="language-bash">str: 除了/以外的所有字符
+int：阿拉伯数字
+path:所有字符
+uuid:uuid.uuid4()函数返回的格式
+slug:英文字母、数字、横杠、下划线
+</code></pre>
+<h4 id="7url的模块化管理">7.url的模块化管理</h4>
+<p>project/urls.py</p>
+<pre><code class="language-python">from django.urls import path, include
+urlpatterns = [
+	path(&quot;book/&gt;&quot;,include(&quot;book.urls&quot;)),
+]
+</code></pre>
+<p>book/urls.py</p>
+<pre><code class="language-python">from django.urls import path
+from .views import booklist
+urlpatterns = [
+	path(&quot;&lt;book_id&gt;/&quot;,booklist),
+]
+</code></pre>
+<p>book/views.py</p>
+<pre><code class="language-bash">from django.http import HttpResponse
+def booklist(request,book_id):
+	text = &quot;图书的id为%s &quot; % book_id
+	return HttpResponse(text)
+</code></pre>
+<h4 id="8url命名与反转">8.url命名与反转</h4>
+<p>在app的urls.py中添加app_name（应用命名空间），防止每个app的url重复，造成url找不到的情况<br>
+front/views.py</p>
+<pre><code class="language-python">from django.shortcuts import render,redirect,reverse
+from django.http import HttpResponse
+
+def index(request):
+    username=request.GET.get(&quot;username&quot;)
+    if username:
+        return HttpResponse(&quot;这是前台首页&quot;)
+    else:
+        return redirect(reverse(&quot;front:login&quot;))
+def login(request):
+    return HttpResponse(&quot;这是前台的登录页面&quot;)
+</code></pre>
+<p>front/urls.py</p>
+<pre><code class="language-python">from django.urls import path
+from .views import index,login
+app_name=&quot;front&quot;
+urlpatterns=[
+    path(&quot;&quot;,index),
+    path(&quot;signin/&quot;,login,name=&quot;login&quot;),
+]
+</code></pre>
+<h4 id="9应用实例命名空间">9.应用实例命名空间</h4>
+<p>不能只制定实例命名空间，没有应用命名空间<br>
+project/urls.py</p>
+<pre><code class="language-bash">    path(&quot;cms1/&quot;,include(&quot;cms.urls&quot;,namespace=&quot;cms1&quot;)),
+    path(&quot;cms2/&quot;,include(&quot;cms.urls&quot;,namespace=&quot;cms2&quot;)),
+</code></pre>
+<p>app/urls.py</p>
+<pre><code class="language-bash">from django.shortcuts import render,reverse,redirect
+from django.http import HttpResponse
+def index(request):
+    username=request.GET.get(&quot;username&quot;)
+    if username:
+        return HttpResponse(&quot;这是后台首页&quot;)
+    else:
+        current_namespace=request.resolver_match.namespace
+        return redirect(reverse(&quot;%s:login&quot; %current_namespace))
+def login(request):
+    return HttpResponse(&quot;这是后台的登录页面&quot;)
+</code></pre>
+<h4 id="10re_path">10.re_path</h4>
+<p>urls.py</p>
+<pre><code class="language-python">    #P为参数的名字，&lt;year&gt;为类型，\d表示为日期型，{4}表示有4个数字
+    #w:0-9,a-z,A-Z
+    re_path(r&quot;^list/(?P&lt;year&gt;\d{4}/)&quot;,article_list),
+    re_path(r&quot;^list/(?P&lt;year&gt;\d{4})/(?P&lt;month&gt;\d{4})&quot;,article_list_month),
+</code></pre>
+<p>views.py</p>
+<pre><code class="language-python">def article_list(request,year):
+    text = &quot;您输入的是第%s年的文章&quot; % year
+    return HttpResponse(text)
+</code></pre>
+<p>此时list后面只能是四位数字<br>
+<img src="https://img-blog.csdnimg.cn/20200402191129108.png" alt="在这里插入图片描述" loading="lazy"></p>
+<h4 id="11跳转到指定的页面">11.跳转到指定的页面</h4>
+<pre><code class="language-python">return redirect(reverse(&quot;&lt;article&gt;/&quot;,kwargs={&quot;article_id&quot;:1}))
+</code></pre>
+<h4 id="12添加多个标签">12.添加多个标签</h4>
+<p>urls.py</p>
+<pre><code class="language-python">    re_path(r&quot;list/(?P&lt;catagries&gt;\w+|(\w+\+\w+)+)/&quot;,article_list_lll),
+</code></pre>
+<p>views.py</p>
+<pre><code class="language-python">def article_list_lll(request,catagries):
+    text = &quot;您输入的是第%s的文章hhhh &quot; % catagries
+    return HttpResponse(text)
+</code></pre>
+<h4 id="13自定义path">13.自定义path</h4>
+<pre><code class="language-bash">from django.urls import converters,register_converter
+class CategoryConverter(object):
+    regex =r'\w+|(\w+\+\w+)+'
+    def to_python(self,value):
+        #python+django+flask
+        #['python','django','flask']
+        result=value.split(&quot;+&quot;)
+        return result
+    def to_url(self,value):
+        #['python','django','flask']
+        # python+django+flask
+        if isinstance(value,list):
+            result = &quot;+&quot;.join(value)
+            return result
+        else:
+            raise RuntimeError(&quot;转换url的时候，分类参数必须为列表&quot;)
+#应用命名空间
+register_converter(CategoryConverter,'cate')
+
+path(&quot;list/&lt;cate:catagries&gt;&quot;,article_list_lll),
+
+</code></pre>
+<p>views.py</p>
+<pre><code class="language-bash">def article_list_lll(request,catagries):
+    text = &quot;您输入的是第%s的文章hhhh &quot; % catagries
+    return HttpResponse(text)
+</code></pre>
+<p><img src="https://img-blog.csdnimg.cn/2020040221085428.png" alt="在这里插入图片描述" loading="lazy"><br>
+如果converters.py是另外的，则需要在init文件中导入converters<br>
+<strong>init</strong>.py</p>
+<pre><code class="language-python">from . import converters
+</code></pre>
+<h4 id="14自定义参数">14.自定义参数</h4>
+<p>urls.py</p>
+<pre><code class="language-bash">    path(&quot;&quot;,movies),
+    path(&quot;page/&lt;int:page&gt;&quot;,movies),
+</code></pre>
+<p>views.py</p>
+<pre><code class="language-bash">book_list=[
+    &quot;三国演义&quot;,
+    &quot;红楼梦&quot;,
+    &quot;西游记&quot;,
+    &quot;水浒传&quot;,
+]
+# Create your views here.
+# def movie(request,movie_id):
+#     text = &quot;电影的id为：%s&quot; % movie_id
+#     return HttpResponse(text)
+
+def movies(request,page=0):
+    return HttpResponse(book_list[page])
+</code></pre>
+<p><img src="https://img-blog.csdnimg.cn/20200402221341463.png" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20200402221414385.png" alt="在这里插入图片描述" loading="lazy"></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[解决Django开发中pycharm连接不到虚拟机的问题]]></title>
         <id>https://906571331.github.io/yx.github.io/post/jie-jue-django-kai-fa-zhong-pycharm-lian-jie-bu-dao-xu-ni-ji-de-wen-ti/</id>
@@ -349,11 +592,11 @@ python manage.py migrate
 usbrip是用Python 3编写的软件，它解析Linux日志文件（/var/log/syslog<em>或/var/log/messages</em>）以构建USB事件历史表。此类表格可能包含以下列：“已连接”（日期和时间），“用户”，“VID”（供应商ID），“PID”（产品ID），“产品”，“制造商”，“序列号”， “端口”和“断开连接”（日期和时间）。</p>
 <p>此外，它还可以：</p>
 <ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-3140180"><label class="task-list-item-label" for="task-item-3140180"> 导出收集的信息作为JSON转储;</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-1693537"><label class="task-list-item-label" for="task-item-1693537"> 生成一个授权（可信）USB设备列表作为JSON（称之为auth.json）;</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-120435"><label class="task-list-item-label" for="task-item-120435"> 根据以下内容搜索“违规事件” auth.json：show（或生成另一个JSON）USB设备出现在历史记录中并且不会出现在auth.json;</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-6862669"><label class="task-list-item-label" for="task-item-6862669"> *使用-sflag * 安装时，创建加密存储（7zip存档），以便在crontab调度程序的帮助下自动备份和累积USB事件;</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-656724"><label class="task-list-item-label" for="task-item-656724"> 根据其VID和/或PID搜索有关特定USB设备的其他详细信息。</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-6513648"><label class="task-list-item-label" for="task-item-6513648"> 导出收集的信息作为JSON转储;</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-9256438"><label class="task-list-item-label" for="task-item-9256438"> 生成一个授权（可信）USB设备列表作为JSON（称之为auth.json）;</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-8959009"><label class="task-list-item-label" for="task-item-8959009"> 根据以下内容搜索“违规事件” auth.json：show（或生成另一个JSON）USB设备出现在历史记录中并且不会出现在auth.json;</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-4317962"><label class="task-list-item-label" for="task-item-4317962"> *使用-sflag * 安装时，创建加密存储（7zip存档），以便在crontab调度程序的帮助下自动备份和累积USB事件;</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-6695704"><label class="task-list-item-label" for="task-item-6695704"> 根据其VID和/或PID搜索有关特定USB设备的其他详细信息。</label></li>
 </ul>
 <pre><code class="language-c"># 下载
 ~$ git clone https://github.com/snovvcrash/usbrip.git usbrip &amp;&amp; cd usbrip
@@ -410,44 +653,6 @@ pip 要么 setup.py<br>
 <p>&quot;MindLine思维导图是一款快速制作笔记和头脑风暴的工具，支持各大平台下载使用和文件云存储同步。<br>
 思维导图,逻辑思维,头脑风暴,流程图,结构图,文字大纲,脑图,幕布,mindmap,mindnode,xmind,lighten,mindmaster<br>
 <img src="https://img-blog.csdnimg.cn/20200327084213189.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[网盘资源搜索网站]]></title>
-        <id>https://906571331.github.io/yx.github.io/post/wang-pan-zi-yuan-sou-suo-wang-zhan/</id>
-        <link href="https://906571331.github.io/yx.github.io/post/wang-pan-zi-yuan-sou-suo-wang-zhan/">
-        </link>
-        <updated>2020-03-25T00:04:40.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="本篇博客总结了百度网盘常用的资源搜索网站">本篇博客总结了百度网盘常用的资源搜索网站。</h3>
-<h4 id="1盘搜搜">1.<a href="www.pansoso.com">盘搜搜</a></h4>
-<p>盘搜搜支持百度云搜索、115网盘、360云盘、华为网盘、新浪微盘等搜索服务，是您工作、学习、娱乐的网盘搜索神器<br>
-<img src="https://img-blog.csdnimg.cn/20200325073953118.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
-<h4 id="2如风搜">2.<a href="www.rufengso.net">如风搜</a></h4>
-<p>如风搜，全网网盘搜索工具。是您工作、学习、娱乐的好助手。找好资源，上如风搜。用网盘，是种生活！如风搜,百度网盘,百度网盘搜索,百度云,百度网盘资源下载,微盘,新浪微盘,微盘资源,网盘搜索,下载,资源,分享,收藏<br>
-<img src="https://img-blog.csdnimg.cn/2020032507430040.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-如搜索关键字java:<br>
-<img src="https://img-blog.csdnimg.cn/20200325074438850.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="加粗样式" loading="lazy"></p>
-<h4 id="3盘发网盘">3.<a href="www.panfa.net">盘发网盘</a></h4>
-<p>盘发网盘,网盘搜索,百度网盘搜索,百度云盘搜索,网盘搜搜,云盘搜搜，网盘搜索引擎.盘发网盘搜索提供百度云网盘搜索服务，是您工作、学习、娱乐的最佳百度云网盘搜索神器<br>
-<img src="https://img-blog.csdnimg.cn/20200325074649983.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
-<h4 id="4百度网盘搜索">4.<a href="http:/uzi8.cn">百度网盘搜索</a></h4>
-<p>优质吧搜集各网络云存储平台用户分享资源, 是专业的网盘资源搜索引擎网站,搜索用户云存储资源,让资源分享、查找更方便.<br>
-<img src="https://img-blog.csdnimg.cn/20200325074920776.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
-<h4 id="5云盘精灵">5.<a href="https://www.yunpanjingling.com/">云盘精灵</a></h4>
-<p>注意：本网站的使用需要云豆<br>
-<img src="https://img-blog.csdnimg.cn/20200325075039339.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-但本网站提供了一个非常实用的功能：<a href="https://extension.yunpanjingling.com/">云盘万能钥匙</a>，可以将链接算出链接的提取码</p>
-<h4 id="6very盘">6.<a href="http://www.verypan.com/">Very盘</a></h4>
-<p>百度网盘搜索引擎专业提供百度网盘搜索服务,是目前国内最专业的百度网盘搜索引擎网站,致力于简单与快速的百度网盘资源搜索服务,让资源分享、查找更方便。<br>
-注意：本网站的资源较为旧<br>
-<img src="https://img-blog.csdnimg.cn/20200325075456312.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
-<h4 id="7小不点搜索">7.<a href="www.xiaoss.net">小不点搜索</a></h4>
-<p>小不点搜索,微盘搜索,资源搜索,网盘搜索,合集,下载,电影,电视剧,小说,电子书,有声小说,文库..专业的资源搜索引擎。专注新浪微盘网盘资源搜索，让资源搜索快如闪电，好资源一网打尽<br>
-注意：可以搜索微盘中的资源<br>
-<img src="https://img-blog.csdnimg.cn/20200325075737362.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
-<h4 id="8良许资源网">8.<a href="http://www.liangxu.co/resource">良许资源网</a></h4>
-<p>本网站提供了编程类的资源<br>
-<img src="https://img-blog.csdnimg.cn/20200325080123238.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
 ]]></content>
     </entry>
 </feed>
