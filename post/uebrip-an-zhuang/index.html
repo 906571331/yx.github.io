@@ -103,11 +103,11 @@
 usbrip是用Python 3编写的软件，它解析Linux日志文件（/var/log/syslog<em>或/var/log/messages</em>）以构建USB事件历史表。此类表格可能包含以下列：“已连接”（日期和时间），“用户”，“VID”（供应商ID），“PID”（产品ID），“产品”，“制造商”，“序列号”， “端口”和“断开连接”（日期和时间）。</p>
 <p>此外，它还可以：</p>
 <ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-968420"><label class="task-list-item-label" for="task-item-968420"> 导出收集的信息作为JSON转储;</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-8250503"><label class="task-list-item-label" for="task-item-8250503"> 生成一个授权（可信）USB设备列表作为JSON（称之为auth.json）;</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-8800788"><label class="task-list-item-label" for="task-item-8800788"> 根据以下内容搜索“违规事件” auth.json：show（或生成另一个JSON）USB设备出现在历史记录中并且不会出现在auth.json;</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-8443597"><label class="task-list-item-label" for="task-item-8443597"> *使用-sflag * 安装时，创建加密存储（7zip存档），以便在crontab调度程序的帮助下自动备份和累积USB事件;</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-7641857"><label class="task-list-item-label" for="task-item-7641857"> 根据其VID和/或PID搜索有关特定USB设备的其他详细信息。</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-9102691"><label class="task-list-item-label" for="task-item-9102691"> 导出收集的信息作为JSON转储;</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-9352405"><label class="task-list-item-label" for="task-item-9352405"> 生成一个授权（可信）USB设备列表作为JSON（称之为auth.json）;</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-1154052"><label class="task-list-item-label" for="task-item-1154052"> 根据以下内容搜索“违规事件” auth.json：show（或生成另一个JSON）USB设备出现在历史记录中并且不会出现在auth.json;</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-9788874"><label class="task-list-item-label" for="task-item-9788874"> *使用-sflag * 安装时，创建加密存储（7zip存档），以便在crontab调度程序的帮助下自动备份和累积USB事件;</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-5349379"><label class="task-list-item-label" for="task-item-5349379"> 根据其VID和/或PID搜索有关特定USB设备的其他详细信息。</label></li>
 </ul>
 <pre><code class="language-c"># 下载
 ~$ git clone https://github.com/snovvcrash/usbrip.git usbrip &amp;&amp; cd usbrip
