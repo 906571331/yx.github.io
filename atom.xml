@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://906571331.github.io/yx.github.io/</id>
     <title>WuXin</title>
-    <updated>2020-04-08T06:53:46.393Z</updated>
+    <updated>2020-04-08T07:52:53.515Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://906571331.github.io/yx.github.io/"/>
     <link rel="self" href="https://906571331.github.io/yx.github.io/atom.xml"/>
@@ -10,6 +10,305 @@
     <logo>https://906571331.github.io/yx.github.io/images/avatar.png</logo>
     <icon>https://906571331.github.io/yx.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, WuXin</rights>
+    <entry>
+        <title type="html"><![CDATA[djang学习笔记数据库（一）]]></title>
+        <id>https://906571331.github.io/yx.github.io/post/djang-xue-xi-bi-ji-shu-ju-ku-yi/</id>
+        <link href="https://906571331.github.io/yx.github.io/post/djang-xue-xi-bi-ji-shu-ju-ku-yi/">
+        </link>
+        <updated>2020-04-08T07:52:02.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="本篇博客记录了博主在学习django操作数据库时的笔记">本篇博客记录了博主在学习Django操作数据库时的笔记：</h3>
+<h4 id="1在有表单的页面viewspy的处理方式">1.在有表单的页面，views.py的处理方式:</h4>
+<pre><code class="language-python">#在urls.py中有个url是name=index
+#views.py
+def add_book(request):
+	if request.method=='GET':
+		return render(request,&quot;add_book.html&quot;)
+	else:
+		name=request.POST.get('name')
+		author=request.POST.get('author')
+		return redirect(reverse('index'))
+#url中传递多个值
+/?P&lt;book_id&gt;\d+/
+</code></pre>
+<h4 id="2最简单的orm模型">2.最简单的ORM模型</h4>
+<pre><code class="language-python">from djangfo.db import models
+#创建一个模型，对应表中的的一张表
+class Book(models.Model):
+	#创建模型中的一个属性，对应表中的一个字段，id可有可无，AutoField是自动增长，可以设置为主键
+	id=models.Autofield(primary_key=True)
+	#当属性是CharField时，必须制定最大长度
+	name=models.CharField(max_length=100,null=Flase)
+	author=models.CharField(max_length=100)
+	price = models.FloatField()
+#一个模型的对象，对应数据库表中的一条数据
+book =Book(name=&quot;三国演义&quot;，author=&quot;罗贯中&quot;，price=100)
+book.save()
+book.delete()
+</code></pre>
+<h4 id="3数据库迁移的两条命令">3.数据库迁移的两条命令</h4>
+<pre><code class="language-bash">python manage.py makemigrations
+python manage.py migrate
+</code></pre>
+<h4 id="4向数据库中插入数据">4.向数据库中插入数据</h4>
+<pre><code class="language-python">#views.py
+from .models import Book
+from django.http import HttpResponse
+def index(request):
+    #使用ORM添加一条数据到数据库中
+    book=Book(name=&quot;三国演义&quot;,author=&quot;罗贯中&quot;,price=100)
+    book.save()
+    return HttpResponse(&quot;图书添加成功&quot;)
+</code></pre>
+<pre><code class="language-python">#models.py
+from django.db import models
+#将普通的类映射为数据库中的ORM模型
+#必须将父类设置为models.Model类，或其子类
+class Book(models.Model):
+    #AutoField代表是自动增长
+    id=models.AutoField(primary_key=True)
+    #设置CharField时必须设置最大长度，Null=False不能为空
+    name=models.CharField(max_length=100,null=False)
+    author=models.CharField(max_length=100,null=False)
+    price=models.FloatField(null=False,default=0)
+</code></pre>
+<p><img src="https://img-blog.csdnimg.cn/20200407091940656.png" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/2020040709195160.png" alt="在这里插入图片描述" loading="lazy"></p>
+<h4 id="5查找数据一">5.查找数据（一）</h4>
+<pre><code class="language-python">#views.py
+from .models import Book
+from django.http import HttpResponse
+def index(request):
+    #使用主键查找
+    Book.objects.get(pk=1)
+    return HttpResponse(&quot;图书查找成功&quot;)
+</code></pre>
+<pre><code class="language-python">#models.py
+from django.db import models
+#将普通的类映射为数据库中的ORM模型
+#必须将父类设置为models.Model类，或其子类
+class Book(models.Model):
+    #AutoField代表是自动增长
+    id=models.AutoField(primary_key=True)
+    #设置CharField时必须设置最大长度，Null=False不能为空
+    name=models.CharField(max_length=100,null=False)
+    author=models.CharField(max_length=100,null=False)
+    price=models.FloatField(null=False,default=0)
+</code></pre>
+<h4 id="6查找数据二">6.查找数据（二）</h4>
+<pre><code class="language-python">#models.py
+from django.db import models
+#将普通的类映射为数据库中的ORM模型
+#必须将父类设置为models.Model类，或其子类
+class Book(models.Model):
+    #AutoField代表是自动增长
+    id=models.AutoField(primary_key=True)
+    #设置CharField时必须设置最大长度，Null=False不能为空
+    name=models.CharField(max_length=100,null=False)
+    author=models.CharField(max_length=100,null=False)
+    price=models.FloatField(null=False,default=0)
+    #将以这种形式返回
+    def __str__(self):
+        return &quot;&lt;Book:({name},{author},{price})&gt;&quot;.format(name=self.name,author=self.author,price=self.price)
+</code></pre>
+<pre><code class="language-python">#views.py
+from .models import Book
+from django.http import HttpResponse
+def index(request):
+    #使用ORM添加一条数据到数据库中
+    # book=Book(name=&quot;三国演义&quot;,author=&quot;罗贯中&quot;,price=100)
+    # book.save()
+    book=Book.objects.get(pk=1)
+    print(book)
+    return HttpResponse(book)
+</code></pre>
+<h4 id="7过滤查找">7.过滤查找</h4>
+<pre><code class="language-python">#views.py
+#.first返回第一条
+def index(request):
+    #使用ORM添加一条数据到数据库中
+    # book=Book(name=&quot;三国演义&quot;,author=&quot;罗贯中&quot;,price=100)
+    # book.save()
+    # book=Book.objects.get(pk=1)
+    # print(book)
+    books=Book.objects.filter(name=&quot;三国演义&quot;).first()
+    print(books)
+    return HttpResponse(&quot;查找成功&quot;)
+</code></pre>
+<p>第一条为不加first，第二条为加.first<br>
+<img src="https://img-blog.csdnimg.cn/20200407093859633.png" alt="在这里插入图片描述" loading="lazy"></p>
+<h4 id="8删除数据">8.删除数据</h4>
+<pre><code class="language-python">def index(request):    
+	book=Book.objects.get(pk=1)
+    book.delete()
+    return HttpResponse(&quot;删除成功&quot;)
+</code></pre>
+<h4 id="9修改数据">9.修改数据</h4>
+<pre><code class="language-python">def index(request):    
+	book=Book.objects.get(pk=1)
+	book.price=90
+    book.save()
+    return HttpResponse(&quot;修改成功&quot;)
+</code></pre>
+<h4 id="10field详解">10.field详解</h4>
+<pre><code class="language-python">#必须设置primary_key，否则为一个普通的字段
+id=models.BigAutoField(primary_key=true)
+#如果删除则不显示
+removed=models.NullBooleanField()
+同时在views.py中如下设置
+article=Article(removed=False)
+article.save()
+</code></pre>
+<h4 id="python中的时区转换">python中的时区转换</h4>
+<p>pytz库是专门用来处理时区的库</p>
+<pre><code class="language-python">&gt;&gt;&gt; from datetime import datetime
+&gt;&gt;&gt; now=datetime.now()
+&gt;&gt;&gt; now
+datetime.datetime(2020, 4, 7, 2, 27, 35, 710567)
+&gt;&gt;&gt; import patz
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+ModuleNotFoundError: No module named 'patz'
+&gt;&gt;&gt; import pytz
+&gt;&gt;&gt; utc_timezone=pytz.timezone('UTC')
+&gt;&gt;&gt; now.astimezone(utc_timezone)
+datetime.datetime(2020, 4, 7, 9, 27, 35, 710567, tzinfo=&lt;UTC&gt;)
+&gt;&gt;&gt; now
+datetime.datetime(2020, 4, 7, 2, 27, 35, 710567)
+
+</code></pre>
+<h1 id="常用field笔记">常用Field笔记：</h1>
+<h2 id="navie时间和aware时间">navie时间和aware时间：</h2>
+<h3 id="什么是navie时间什么是aware时间">什么是navie时间？什么是aware时间？</h3>
+<ol>
+<li>navie时间：不知道自己的时间表示的是哪个时区的。也就是不知道自己几斤几两。比较幼稚。</li>
+<li>aware时间：知道自己的时间表示的是哪个时区的。也就是比较清醒。</li>
+</ol>
+<h3 id="pytz库">pytz库：</h3>
+<p>专门用来处理时区的库。这个库会经常更新一些时区的数据，不需要我们担心。并且这个库在安装Django的时候会默认的安装。如果没有安装，那么可以通过<code>pip install pytz</code>的方式进行安装。</p>
+<h3 id="astimezone方法">astimezone方法：</h3>
+<p>将一个时区的时间转换为另外一个时区的时间。这个方法只能被<code>aware</code>类型的时间调用。不能被<code>navie</code>类型的时间调用。<br>
+示例代码如下：</p>
+<pre><code class="language-python">import pytz
+from datetime import datetime
+now = datetime.now() # 这是一个navie类型的时间
+utc_timezone = pytz.timezone(&quot;UTC&quot;) # 定义UTC的时区对象
+utc_now = now.astimezone(utc_timezone) # 将当前的时间转换为UTC时区的时间
+&gt;&gt; ValueError: astimezone() cannot be applied to a naive datetime # 会抛出一个异常，原因就是因为navie类型的时间不能调用astimezone方法
+
+
+now = now.replace(tzinfo=pytz.timezone('Asia/Shanghai'))
+utc_now = now.astimezone(utc_timezone)
+# 这时候就可以正确的转换。
+</code></pre>
+<h3 id="replace方法">replace方法：</h3>
+<p>可以将一个时间的某些属性进行更改。</p>
+<h3 id="djangoutilstimezonenow方法">django.utils.timezone.now方法：</h3>
+<p>会根据<code>settings.py</code>中是否设置了<code>USE_TZ=True</code>获取当前的时间。如果设置了，那么就获取一个<code>aware</code>类型的<code>UTC</code>时间。如果没有设置，那么就会获取一个<code>navie</code>类型的时间。</p>
+<pre><code class="language-python">#models.py
+create_time=models.DateTimeField(default=timezone.now())
+#views.py
+book=Book(create_time=now())
+book.save()
+</code></pre>
+<p>和本地时间差8个小时<br>
+<img src="https://img-blog.csdnimg.cn/20200407180926600.png" alt="在这里插入图片描述" loading="lazy"><br>
+在本地显示时间时：<br>
+<img src="https://img-blog.csdnimg.cn/20200407182550898.png" alt="在这里插入图片描述" loading="lazy"></p>
+<pre><code class="language-python">#models.py
+create_time=models.DateTimeField(default=timezone.now())
+#auto_now_add第一次保存进数据库时
+create_time=models.DateTimeField(auto_now_add=True)
+</code></pre>
+<pre><code class="language-python"> #views.py
+def index()request:
+     book=Book.objects.get(pk=3)
+     create_time=book.create_time
+     return render(request,&quot;inde.html&quot;,context={'create_time':create_time})
+</code></pre>
+<pre><code class="language-html">#在头部引入
+{% load tz %}
+#在合适的地方，不加localtime也可以正确显示
+{{ create_time|localtime }}
+</code></pre>
+<h3 id="djangoutilstimezonelocaltime方法">django.utils.timezone.localtime方法：</h3>
+<p>会根据<code>setting.py</code>中的<code>TIME_ZONE</code>来将一个<code>aware</code>类型的时间转换为<code>TIME_ZONE</code>指定时区的时间。</p>
+<h2 id="datefield">DateField：</h2>
+<p>日期类型。在<code>Python</code>中是<code>datetime.date</code>类型，可以记录年月日。在映射到数据库中也是<code>date</code>类型。使用这个<code>Field</code>可以传递以下几个参数：</p>
+<ol>
+<li><code>auto_now</code>：在每次这个数据保存的时候，都使用当前的时间。比如作为一个记录修改日期的字段，可以将这个属性设置为<code>True</code>。更新时间</li>
+<li><code>auto_now_add</code>：在每次数据第一次被添加进去的时候，都使用当前的时间。比如作为一个记录第一次入库的字段，可以将这个属性设置为<code>True</code>。创建时间</li>
+</ol>
+<h2 id="datetimefield">DateTimeField：</h2>
+<p>日期时间类型，类似于<code>DateField</code>。不仅仅可以存储日期，还可以存储时间。映射到数据库中是<code>datetime</code>类型。这个<code>Field</code>也可以使用<code>auto_now</code>和<code>auto_now_add</code>两个属性。</p>
+<h2 id="timefield">TimeField：</h2>
+<p>时间类型。在数据库中是<code>time</code>类型。在<code>Python</code>中是<code>datetime.time</code>类型。</p>
+<h3 id="navie和aware介绍以及在django中的用法">navie和aware介绍以及在django中的用法：</h3>
+<p>https://docs.djangoproject.com/en/2.0/topics/i18n/timezones/</p>
+<h2 id="emailfield">EmailField：</h2>
+<p>类似于<code>CharField</code>。在数据库底层也是一个<code>varchar</code>类型。最大长度是254个字符。</p>
+<h2 id="filefield">FileField：</h2>
+<p>用来存储文件的。这个请参考后面的文件上传章节部分。</p>
+<h3 id="imagefield">ImageField：</h3>
+<p>用来存储图片文件的。这个请参考后面的图片上传章节部分。</p>
+<h3 id="floatfield">FloatField：</h3>
+<p>浮点类型。映射到数据库中是<code>float</code>类型。</p>
+<h3 id="integerfield">IntegerField：</h3>
+<p>整形。值的区间是<code>-2147483648——2147483647</code>。</p>
+<h3 id="bigintegerfield">BigIntegerField：</h3>
+<p>大整形。值的区间是<code>-9223372036854775808——9223372036854775807</code>。</p>
+<h3 id="positiveintegerfield">PositiveIntegerField：</h3>
+<p>正整形。值的区间是<code>0——2147483647</code>。</p>
+<h3 id="smallintegerfield">SmallIntegerField：</h3>
+<p>小整形。值的区间是<code>-32768——32767</code>。</p>
+<h3 id="positivesmallintegerfield">PositiveSmallIntegerField：</h3>
+<p>正小整形。值的区间是<code>0——32767</code>。</p>
+<h3 id="textfield">TextField：</h3>
+<p>大量的文本类型。映射到数据库中是longtext类型。</p>
+<h3 id="uuidfield">UUIDField：</h3>
+<p>只能存储<code>uuid</code>格式的字符串。<code>uuid</code>是一个32位的全球唯一的字符串，一般用来作为主键。</p>
+<h3 id="urlfield">URLField：</h3>
+<p>类似于<code>CharField</code>，只不过只能用来存储<code>url</code>格式的字符串。并且默认的<code>max_length</code>是200。</p>
+<h2 id="field常用的参数">Field常用的参数</h2>
+<h3 id="null">null：</h3>
+<p>如果设置为<code>True</code>，<code>Django</code>将会在映射表的时候指定是否为空。默认是为<code>False</code>。在使用字符串相关的<code>Field</code>（CharField/TextField）的时候，官方推荐尽量不要使用这个参数，也就是保持默认值<code>False</code>。因为<code>Django</code>在处理字符串相关的<code>Field</code>的时候，即使这个<code>Field</code>的<code>null=False</code>，如果你没有给这个<code>Field</code>传递任何值，那么<code>Django</code>也会使用一个空的字符串<code>&quot;&quot;</code>来作为默认值存储进去。因此如果再使用<code>null=True</code>，<code>Django</code>会产生两种空值的情形（NULL或者空字符串）。如果想要在表单验证的时候允许这个字符串为空，那么建议使用<code>blank=True</code>。如果你的<code>Field</code>是<code>BooleanField</code>，那么对应的可空的字段则为<code>NullBooleanField</code>。</p>
+<h3 id="blank">blank：</h3>
+<p>标识这个字段在表单验证的时候是否可以为空。默认是<code>False</code>。<br>
+这个和<code>null</code>是有区别的，<code>null</code>是一个纯数据库级别的。而<code>blank</code>是<code>表单验证</code>级别的。</p>
+<h3 id="db_column">db_column：</h3>
+<p>这个字段在数据库中的名字。如果没有设置这个参数，那么将会使用模型中属性的名字。</p>
+<h3 id="default">default：</h3>
+<p>默认值。可以为一个值，或者是一个函数，但是不支持<code>lambda</code>表达式。并且不支持列表/字典/集合等可变的数据结构。</p>
+<h3 id="primary_key">primary_key：</h3>
+<p>是否为主键。默认是<code>False</code>。</p>
+<h3 id="unique">unique：</h3>
+<p>在表中这个字段的值是否唯一。一般是设置手机号码/邮箱等。</p>
+<p>更多<code>Field</code>参数请参考官方文档：<a href="https://docs.djangoproject.com/zh-hans/2.0/ref/models/fields/">https://docs.djangoproject.com/zh-hans/2.0/ref/models/fields/</a></p>
+<h2 id="模型中meta配置">模型中<code>Meta</code>配置：</h2>
+<p>对于一些模型级别的配置。我们可以在模型中定义一个类，叫做<code>Meta</code>。然后在这个类中添加一些类属性来控制模型的作用。比如我们想要在数据库映射的时候使用自己指定的表名，而不是使用模型的名称。那么我们可以在<code>Meta</code>类中添加一个<code>db_table</code>的属性。示例代码如下：</p>
+<pre><code class="language-python">class Book(models.Model):
+    name = models.CharField(max_length=20,null=False)
+    desc = models.CharField(max_length=100,name='description',db_column=&quot;description1&quot;)
+
+class Meta:
+    db_table = 'book_model'
+</code></pre>
+<p>以下将对<code>Meta</code>类中的一些常用配置进行解释。</p>
+<h3 id="db_table">db_table：</h3>
+<p>这个模型映射到数据库中的表名。如果没有指定这个参数，那么在映射的时候将会使用模型名来作为默认的表名。</p>
+<h3 id="ordering">ordering：</h3>
+<p>设置在提取数据的排序方式。后面章节会讲到如何查找数据。比如我想在查找数据的时候根据添加的时间排序，那么示例代码如下：</p>
+<pre><code class="language-python">class Book(models.Model):
+	name = models.CharField(max_length=20,null=False)
+	desc = models.CharField(max_length=100,name='description',db_column=&quot;description1&quot;)
+	pub_date = models.DateTimeField(auto_now_add=True)
+
+	class Meta:
+		db_table = 'book_model'
+		#-号表示相反排序
+		ordering = ['-pub_date']
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[使用JavaScript实时获取系统时间]]></title>
         <id>https://906571331.github.io/yx.github.io/post/shi-yong-javascript-shi-shi-huo-qu-xi-tong-shi-jian/</id>
@@ -1333,65 +1632,6 @@ LookupError:
   &gt;&gt;&gt; nltk.download('stopwords')
 </code></pre>
 <p>再次重启Django项目即可正确运行</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[django.core.exceptions.ImproperlyConfigured: mysqlclient 1.3.13 or newer is required; you have 0.9.3.]]></title>
-        <id>https://906571331.github.io/yx.github.io/post/djangocoreexceptionsimproperlyconfigured-mysqlclient-1313-or-newer-is-required-you-have-093/</id>
-        <link href="https://906571331.github.io/yx.github.io/post/djangocoreexceptionsimproperlyconfigured-mysqlclient-1313-or-newer-is-required-you-have-093/">
-        </link>
-        <updated>2020-03-30T09:06:24.000Z</updated>
-        <content type="html"><![CDATA[<!-- more -->
-<h3 id="出现的问题">出现的问题：</h3>
-<p>阿里云ubuntu服务器Django项目开发中出现</p>
-<pre><code class="language-bash">    raise ImproperlyConfigured('mysqlclient 1.3.13 or newer is required; you have %s.' % Database.__version__)
-django.core.exceptions.ImproperlyConfigured: mysqlclient 1.3.13 or newer is required; you have 0.9.3.
-</code></pre>
-<h3 id="解决的思路">解决的思路：</h3>
-<h4 id="一修改basepy">一.修改base.py</h4>
-<pre><code class="language-bash">cd /root/.virtualenvs/T/lib/python3.5/site-packages/django/db/backends/mysql
-</code></pre>
-<p>打开base.py</p>
-<pre><code class="language-bash">vi base.py
-</code></pre>
-<p>知道到下图所示位置：<br>
-<img src="https://img-blog.csdnimg.cn/20200330165529285.png" alt="在这里插入图片描述" loading="lazy"><br>
-将下面两行注释掉，结果如图所示：</p>
-<pre><code class="language-bash">version = Database.version_info
-#if version &lt; (1, 3, 13):
- #   raise ImproperlyConfigured('mysqlclient 1.3.13 or newer is required; you have %s.' % Database.__version__)
-</code></pre>
-<h4 id="二修改__init__py">二.修改__init__.py</h4>
-<p>添加如下代码：</p>
-<pre><code class="language-bash">import pymysql
-pymysql.install_as_MySQLdb()
-</code></pre>
-<p>第二步完成之后若出现如下报错，则进行第三步：</p>
-<pre><code class="language-bash">    query = query.decode(errors='replace')
-AttributeError: 'str' object has no attribute 'decode'
-</code></pre>
-<h4 id="第三步修改operationspy">第三步.修改operations.py</h4>
-<p>打开operations.py所在的文件夹</p>
-<pre><code class="language-bash">cd /root/.virtualenvs/T/lib/python3.5/site-packages/django/db/backends/mysql/
-</code></pre>
-<p>打开operations.py，并找到如下代码</p>
-<pre><code class="language-bash">        if query is not None:
-            query = query.decode(errors='replace')
-        return query
-</code></pre>
-<p>修改decode为enconde,结果如图所示：</p>
-<pre><code class="language-bash">        if query is not None:
-            query = query.encode(errors='replace')
-        return query
-</code></pre>
-<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20200330170302985.png" alt="在这里插入图片描述" loading="lazy"></figure>
-<h4 id="第四步迁移数据库">第四步：迁移数据库</h4>
-<pre><code class="language-bash">python manage.py makemigrations
-python manage.py migrate
-</code></pre>
-<h4 id="重启django项目">重启Django项目：</h4>
-<pre><code class="language-bash">python manage.py runserver 0:8000
-</code></pre>
 ]]></content>
     </entry>
 </feed>
