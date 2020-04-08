@@ -5,7 +5,7 @@
     
 <meta charset="utf-8" >
 
-<title>解决JSP开发中出现的Tomcat启动时闪退的问题 | WuXin</title>
+<title>使用JavaScript试试获取系统时间 | WuXin</title>
 <meta name="description" content="成千上万个门口，总有一个人要先走。">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -80,18 +80,18 @@
       <div class="content-container">
         <div class="post-detail">
           
-            <div class="feature-container" style="background-image: url('https://906571331.github.io/yx.github.io//post-images/jie-jue-jsp-kai-fa-zhong-chu-xian-de-tomcat-qi-dong-shi-shan-tui-de-wen-ti.jpg')">
+            <div class="feature-container" style="background-image: url('https://906571331.github.io/yx.github.io//post-images/shi-yong-javascript-shi-shi-huo-qu-xi-tong-shi-jian.jpg')">
             </div>
           
-          <h2 class="post-title">解决JSP开发中出现的Tomcat启动时闪退的问题</h2>
+          <h2 class="post-title">使用JavaScript试试获取系统时间</h2>
           <div class="post-info post-detail-info">
-            <span><i class="icon-calendar-outline"></i> 2020-03-11</span>
+            <span><i class="icon-calendar-outline"></i> 2020-04-08</span>
             
               <span>
                 <i class="icon-pricetags-outline"></i>
                 
-                  <a href="https://906571331.github.io/yx.github.io/tag/9zpFSDVIG/">
-                    jsp
+                  <a href="https://906571331.github.io/yx.github.io/tag/zJiFYZXVl/">
+                    前端
                     
                   </a>
                 
@@ -99,24 +99,47 @@
             
           </div>
           <div class="post-content">
-            <h3 id="出现的问题">出现的问题</h3>
-<p>在下载完tomcat以后准备启动，点击tomcat安装目录bin/startup.bat，但是出现闪退的现象，原因在于jre环境变量没有设置在系统变量中。</p>
-<h3 id="解决办法">解决办法：</h3>
-<p>找到jre的安装目录，复制jre的根路径，打开系统变量设置，变量名填一个（最好见名知意），变量值为刚刚复制的jre的根路径，点击确定，再回去重启tomcat，即可恢复正常<br>
-<img src="https://img-blog.csdnimg.cn/20200311091957828.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-<img src="https://img-blog.csdnimg.cn/20200311092352945.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-在浏览器中打开127.0.0.1:8081查看tomcat是否启动成功<br>
-<img src="https://img-blog.csdnimg.cn/20200311092326340.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-（这里的端口是自己设置的端口，默认8080端口，修改以后填自己修改的端口）</p>
+            <h3 id="本案例实现了使用js代码实时获取系统时间">本案例实现了使用js代码实时获取系统时间</h3>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+	&lt;head&gt;
+		&lt;meta charset=&quot;utf-8&quot;&gt;
+		&lt;title&gt;实时获取系统时间&lt;/title&gt;
+		&lt;script language=&quot;JavaScript&quot;&gt;
+			function realSystime(clock){
+				var now=new Date();//创建Date对象
+				var year=now.getFullYear();//获取年份
+				var month=now.getMonth();//获取月份
+				var date=now.getDate();//获取日期
+				var day=now.getDay();//获取星期
+				var hour=now.getHours();//获取小时
+				var minu=now.getMinutes();//获取分钟
+				var sec=now.getSeconds();//获取秒
+				month=month+1;
+				var arr_week=new Array(&quot;星期日&quot;,&quot;星期一&quot;,&quot;星期二&quot;,&quot;星期三&quot;,&quot;星期四&quot;,&quot;星期五&quot;,&quot;星期六&quot;);
+				var week=arr_week[day];//获取中文格式的星期，是个数组
+				var time=year+&quot;年&quot;+month+&quot;月&quot;+date+&quot;日&quot; +week+&quot; &quot;+hour+&quot;:&quot;+minu+&quot;:&quot;+sec;//组合系统时间
+				clock.innerHTML=&quot;当前时间：&quot;+time;//显示系统时间
+			}
+			window.onload=function(){
+				window.setInterval(&quot;realSystime(clock)&quot;,1000);//实时获取并显示系统时间
+			}
+		&lt;/script&gt;
+	&lt;/head&gt;
+	&lt;body&gt;
+		&lt;div id=&quot;clock&quot;&gt;&lt;/div&gt;
+	&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
 
           </div>
         </div>
 
         
           <div class="next-post">
-            <a class="purple-link" href="https://906571331.github.io/yx.github.io/post/shi-yong-gridea-shi-fen-zhong-da-jian-ge-ren-bo-ke/">
+            <a class="purple-link" href="https://906571331.github.io/yx.github.io/post/django-xue-xi-mo-ban-pian/">
               <h3 class="post-title">
-                下一篇：使用Gridea十分钟搭建个人博客
+                下一篇：django学习模板篇
               </h3>
             </a>
           </div>
