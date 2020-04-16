@@ -5,7 +5,7 @@
     
 <meta charset="utf-8" >
 
-<title>jsp | WuXin</title>
+<title>django开发中遇到No module named &#39;captcha的问题解决方法 | WuXin</title>
 <meta name="description" content="成千上万个门口，总有一个人要先走。">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -78,84 +78,47 @@
 
 
       <div class="content-container">
+        <div class="post-detail">
+          
+            <div class="feature-container" style="background-image: url('https://906571331.github.io/yx.github.io//post-images/django-kai-fa-zhong-yu-dao-no-module-named-captcha-de-wen-ti-jie-jue-fang-fa.jpg')">
+            </div>
+          
+          <h2 class="post-title">django开发中遇到No module named &#39;captcha的问题解决方法</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2020-04-16</span>
+            
+          </div>
+          <div class="post-content">
+            <h4 id="在django开发中遇到如下问题">在Django开发中遇到如下问题</h4>
+<pre><code class="language-python">    from captcha.fields import CaptchaField
+ModuleNotFoundError: No module named 'captcha.fields'
+</code></pre>
+<h4 id="解决方法">解决方法：</h4>
+<p>安装django-simple-captcha</p>
+<pre><code class="language-python">pip install django-simple-captcha
+</code></pre>
+<h4 id="在开发中遇到以下错误">在开发中遇到以下错误</h4>
+<pre><code class="language-python">HINT: Add or change a related_name argument to the definition for 'User.user_permissions' or 'UserProfile.user_permissions'.
+</code></pre>
+<p>解决方案：在settings.py中添加：</p>
+<pre><code class="language-python">AUTH_USER_MODEL = 'Users.UserProfile'
+</code></pre>
 
-        <div class="current-tag-container">
-          <h2 class="title">
-            <i class="icon icon-pricetags-outline"></i> jsp
-          </h2> 
+          </div>
         </div>
 
         
-<section class="post-item">
-    <div class="content">
-      <a href="https://906571331.github.io/yx.github.io/post/jsp-kai-fa-zhong-tomcat-fang-wen-url-dai-you-zhong-wen-ming-cheng-de-html-wen-jian-xian-shi-404-cuo-wu/">
-        <h2 class="post-title">JSP开发中tomcat访问URL带有中文名称的HTML文件显示404错误</h2>
-      </a>
-      <div class="post-abstract">
-        
+          <div class="next-post">
+            <a class="purple-link" href="https://906571331.github.io/yx.github.io/post/django-de-kai-fa-zhong-yu-dao-de-yi-xie-wen-ti-yi-ji-jie-jue-fang-an-bao-gua-django-xadmin-de-you-hua/">
+              <h3 class="post-title">
+                下一篇：Django的开发中遇到的一些问题以及解决方案，包括Django-xadmin的优化
+              </h3>
+            </a>
+          </div>
+          
       </div>
-      <div class="post-info">
-        <span><i class="icon icon-calendar-outline"></i> 2020-03-18</span>
-        
-          <span>
-            <i class="icon icon-pricetags-outline"></i>
-            
-              <a href="https://906571331.github.io/yx.github.io/tag/9zpFSDVIG/">
-                jsp
-                
-              </a>
-            
-          </span>
-        
-      </div>
-    </div>
-    
-      <a href="https://906571331.github.io/yx.github.io/post/jsp-kai-fa-zhong-tomcat-fang-wen-url-dai-you-zhong-wen-ming-cheng-de-html-wen-jian-xian-shi-404-cuo-wu/">
-        <div class="feature-container" style="background-image: url('https://906571331.github.io/yx.github.io//post-images/jsp-kai-fa-zhong-tomcat-fang-wen-url-dai-you-zhong-wen-ming-cheng-de-html-wen-jian-xian-shi-404-cuo-wu.jpg')">
-        </div>
-      </a>
-    
-  </section>
 
-<section class="post-item">
-    <div class="content">
-      <a href="https://906571331.github.io/yx.github.io/post/jie-jue-jsp-kai-fa-zhong-chu-xian-de-tomcat-qi-dong-shi-shan-tui-de-wen-ti/">
-        <h2 class="post-title">解决JSP开发中出现的Tomcat启动时闪退的问题</h2>
-      </a>
-      <div class="post-abstract">
-        
-      </div>
-      <div class="post-info">
-        <span><i class="icon icon-calendar-outline"></i> 2020-03-11</span>
-        
-          <span>
-            <i class="icon icon-pricetags-outline"></i>
-            
-              <a href="https://906571331.github.io/yx.github.io/tag/9zpFSDVIG/">
-                jsp
-                
-              </a>
-            
-          </span>
-        
-      </div>
-    </div>
-    
-      <a href="https://906571331.github.io/yx.github.io/post/jie-jue-jsp-kai-fa-zhong-chu-xian-de-tomcat-qi-dong-shi-shan-tui-de-wen-ti/">
-        <div class="feature-container" style="background-image: url('https://906571331.github.io/yx.github.io//post-images/jie-jue-jsp-kai-fa-zhong-chu-xian-de-tomcat-qi-dong-shi-shan-tui-de-wen-ti.jpg')">
-        </div>
-      </a>
-    
-  </section>
-
-
-<div class="pagination-container">
-  
-  
-</div>
-
-
-      </div>
+      
 
       <div class="site-footer">
   <div class="slogan">成千上万个门口，总有一个人要先走。</div>
