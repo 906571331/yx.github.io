@@ -5,7 +5,7 @@
     
 <meta charset="utf-8" >
 
-<title>使用JavaScript实时获取系统时间 | WuXin</title>
+<title>django-xadmin实现自定义后台，进行个性化显示 | WuXin</title>
 <meta name="description" content="成千上万个门口，总有一个人要先走。">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -80,66 +80,61 @@
       <div class="content-container">
         <div class="post-detail">
           
-            <div class="feature-container" style="background-image: url('https://906571331.github.io/yx.github.io//post-images/shi-yong-javascript-shi-shi-huo-qu-xi-tong-shi-jian.jpg')">
+            <div class="feature-container" style="background-image: url('https://906571331.github.io/yx.github.io//post-images/django-xadmin-shi-xian-zi-ding-yi-hou-tai-jin-xing-ge-xing-hua-xian-shi.jpg')">
             </div>
           
-          <h2 class="post-title">使用JavaScript实时获取系统时间</h2>
+          <h2 class="post-title">django-xadmin实现自定义后台，进行个性化显示</h2>
           <div class="post-info post-detail-info">
-            <span><i class="icon-calendar-outline"></i> 2020-04-08</span>
-            
-              <span>
-                <i class="icon-pricetags-outline"></i>
-                
-                  <a href="https://906571331.github.io/yx.github.io/tag/zJiFYZXVl/">
-                    前端
-                    
-                  </a>
-                
-              </span>
+            <span><i class="icon-calendar-outline"></i> 2020-04-16</span>
             
           </div>
           <div class="post-content">
-            <h3 id="本案例实现了使用js代码实时获取系统时间">本案例实现了使用js代码实时获取系统时间</h3>
-<pre><code class="language-html">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-	&lt;head&gt;
-		&lt;meta charset=&quot;utf-8&quot;&gt;
-		&lt;title&gt;实时获取系统时间&lt;/title&gt;
-		&lt;script language=&quot;JavaScript&quot;&gt;
-			function realSystime(clock){
-				var now=new Date();//创建Date对象
-				var year=now.getFullYear();//获取年份
-				var month=now.getMonth();//获取月份
-				var date=now.getDate();//获取日期
-				var day=now.getDay();//获取星期
-				var hour=now.getHours();//获取小时
-				var minu=now.getMinutes();//获取分钟
-				var sec=now.getSeconds();//获取秒
-				month=month+1;
-				var arr_week=new Array(&quot;星期日&quot;,&quot;星期一&quot;,&quot;星期二&quot;,&quot;星期三&quot;,&quot;星期四&quot;,&quot;星期五&quot;,&quot;星期六&quot;);
-				var week=arr_week[day];//获取中文格式的星期，是个数组
-				var time=year+&quot;年&quot;+month+&quot;月&quot;+date+&quot;日&quot; +week+&quot; &quot;+hour+&quot;:&quot;+minu+&quot;:&quot;+sec;//组合系统时间
-				clock.innerHTML=&quot;当前时间：&quot;+time;//显示系统时间
-			}
-			window.onload=function(){
-				window.setInterval(&quot;realSystime(clock)&quot;,1000);//实时获取并显示系统时间
-			}
-		&lt;/script&gt;
-	&lt;/head&gt;
-	&lt;body&gt;
-		&lt;div id=&quot;clock&quot;&gt;&lt;/div&gt;
-	&lt;/body&gt;
-&lt;/html&gt;
+            <p>在实际的开发中，通常需要对Django的后台管理页面进行个性化定制，本篇博客将介绍如何个性化定制后台。</p>
+<h4 id="1在任意的adminx中自定义类如下所示">1.在任意的adminx中自定义类，如下所示：</h4>
+<pre><code class="language-python">#adminx.py
+class ChangeIntoAdmin(object):
+    # 指向自定义的页面，并且在templates创建名字为base111.html的页面
+    object_list_template = 'base111.html'
+    # 重写方法，把要展示的数据更新到 context
+    def get_context(self):
+    	#读取所需要的数据
+        context = CommAdminView.get_context(self)
+        bill_message = Book.objects.all()
+        context.update(
+            {
+                'title': '转入分析',
+            }
+        )
+        return context
+#进行注册，注册到名字为Book的列表页下面
+xadmin.site.register(Book, ChangeIntoAdmin)
 </code></pre>
+<pre><code class="language-html"># base111.html
+#继承自xadmin/base_site.html
+{% extends 'xadmin/base_site.html' %}
+
+{# 去掉标签栏 #}
+{% block content-nav %}
+
+{% endblock %}
+
+{% block content %}
+#显示传入的数据
+{{ title }}
+{% endblock content %}
+</code></pre>
+<p>效果如下：<img src="https://img-blog.csdnimg.cn/20200416200122973.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+未修改前：<br>
+<img src="https://img-blog.csdnimg.cn/20200416200108299.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
 
           </div>
         </div>
 
         
           <div class="next-post">
-            <a class="purple-link" href="https://906571331.github.io/yx.github.io/post/django-xue-xi-mo-ban-pian/">
+            <a class="purple-link" href="https://906571331.github.io/yx.github.io/post/django-kai-fa-zhong-yu-dao-no-module-named-captcha-de-wen-ti-jie-jue-fang-fa/">
               <h3 class="post-title">
-                下一篇：django学习模板篇
+                下一篇：django开发中遇到No module named &#39;captcha的问题解决方法
               </h3>
             </a>
           </div>
