@@ -5,7 +5,7 @@
     
 <meta charset="utf-8" >
 
-<title>Django | WuXin</title>
+<title>Django2.1.7 xadmin后台开发中出现“你无权修改任何东西”的错误 | WuXin</title>
 <meta name="description" content="成千上万个门口，总有一个人要先走。">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -78,62 +78,73 @@
 
 
       <div class="content-container">
+        <div class="post-detail">
+          
+            <div class="feature-container" style="background-image: url('https://906571331.github.io/yx.github.io//post-images/django217-xadmin-hou-tai-kai-fa-zhong-chu-xian-ni-wu-quan-xiu-gai-ren-he-dong-xi-de-cuo-wu.jpg')">
+            </div>
+          
+          <h2 class="post-title">Django2.1.7 xadmin后台开发中出现“你无权修改任何东西”的错误</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2020-04-17</span>
+            
+          </div>
+          <div class="post-content">
+            <p>Django2.1.7 xadmin后台开发中出现“你无权修改任何东西”的错误<img src="https://img-blog.csdnimg.cn/20200417090859980.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
+<h4 id="解决的办法">解决的办法</h4>
+<pre><code class="language-python">from users.models import User
+class ChangeIntoAdmin(object):
+    # 指向自定义的页面
+    object_list_template = 'base111.html'
+    # 重写方法，把要展示的数据更新到 context
+    def get_context(self):
+        context = CommAdminView.get_context(self)
+        users = User.objects.all()
+        base_list = []
+        name_list = []
+        for user in users:
+            name_list.append(user.name)
+            base_list.append(user.base_mark)
+        context.update(
+            {
+                'name_list': name_list,
+                'base_list': base_list,
+            }
+        )
+        return context
+#注册，其中Book是一张表
+xadmin.site.register(Book, ChangeIntoAdmin)
+</code></pre>
+<pre><code class="language-html">#继承自xadmin/base_site.html模板
+{% extends 'xadmin/base_site.html' %}
 
-        <div class="current-tag-container">
-          <h2 class="title">
-            <i class="icon icon-pricetags-outline"></i> Django
-          </h2> 
+{# 去掉标签栏 #}
+{% block content-nav %}
+
+{% endblock %}
+
+{% block content %}
+{{ name_list|safe }}
+    {{ base_list }}
+{% endblock content %}
+</code></pre>
+<p>即可正确显示<br>
+<img src="https://img-blog.csdnimg.cn/2020041709130918.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
+
+          </div>
         </div>
 
         
-<section class="post-item">
-    <div class="content">
-      <a href="https://906571331.github.io/yx.github.io/post/echarts-zhong-yin-ru-json-wen-jian/">
-        <h2 class="post-title">echarts中引入json文件</h2>
-      </a>
-      <div class="post-abstract">
-        
+          <div class="next-post">
+            <a class="purple-link" href="https://906571331.github.io/yx.github.io/post/django-xadmin-shi-xian-zi-ding-yi-hou-tai-jin-xing-ge-xing-hua-xian-shi/">
+              <h3 class="post-title">
+                下一篇：django-xadmin实现自定义后台，进行个性化显示
+              </h3>
+            </a>
+          </div>
+          
       </div>
-      <div class="post-info">
-        <span><i class="icon icon-calendar-outline"></i> 2020-03-19</span>
-        
-          <span>
-            <i class="icon icon-pricetags-outline"></i>
-            
-              <a href="https://906571331.github.io/yx.github.io/tag/ENxH7AZ31/">
-                echarts
-                
-                  ，
-                
-              </a>
-            
-              <a href="https://906571331.github.io/yx.github.io/tag/sR-2jrK5Z/">
-                Django
-                
-              </a>
-            
-          </span>
-        
-      </div>
-    </div>
-    
-      <a href="https://906571331.github.io/yx.github.io/post/echarts-zhong-yin-ru-json-wen-jian/">
-        <div class="feature-container" style="background-image: url('https://906571331.github.io/yx.github.io//post-images/echarts-zhong-yin-ru-json-wen-jian.jpg')">
-        </div>
-      </a>
-    
-  </section>
 
-
-<div class="pagination-container">
-  
-    <a href="https://906571331.github.io/yx.github.io/tag/sR-2jrK5Z" class="prev"><i class="icon-arrow-ios-back-outline"></i> 上一页</a>
-  
-  
-</div>
-
-
-      </div>
+      
 
       <div class="site-footer">
   <div class="slogan">成千上万个门口，总有一个人要先走。</div>

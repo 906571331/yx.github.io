@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://906571331.github.io/yx.github.io/</id>
     <title>WuXin</title>
-    <updated>2020-04-16T12:04:48.376Z</updated>
+    <updated>2020-04-17T01:15:06.442Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://906571331.github.io/yx.github.io/"/>
     <link rel="self" href="https://906571331.github.io/yx.github.io/atom.xml"/>
@@ -10,6 +10,54 @@
     <logo>https://906571331.github.io/yx.github.io/images/avatar.png</logo>
     <icon>https://906571331.github.io/yx.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, WuXin</rights>
+    <entry>
+        <title type="html"><![CDATA[Django2.1.7 xadmin后台开发中出现“你无权修改任何东西”的错误]]></title>
+        <id>https://906571331.github.io/yx.github.io/post/django217-xadmin-hou-tai-kai-fa-zhong-chu-xian-ni-wu-quan-xiu-gai-ren-he-dong-xi-de-cuo-wu/</id>
+        <link href="https://906571331.github.io/yx.github.io/post/django217-xadmin-hou-tai-kai-fa-zhong-chu-xian-ni-wu-quan-xiu-gai-ren-he-dong-xi-de-cuo-wu/">
+        </link>
+        <updated>2020-04-17T01:14:34.000Z</updated>
+        <content type="html"><![CDATA[<p>Django2.1.7 xadmin后台开发中出现“你无权修改任何东西”的错误<img src="https://img-blog.csdnimg.cn/20200417090859980.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
+<h4 id="解决的办法">解决的办法</h4>
+<pre><code class="language-python">from users.models import User
+class ChangeIntoAdmin(object):
+    # 指向自定义的页面
+    object_list_template = 'base111.html'
+    # 重写方法，把要展示的数据更新到 context
+    def get_context(self):
+        context = CommAdminView.get_context(self)
+        users = User.objects.all()
+        base_list = []
+        name_list = []
+        for user in users:
+            name_list.append(user.name)
+            base_list.append(user.base_mark)
+        context.update(
+            {
+                'name_list': name_list,
+                'base_list': base_list,
+            }
+        )
+        return context
+#注册，其中Book是一张表
+xadmin.site.register(Book, ChangeIntoAdmin)
+</code></pre>
+<pre><code class="language-html">#继承自xadmin/base_site.html模板
+{% extends 'xadmin/base_site.html' %}
+
+{# 去掉标签栏 #}
+{% block content-nav %}
+
+{% endblock %}
+
+{% block content %}
+{{ name_list|safe }}
+    {{ base_list }}
+{% endblock content %}
+</code></pre>
+<p>即可正确显示<br>
+<img src="https://img-blog.csdnimg.cn/2020041709130918.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[django-xadmin实现自定义后台，进行个性化显示]]></title>
         <id>https://906571331.github.io/yx.github.io/post/django-xadmin-shi-xian-zi-ding-yi-hou-tai-jin-xing-ge-xing-hua-xian-shi/</id>
@@ -1864,30 +1912,6 @@ Session.connect：java.netConnectException: Connection timed out connect
 <p>查看虚拟机的ip时，发现虚拟机的ip已经更换，所以在pycharm中，点击工具----&gt;Deployment----&gt;Configuration，以下三处分别改为虚拟机新的ip地址，（我的是从192.168.168.141改为192.168.168.145），点击Test SFTP connection，即可解决连接超时的问题<br>
 <img src="https://img-blog.csdnimg.cn/20200402101531809.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
 <img src="https://img-blog.csdnimg.cn/2020040210172163.png" alt="在这里插入图片描述" loading="lazy"></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Django常用学习网站]]></title>
-        <id>https://906571331.github.io/yx.github.io/post/django-chang-yong-xue-xi-wang-zhan/</id>
-        <link href="https://906571331.github.io/yx.github.io/post/django-chang-yong-xue-xi-wang-zhan/">
-        </link>
-        <updated>2020-03-31T02:33:22.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="本篇博客总结了一些django常用的一些学习网站欢迎留言补充">本篇博客总结了一些Django常用的一些学习网站，欢迎留言补充</h3>
-<h4 id="1django中文网">1.<a href="https://www.django.cn/">Django中文网</a></h4>
-<p>Django中文社区,是一个Django开发者和Django爱好者交流的社区,这里有很多django教程和django技术文档,欢迎广大喜欢Django的朋友加入！django,django教程,django,django社区,django文档,django中文<br>
-<img src="https://img-blog.csdnimg.cn/20200331092025348.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-<img src="https://img-blog.csdnimg.cn/20200331092120796.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
-<h4 id="2django-rest-framework">2.<a href="https://www.django-rest-framework.org/">django-rest-framework</a></h4>
-<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20200331100915981.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
-<h4 id="3django文档">3.<a href="https://docs.djangoproject.com/zh-hans/2.0/">Django文档</a></h4>
-<p>Django 有丰富的文档。一份高度概述的文档会告诉你在哪里找到特定的东西<br>
-<img src="https://img-blog.csdnimg.cn/20200331101207485.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
-<h4 id="4菜鸟教程">4.<a href="https://www.runoob.com/django/django-tutorial.html">菜鸟教程</a></h4>
-<figure data-type="image" tabindex="2"><img src="https://img-blog.csdnimg.cn/20200331101412255.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
-<h4 id="5刘江的django教程">5.<a href="https://www.liujiangblog.com/course/django/84">刘江的Django教程</a></h4>
-<figure data-type="image" tabindex="3"><img src="https://img-blog.csdnimg.cn/20200331101728234.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
-<h4 id="6w3cschool">6.<a href="https://www.w3cschool.cn/django/">W3Cschool</a></h4>
-<figure data-type="image" tabindex="4"><img src="https://img-blog.csdnimg.cn/20200331121714837.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
 ]]></content>
     </entry>
 </feed>
