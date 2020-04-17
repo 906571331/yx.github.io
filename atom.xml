@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://906571331.github.io/yx.github.io/</id>
     <title>WuXin</title>
-    <updated>2020-04-17T01:17:08.066Z</updated>
+    <updated>2020-04-17T02:29:59.382Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://906571331.github.io/yx.github.io/"/>
     <link rel="self" href="https://906571331.github.io/yx.github.io/atom.xml"/>
@@ -10,6 +10,92 @@
     <logo>https://906571331.github.io/yx.github.io/images/avatar.png</logo>
     <icon>https://906571331.github.io/yx.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, WuXin</rights>
+    <entry>
+        <title type="html"><![CDATA[Django+xadmin+echarts在后台动态显示echarts图表，实现后台定制化开发]]></title>
+        <id>https://906571331.github.io/yx.github.io/post/djangoxadminecharts-zai-hou-tai-dong-tai-xian-shi-echarts-tu-biao-shi-xian-hou-tai-ding-zhi-hua-kai-fa/</id>
+        <link href="https://906571331.github.io/yx.github.io/post/djangoxadminecharts-zai-hou-tai-dong-tai-xian-shi-echarts-tu-biao-shi-xian-hou-tai-ding-zhi-hua-kai-fa/">
+        </link>
+        <updated>2020-04-17T02:29:13.000Z</updated>
+        <content type="html"><![CDATA[<p>本篇博客将Django+xadmin+echarts在后台动态显示echarts图表</p>
+<pre><code class="language-python">#app/adminx.py
+#从user模型中导入User表
+from users.models import User
+class ChangeIntoAdmin(object):
+    # 指向自定义的页面
+    object_list_template = 'base111.html'
+    # 重写方法，把要展示的数据更新到 context
+    def get_context(self):
+        context = CommAdminView.get_context(self)
+        #获取所有的用户
+        users = User.objects.all()
+        #获取用户的一个属性，将显示到
+        base_list = []
+        #获取用户名
+        name_list = []
+        for user in users:
+            name_list.append(user.name)
+            base_list.append(user.base_mark)
+        context.update(
+            {
+                'name_list': name_list,
+                'base_list': base_list,
+            }
+        )
+        return context
+#进行注册
+xadmin.site.register(Book, ChangeIntoAdmin)
+</code></pre>
+<pre><code class="language-html">#base111.html
+{# 继承自xadmin中的base_site.html #}
+{% extends 'xadmin/base_site.html' %}
+
+{# 去掉标签栏 #}
+{% block content-nav %}
+
+{% endblock %}
+{% block extrastyle %}
+{#这个block块中添加echarts.min.js，前提是在static文件夹下放入echarts.min.js,也可以引入其他样式，这个块是在xadmin/base.html中#}
+&lt;script src=&quot;{% static 'js/echarts.min.js' %}&quot;  charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+{% endblock %}
+{% block content %}
+&lt;div&gt;zhelishige
+    &lt;div id=&quot;chart_1&quot; style=&quot;width:500px; height:500px&quot;&gt;在这里&lt;/div&gt;
+&lt;/div&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+var myChart = echarts.init(document.getElementById('chart_1'));
+option = {
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        {# 这里是填入的数据 #}
+        data: {{ name_list|safe }}
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [{
+    	{# 这里是填入的数据 #}
+        data:{{base_list}},
+        type: 'line',
+        areaStyle: {}
+    }]
+};
+myChart.setOption(option);
+&lt;/script&gt;
+{% endblock content %}
+</code></pre>
+<p><code>显示效果</code>（修改css样式即可显示的更加美观）<br>
+<img src="https://img-blog.csdnimg.cn/20200417102244216.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<code>常见的一些问题：</code><br>
+1.在添加echarts后，左侧导航栏显示<code>你没有权限修改任何东西</code>的错误，请移步：<a href="https://blog.csdn.net/qq_42092076/article/details/105572667">Django2.1.7 xadmin后台开发中出现“你无权修改任何东西”的错误</a><br>
+2.<code>echarts中div层不显示</code>：可能是在div中没有添加css样式，解决方案，<code>在相应的div中添加样式</code>，如下所示：</p>
+<pre><code class="language-html">&lt;div id=&quot;chart_1&quot; style=&quot;width:500px; height:500px&quot;&gt;&lt;/div&gt;
+</code></pre>
+<p><code>其他优化xadmin方法，以及解决方案：</code><br>
+1.<a href="https://blog.csdn.net/qq_42092076/article/details/105440673">Django的开发中遇到的一些问题以及解决方案，包括Django-xadmin的优化</a><br>
+2.<a href="https://blog.csdn.net/qq_42092076/article/details/105565647">django-xadmin实现自定义后台，进行个性化显示</a></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Django2.1.7 xadmin后台开发中出现“你无权修改任何东西”的错误]]></title>
         <id>https://906571331.github.io/yx.github.io/post/django217-xadmin-hou-tai-kai-fa-zhong-chu-xian-ni-wu-quan-xiu-gai-ren-he-dong-xi-de-cuo-wu/</id>
@@ -1894,24 +1980,6 @@ def movies(request,page=0):
 </code></pre>
 <p><img src="https://img-blog.csdnimg.cn/20200402221341463.png" alt="在这里插入图片描述" loading="lazy"><br>
 <img src="https://img-blog.csdnimg.cn/20200402221414385.png" alt="在这里插入图片描述" loading="lazy"></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[解决Django开发中pycharm连接不到虚拟机的问题]]></title>
-        <id>https://906571331.github.io/yx.github.io/post/jie-jue-django-kai-fa-zhong-pycharm-lian-jie-bu-dao-xu-ni-ji-de-wen-ti/</id>
-        <link href="https://906571331.github.io/yx.github.io/post/jie-jue-django-kai-fa-zhong-pycharm-lian-jie-bu-dao-xu-ni-ji-de-wen-ti/">
-        </link>
-        <updated>2020-04-02T02:18:36.000Z</updated>
-        <content type="html"><![CDATA[<h4 id="出现的问题">出现的问题</h4>
-<p>在pycharm连接ubuntu时，出现了：</p>
-<pre><code class="language-bash">Connection to '192.168.168.141' failed.
-Session.connect：java.netConnectException: Connection timed out connect
-</code></pre>
-<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20200402101036518.png" alt="在这里插入图片描述" loading="lazy"></figure>
-<h4 id="解决的方法">解决的方法</h4>
-<p>查看虚拟机的ip时，发现虚拟机的ip已经更换，所以在pycharm中，点击工具----&gt;Deployment----&gt;Configuration，以下三处分别改为虚拟机新的ip地址，（我的是从192.168.168.141改为192.168.168.145），点击Test SFTP connection，即可解决连接超时的问题<br>
-<img src="https://img-blog.csdnimg.cn/20200402101531809.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-<img src="https://img-blog.csdnimg.cn/2020040210172163.png" alt="在这里插入图片描述" loading="lazy"></p>
 ]]></content>
     </entry>
 </feed>
