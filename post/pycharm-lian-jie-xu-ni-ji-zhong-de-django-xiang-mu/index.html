@@ -5,7 +5,7 @@
     
 <meta charset="utf-8" >
 
-<title>chm在本地的正确打开方式 | WuXin</title>
+<title>pycharm连接虚拟机中的django项目 | WuXin</title>
 <meta name="description" content="成千上万个门口，总有一个人要先走。">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -80,18 +80,25 @@
       <div class="content-container">
         <div class="post-detail">
           
-            <div class="feature-container" style="background-image: url('https://906571331.github.io/yx.github.io//post-images/chm-zai-ben-di-de-zheng-que-da-kai-fang-shi.jpg')">
+            <div class="feature-container" style="background-image: url('https://906571331.github.io/yx.github.io//post-images/pycharm-lian-jie-xu-ni-ji-zhong-de-django-xiang-mu.jpg')">
             </div>
           
-          <h2 class="post-title">chm在本地的正确打开方式</h2>
+          <h2 class="post-title">pycharm连接虚拟机中的django项目</h2>
           <div class="post-info post-detail-info">
-            <span><i class="icon-calendar-outline"></i> 2020-03-18</span>
+            <span><i class="icon-calendar-outline"></i> 2020-04-18</span>
             
               <span>
                 <i class="icon-pricetags-outline"></i>
                 
-                  <a href="https://906571331.github.io/yx.github.io/tag/rHocdhD_O/">
-                    chm
+                  <a href="https://906571331.github.io/yx.github.io/tag/IOUFjN4sc/">
+                    解决问题
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://906571331.github.io/yx.github.io/tag/sR-2jrK5Z/">
+                    Django
                     
                   </a>
                 
@@ -99,24 +106,31 @@
             
           </div>
           <div class="post-content">
-            <p>tags: [chm]</p>
-<h3 id="出现的情况">出现的情况</h3>
-<p>在本地直接打开chm文件可能出现加载不出来的情况<br>
-如下图所示（右边加载不出来）：<br>
-<img src="https://img-blog.csdnimg.cn/20200318090914868.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
-<h3 id="解决的办法">解决的办法</h3>
-<p>根据chm文件的制作原理（链接网页，右击选择使用记事本打开时改文件时，发现该文件跳转到了一个一个的网页上），右击本地chm文件，选择打开方式，使用浏览器打开，即可正确打开<br>
-结果如图所示：<br>
-<img src="https://img-blog.csdnimg.cn/20200318091140616.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
+            <p>1.在配置好环境以后，打开pycharm，点击文件，新项目，创建一个Pure Python项目，打开添加远程<br>
+<img src="https://img-blog.csdnimg.cn/20200418162635495.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+2.点击SSH，按下面的要求进行配置<br>
+<img src="https://img-blog.csdnimg.cn/20200418163337630.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+进来以后发现，显示没有文件，<br>
+<img src="https://img-blog.csdnimg.cn/20200418163501574.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+3.接下来点击工具--&gt;&gt;Deployment---&gt;&gt;Configuration<br>
+<img src="https://img-blog.csdnimg.cn/20200418163550530.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/2020041816394794.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+在Mappings中的设置：<br>
+<img src="https://img-blog.csdnimg.cn/20200418164055119.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+4.点击确定，在左侧的目录栏中，右击项目名称----&gt;Deployment---&gt;Download，从虚拟机中将项目导入<br>
+<img src="https://img-blog.csdnimg.cn/20200418164159667.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<code>常见的问题</code><br>
+1.下次打开虚拟机，发现虚拟机中的项目无法正确导入，可能是虚拟机中的ip已换，解决方案请移步：<a href="https://blog.csdn.net/qq_42092076/article/details/105263238">解决Django开发中pycharm连接不到虚拟机的问题</a><br>
+2.其他问题可关注博客：<a href="https://blog.csdn.net/qq_42092076">博客</a></p>
 
           </div>
         </div>
 
         
           <div class="next-post">
-            <a class="purple-link" href="https://906571331.github.io/yx.github.io/post/jsp-kai-fa-zhong-tomcat-fang-wen-url-dai-you-zhong-wen-ming-cheng-de-html-wen-jian-xian-shi-404-cuo-wu/">
+            <a class="purple-link" href="https://906571331.github.io/yx.github.io/post/djangoxadminecharts-zai-hou-tai-dong-tai-xian-shi-echarts-tu-biao-shi-xian-hou-tai-ding-zhi-hua-kai-fa/">
               <h3 class="post-title">
-                下一篇：JSP开发中tomcat访问URL带有中文名称的HTML文件显示404错误
+                下一篇：Django+xadmin+echarts在后台动态显示echarts图表，实现后台定制化开发
               </h3>
             </a>
           </div>

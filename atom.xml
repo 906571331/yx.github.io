@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://906571331.github.io/yx.github.io/</id>
     <title>WuXin</title>
-    <updated>2020-04-17T02:32:37.272Z</updated>
+    <updated>2020-04-18T08:50:13.405Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://906571331.github.io/yx.github.io/"/>
     <link rel="self" href="https://906571331.github.io/yx.github.io/atom.xml"/>
@@ -10,6 +10,30 @@
     <logo>https://906571331.github.io/yx.github.io/images/avatar.png</logo>
     <icon>https://906571331.github.io/yx.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, WuXin</rights>
+    <entry>
+        <title type="html"><![CDATA[pycharm连接虚拟机中的django项目]]></title>
+        <id>https://906571331.github.io/yx.github.io/post/pycharm-lian-jie-xu-ni-ji-zhong-de-django-xiang-mu/</id>
+        <link href="https://906571331.github.io/yx.github.io/post/pycharm-lian-jie-xu-ni-ji-zhong-de-django-xiang-mu/">
+        </link>
+        <updated>2020-04-18T08:48:19.000Z</updated>
+        <content type="html"><![CDATA[<p>1.在配置好环境以后，打开pycharm，点击文件，新项目，创建一个Pure Python项目，打开添加远程<br>
+<img src="https://img-blog.csdnimg.cn/20200418162635495.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+2.点击SSH，按下面的要求进行配置<br>
+<img src="https://img-blog.csdnimg.cn/20200418163337630.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+进来以后发现，显示没有文件，<br>
+<img src="https://img-blog.csdnimg.cn/20200418163501574.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+3.接下来点击工具--&gt;&gt;Deployment---&gt;&gt;Configuration<br>
+<img src="https://img-blog.csdnimg.cn/20200418163550530.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/2020041816394794.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+在Mappings中的设置：<br>
+<img src="https://img-blog.csdnimg.cn/20200418164055119.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+4.点击确定，在左侧的目录栏中，右击项目名称----&gt;Deployment---&gt;Download，从虚拟机中将项目导入<br>
+<img src="https://img-blog.csdnimg.cn/20200418164159667.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<code>常见的问题</code><br>
+1.下次打开虚拟机，发现虚拟机中的项目无法正确导入，可能是虚拟机中的ip已换，解决方案请移步：<a href="https://blog.csdn.net/qq_42092076/article/details/105263238">解决Django开发中pycharm连接不到虚拟机的问题</a><br>
+2.其他问题可关注博客：<a href="https://blog.csdn.net/qq_42092076">博客</a></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Django+xadmin+echarts在后台动态显示echarts图表，实现后台定制化开发]]></title>
         <id>https://906571331.github.io/yx.github.io/post/djangoxadminecharts-zai-hou-tai-dong-tai-xian-shi-echarts-tu-biao-shi-xian-hou-tai-ding-zhi-hua-kai-fa/</id>
@@ -1737,249 +1761,6 @@ TEMPLATES = [
     },
 ]
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[django学习笔记URL篇]]></title>
-        <id>https://906571331.github.io/yx.github.io/post/django-xue-xi-bi-ji-url-pian/</id>
-        <link href="https://906571331.github.io/yx.github.io/post/django-xue-xi-bi-ji-url-pian/">
-        </link>
-        <updated>2020-04-02T14:33:37.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="本篇博客记录了博主平时django的一些学习笔记">本篇博客记录了博主平时Django的一些学习笔记：</h3>
-<h4 id="1在urlpy中使用httpresponse">1.在Url.py中使用HttpResponse</h4>
-<p>urls.py</p>
-<pre><code class="language-bash">from django.http import HttpResponse
-from django.urls import path, include
-def index1(request):
-    return HttpResponse(&quot;这才是首页&quot;)
-def book(request):
-	return HttpResponse(&quot;书籍首页&quot;)
-urlpatterns = [
-    path(&quot;&quot;,index1),
-    path(&quot;book/&quot;,book),
-]
-</code></pre>
-<p>开启debug模式可以在访问错误页面的时候发现运行中的错误，<br>
-当Debug设置为False时，必须设置能够访问本网站的主机地址<br>
-同时，在本页面出现错误时会返回Server Error (500)<br>
-在生产环境中一定要关闭Debug模式，否则可能造成信息泄露<br>
-<img src="https://img-blog.csdnimg.cn/20200401181539431.png" alt="在这里插入图片描述" loading="lazy"></p>
-<h4 id="2project与app分开写视图函数">2.project与app分开写视图函数</h4>
-<p>projetc/url.py</p>
-<pre><code class="language-python">from book.views import book
-urlpatterns = [
-    path(&quot;book/&quot;,book),
-]
-</code></pre>
-<p>book/views.py</p>
-<pre><code class="language-python">from django.http import HttpResponse
-def book(request):
-	return HttpResponse(&quot;这是book首页&quot;)
-</code></pre>
-<h4 id="3url传递参数给视图函数">3.URL传递参数给视图函数</h4>
-<p>一个参数views.py</p>
-<pre><code class="language-python">def booklist(request,book_id):
-    #可以根据数据库中的数据提取book的信息
-    text = &quot;您获取的图书的id是：%s&quot; % book_id
-    return HttpResponse(text)
-</code></pre>
-<p>一个参数urls.py</p>
-<pre><code class="language-python">from book import booklist
-urlpatterns = [
-	path(&quot;book/&lt;book_id&gt;&quot;,booklist),
-]
-</code></pre>
-<p>两个参数views.py</p>
-<pre><code class="language-python">def booklist(request,book_id,book_name):
-    #可以根据数据库中的数据提取book的信息
-    text = &quot;您获取的图书的id是：%s ,您的图书的名字是：%s&quot; % (book_id,book_name)
-    return HttpResponse(text)
-</code></pre>
-<p>两个参数urls.py</p>
-<pre><code class="language-python">from book import booklist
-urlpatterns = [
-	path(&quot;book/&lt;book_id&gt;/&lt;book_name&gt;&quot;,booklist),
-]
-</code></pre>
-<h4 id="4查询">4.查询</h4>
-<p>views.py</p>
-<pre><code class="language-python">def author(request):
-	author_id=request.Get.get(&quot;id&quot;)
-	text = &quot;作者的id为%s &quot; % author_id
-	return HttpResponse(text)
-</code></pre>
-<p>urls.py</p>
-<pre><code class="language-python">	path(&quot;author/&quot;,author)
-</code></pre>
-<p>查询时<br>
-http://192.168.168.141:8000/author/?id=2<br>
-<img src="https://img-blog.csdnimg.cn/2020040121074461.png" alt="在这里插入图片描述" loading="lazy"><br>
-因为查询字符串使用的是GET请求，所以我们使用request.GET来获取参数，且因为GET是一个类似于字典的数类型，所以获取值跟字典的方式都是一样的</p>
-<h4 id="5uuid的使用">5.uuid的使用</h4>
-<p>uuid根据实际情况也可以换成int,或者str</p>
-<pre><code class="language-python">from book import booklist
-urlpatterns = [
-	path(&quot;book/&lt;uuid:book_id&gt;&quot;,booklist),
-]
-</code></pre>
-<p>使用uuid，只能访问uuid类型的字符串，其他的都是错误的<br>
-在Python环境中导入一个uuid</p>
-<pre><code class="language-python">import uuid
-print(uuid.uuid4())
-</code></pre>
-<p>from django.urls import converters<br>
-str不能加/，但是改为path就可以显示斜杠，具体使用看converters.py</p>
-<h4 id="6url参数的转化器">6.url参数的转化器</h4>
-<pre><code class="language-bash">str: 除了/以外的所有字符
-int：阿拉伯数字
-path:所有字符
-uuid:uuid.uuid4()函数返回的格式
-slug:英文字母、数字、横杠、下划线
-</code></pre>
-<h4 id="7url的模块化管理">7.url的模块化管理</h4>
-<p>project/urls.py</p>
-<pre><code class="language-python">from django.urls import path, include
-urlpatterns = [
-	path(&quot;book/&gt;&quot;,include(&quot;book.urls&quot;)),
-]
-</code></pre>
-<p>book/urls.py</p>
-<pre><code class="language-python">from django.urls import path
-from .views import booklist
-urlpatterns = [
-	path(&quot;&lt;book_id&gt;/&quot;,booklist),
-]
-</code></pre>
-<p>book/views.py</p>
-<pre><code class="language-bash">from django.http import HttpResponse
-def booklist(request,book_id):
-	text = &quot;图书的id为%s &quot; % book_id
-	return HttpResponse(text)
-</code></pre>
-<h4 id="8url命名与反转">8.url命名与反转</h4>
-<p>在app的urls.py中添加app_name（应用命名空间），防止每个app的url重复，造成url找不到的情况<br>
-front/views.py</p>
-<pre><code class="language-python">from django.shortcuts import render,redirect,reverse
-from django.http import HttpResponse
-
-def index(request):
-    username=request.GET.get(&quot;username&quot;)
-    if username:
-        return HttpResponse(&quot;这是前台首页&quot;)
-    else:
-        return redirect(reverse(&quot;front:login&quot;))
-def login(request):
-    return HttpResponse(&quot;这是前台的登录页面&quot;)
-</code></pre>
-<p>front/urls.py</p>
-<pre><code class="language-python">from django.urls import path
-from .views import index,login
-app_name=&quot;front&quot;
-urlpatterns=[
-    path(&quot;&quot;,index),
-    path(&quot;signin/&quot;,login,name=&quot;login&quot;),
-]
-</code></pre>
-<h4 id="9应用实例命名空间">9.应用实例命名空间</h4>
-<p>不能只制定实例命名空间，没有应用命名空间<br>
-project/urls.py</p>
-<pre><code class="language-bash">    path(&quot;cms1/&quot;,include(&quot;cms.urls&quot;,namespace=&quot;cms1&quot;)),
-    path(&quot;cms2/&quot;,include(&quot;cms.urls&quot;,namespace=&quot;cms2&quot;)),
-</code></pre>
-<p>app/urls.py</p>
-<pre><code class="language-bash">from django.shortcuts import render,reverse,redirect
-from django.http import HttpResponse
-def index(request):
-    username=request.GET.get(&quot;username&quot;)
-    if username:
-        return HttpResponse(&quot;这是后台首页&quot;)
-    else:
-        current_namespace=request.resolver_match.namespace
-        return redirect(reverse(&quot;%s:login&quot; %current_namespace))
-def login(request):
-    return HttpResponse(&quot;这是后台的登录页面&quot;)
-</code></pre>
-<h4 id="10re_path">10.re_path</h4>
-<p>urls.py</p>
-<pre><code class="language-python">    #P为参数的名字，&lt;year&gt;为类型，\d表示为日期型，{4}表示有4个数字
-    #w:0-9,a-z,A-Z
-    re_path(r&quot;^list/(?P&lt;year&gt;\d{4}/)&quot;,article_list),
-    re_path(r&quot;^list/(?P&lt;year&gt;\d{4})/(?P&lt;month&gt;\d{4})&quot;,article_list_month),
-</code></pre>
-<p>views.py</p>
-<pre><code class="language-python">def article_list(request,year):
-    text = &quot;您输入的是第%s年的文章&quot; % year
-    return HttpResponse(text)
-</code></pre>
-<p>此时list后面只能是四位数字<br>
-<img src="https://img-blog.csdnimg.cn/20200402191129108.png" alt="在这里插入图片描述" loading="lazy"></p>
-<h4 id="11跳转到指定的页面">11.跳转到指定的页面</h4>
-<pre><code class="language-python">return redirect(reverse(&quot;&lt;article&gt;/&quot;,kwargs={&quot;article_id&quot;:1}))
-</code></pre>
-<h4 id="12添加多个标签">12.添加多个标签</h4>
-<p>urls.py</p>
-<pre><code class="language-python">    re_path(r&quot;list/(?P&lt;catagries&gt;\w+|(\w+\+\w+)+)/&quot;,article_list_lll),
-</code></pre>
-<p>views.py</p>
-<pre><code class="language-python">def article_list_lll(request,catagries):
-    text = &quot;您输入的是第%s的文章hhhh &quot; % catagries
-    return HttpResponse(text)
-</code></pre>
-<h4 id="13自定义path">13.自定义path</h4>
-<pre><code class="language-bash">from django.urls import converters,register_converter
-class CategoryConverter(object):
-    regex =r'\w+|(\w+\+\w+)+'
-    def to_python(self,value):
-        #python+django+flask
-        #['python','django','flask']
-        result=value.split(&quot;+&quot;)
-        return result
-    def to_url(self,value):
-        #['python','django','flask']
-        # python+django+flask
-        if isinstance(value,list):
-            result = &quot;+&quot;.join(value)
-            return result
-        else:
-            raise RuntimeError(&quot;转换url的时候，分类参数必须为列表&quot;)
-#应用命名空间
-register_converter(CategoryConverter,'cate')
-
-path(&quot;list/&lt;cate:catagries&gt;&quot;,article_list_lll),
-
-</code></pre>
-<p>views.py</p>
-<pre><code class="language-bash">def article_list_lll(request,catagries):
-    text = &quot;您输入的是第%s的文章hhhh &quot; % catagries
-    return HttpResponse(text)
-</code></pre>
-<p><img src="https://img-blog.csdnimg.cn/2020040221085428.png" alt="在这里插入图片描述" loading="lazy"><br>
-如果converters.py是另外的，则需要在init文件中导入converters<br>
-<strong>init</strong>.py</p>
-<pre><code class="language-python">from . import converters
-</code></pre>
-<h4 id="14自定义参数">14.自定义参数</h4>
-<p>urls.py</p>
-<pre><code class="language-bash">    path(&quot;&quot;,movies),
-    path(&quot;page/&lt;int:page&gt;&quot;,movies),
-</code></pre>
-<p>views.py</p>
-<pre><code class="language-bash">book_list=[
-    &quot;三国演义&quot;,
-    &quot;红楼梦&quot;,
-    &quot;西游记&quot;,
-    &quot;水浒传&quot;,
-]
-# Create your views here.
-# def movie(request,movie_id):
-#     text = &quot;电影的id为：%s&quot; % movie_id
-#     return HttpResponse(text)
-
-def movies(request,page=0):
-    return HttpResponse(book_list[page])
-</code></pre>
-<p><img src="https://img-blog.csdnimg.cn/20200402221341463.png" alt="在这里插入图片描述" loading="lazy"><br>
-<img src="https://img-blog.csdnimg.cn/20200402221414385.png" alt="在这里插入图片描述" loading="lazy"></p>
 ]]></content>
     </entry>
 </feed>
