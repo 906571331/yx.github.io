@@ -5,7 +5,7 @@
     
 <meta charset="utf-8" >
 
-<title>django开发中遇到No module named &#39;captcha的问题解决方法 | WuXin</title>
+<title>设置`&lt;iframe&gt;`标签的大小 | WuXin</title>
 <meta name="description" content="成千上万个门口，总有一个人要先走。">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -80,45 +80,53 @@
       <div class="content-container">
         <div class="post-detail">
           
-            <div class="feature-container" style="background-image: url('https://906571331.github.io/yx.github.io//post-images/django-kai-fa-zhong-yu-dao-no-module-named-captcha-de-wen-ti-jie-jue-fang-fa.jpg')">
+            <div class="feature-container" style="background-image: url('https://906571331.github.io/yx.github.io//post-images/she-zhi-lessiframegreaterbiao-qian-de-da-xiao.jpg')">
             </div>
           
-          <h2 class="post-title">django开发中遇到No module named &#39;captcha的问题解决方法</h2>
+          <h2 class="post-title">设置`&lt;iframe&gt;`标签的大小</h2>
           <div class="post-info post-detail-info">
-            <span><i class="icon-calendar-outline"></i> 2020-04-16</span>
-            
-              <span>
-                <i class="icon-pricetags-outline"></i>
-                
-                  <a href="https://906571331.github.io/yx.github.io/tag/IOUFjN4sc/">
-                    解决问题
-                    
-                      ，
-                    
-                  </a>
-                
-                  <a href="https://906571331.github.io/yx.github.io/tag/sR-2jrK5Z/">
-                    Django
-                    
-                  </a>
-                
-              </span>
+            <span><i class="icon-calendar-outline"></i> 2020-04-19</span>
             
           </div>
           <div class="post-content">
-            <h4 id="在django开发中遇到如下问题">在Django开发中遇到如下问题</h4>
-<pre><code class="language-python">    from captcha.fields import CaptchaField
-ModuleNotFoundError: No module named 'captcha.fields'
+            <h4 id=""></h4>
+<p><code>&lt;ifrarme&gt;</code>标签的大小设置，Django填入<code>&lt;ifrarme&gt;</code>标签后自动设置大小</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;Title&lt;/title&gt;
+    &lt;style&gt;
+        .container{
+       width: 1700px;
+            height:500px;
+       margin: 0 auto;
+       border: 1px solid #f00;
+       text-align: center;
+     }
+ iframe{
+         border: 1px solid #000;
+       width: 1700px;
+         height: 600px;
+     }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+ &lt;div class=&quot;container&quot;&gt;
+ {% autoescape off %}
+     {{ info }}
+     {% endautoescape %}
+ &lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
 </code></pre>
-<h4 id="解决方法">解决方法：</h4>
-<p>安装django-simple-captcha</p>
-<pre><code class="language-python">pip install django-simple-captcha
-</code></pre>
-<h4 id="在开发中遇到以下错误">在开发中遇到以下错误</h4>
-<pre><code class="language-python">HINT: Add or change a related_name argument to the definition for 'User.user_permissions' or 'UserProfile.user_permissions'.
-</code></pre>
-<p>解决方案：在settings.py中添加：</p>
-<pre><code class="language-python">AUTH_USER_MODEL = 'Users.UserProfile'
+<pre><code class="language-python">def bofang(request):
+    context={
+        &quot;info&quot;:'&lt;iframe src=&quot;//player.bilibili.com/player.html?aid=455345011&amp;bvid=BV1x5411x7kE&amp;cid=179274496&amp;page=1&quot; scrolling=&quot;yes&quot; border=&quot;0&quot; frameborder=&quot;no&quot; framespacing=&quot;0&quot; allowfullscreen=&quot;true&quot; &gt; &lt;/iframe&gt;'
+    }
+    return render(request,&quot;bofang.html&quot;,context=context)
 </code></pre>
 
           </div>
@@ -126,9 +134,9 @@ ModuleNotFoundError: No module named 'captcha.fields'
 
         
           <div class="next-post">
-            <a class="purple-link" href="https://906571331.github.io/yx.github.io/post/django-de-kai-fa-zhong-yu-dao-de-yi-xie-wen-ti-yi-ji-jie-jue-fang-an-bao-gua-django-xadmin-de-you-hua/">
+            <a class="purple-link" href="https://906571331.github.io/yx.github.io/post/pycharm-lian-jie-xu-ni-ji-zhong-de-django-xiang-mu/">
               <h3 class="post-title">
-                下一篇：Django的开发中遇到的一些问题以及解决方案，包括Django-xadmin的优化
+                下一篇：pycharm连接虚拟机中的django项目
               </h3>
             </a>
           </div>
