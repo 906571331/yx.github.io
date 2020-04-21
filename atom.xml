@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://906571331.github.io/yx.github.io/</id>
     <title>WuXin</title>
-    <updated>2020-04-19T12:21:25.732Z</updated>
+    <updated>2020-04-21T02:37:21.058Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://906571331.github.io/yx.github.io/"/>
     <link rel="self" href="https://906571331.github.io/yx.github.io/atom.xml"/>
@@ -10,6 +10,325 @@
     <logo>https://906571331.github.io/yx.github.io/images/avatar.png</logo>
     <icon>https://906571331.github.io/yx.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, WuXin</rights>
+    <entry>
+        <title type="html"><![CDATA[Django学习之表单]]></title>
+        <id>https://906571331.github.io/yx.github.io/post/django-xue-xi-zhi-biao-dan/</id>
+        <link href="https://906571331.github.io/yx.github.io/post/django-xue-xi-zhi-biao-dan/">
+        </link>
+        <updated>2020-04-21T02:36:46.000Z</updated>
+        <content type="html"><![CDATA[<h4 id="1django表单1">1.django表单1</h4>
+<pre><code class="language-python">#forms.py
+from django import forms
+
+class  MessageForms(forms.Form):
+    title=forms.CharField(max_length=200,min_length=3,label=&quot;标题&quot;,error_messages={&quot;min_length&quot;:&quot;最好不能小于3个字符&quot;,&quot;max_length&quot;:&quot;最大不能超过200字符&quot;})
+    content=forms.CharField(widget=forms.Textarea,label=&quot;内容&quot;,error_messages={&quot;required&quot;:&quot;必须要填这个字段&quot;})
+    email=forms.EmailField(label=&quot;邮箱&quot;,error_messages={&quot;required&quot;:&quot;必须要填写邮箱地址&quot;})
+    reply=forms.BooleanField(required=False,label=&quot;回复&quot;)
+</code></pre>
+<pre><code class="language-python">#urls.py
+from django.urls import path
+from .views import MessagesformsView
+
+urlpatterns=[
+    path(&quot;&quot;,MessagesformsView.as_view()),
+]
+</code></pre>
+<pre><code class="language-bash">#views.py
+from django.shortcuts import render
+from .forms import MessageForms
+from django.views.generic import View
+from django.http import HttpResponse
+from django.forms.utils import ErrorDict
+# Create your views here.
+class MessagesformsView(View):
+    def get(self,request):
+        form = MessageForms()
+        return render(request,'forms.html',context={&quot;forms&quot;:form})
+    def post(self,request):
+        print(&quot;正在提交&quot;)
+        form = MessageForms(request.POST)
+        if form.is_valid():
+            title = form.cleaned_data.get('title')
+            content = form.cleaned_data.get('content')
+            email = form.cleaned_data.get('email')
+            reply = form.cleaned_data.get('reply')
+            print('='*30)
+            print(title)
+            print(content)
+            print(email)
+            print(reply)
+            print('='*30)
+            return HttpResponse('success')
+        else:
+            print(form.errors.get_json_data())
+            return HttpResponse('fail')
+</code></pre>
+<pre><code class="language-bash">#forms.html
+&lt;form action=&quot;&quot; method=&quot;post&quot;&gt;
+    &lt;table&gt;
+        {{ forms.as_table }}
+        &lt;tr&gt;
+            &lt;td&gt;&lt;/td&gt;
+            &lt;td&gt;&lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/table&gt;
+&lt;/form&gt;
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20200420202907648.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+<h4 id="2djano表单2">2.djano表单2</h4>
+<pre><code class="language-python">#views.py
+from django.shortcuts import render
+from .forms import Myform
+from django.views.generic import View
+from django.http import HttpResponse
+
+class From1View(View):
+    def get(self,request):
+        return render(request,'form2.html')
+    def post(self,request):
+        form=Myform(request.POST)
+        if form.is_valid():
+            url=form.cleaned_data.get(&quot;my_website&quot;)
+            return HttpResponse(&quot;success&quot;)
+        else:
+            print(form.errors.get_json_data())
+            return HttpResponse(&quot;fail&quot;)
+</code></pre>
+<pre><code class="language-python">#urls.py
+from django.urls import path
+from .views import From1View
+
+urlpatterns=[
+    path(&quot;form1/&quot;,From1View.as_view()),
+]
+
+</code></pre>
+<pre><code class="language-python">#forms.py
+from django import forms
+class Myform(forms.Form):
+    my_website=forms.URLField()
+</code></pre>
+<pre><code class="language-html">#form2.html
+&lt;form action=&quot;&quot; method=&quot;post&quot;&gt;
+    &lt;input type=&quot;text&quot; name=&quot;my_website&quot;&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;
+&lt;/form&gt;
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://img-blog.csdnimg.cn/20200420203151833.png" alt="在这里插入图片描述" loading="lazy"></figure>
+<h4 id="3验证合法的手机号">3.验证合法的手机号</h4>
+<pre><code class="language-python">#views.py
+class From1View(View):
+    def get(self,request):
+        return render(request,'form2.html')
+    def post(self,request):
+        form=Myform(request.POST)
+        if form.is_valid():
+            url=form.cleaned_data.get(&quot;telephone&quot;)
+            return HttpResponse(&quot;success&quot;)
+        else:
+            print(form.errors.get_json_data())
+            return HttpResponse(&quot;fail&quot;)
+</code></pre>
+<pre><code class="language-python">#urls.py
+from django.urls import path
+from .views import MessagesformsView,From1View
+
+urlpatterns=[
+    path(&quot;form1/&quot;,From1View.as_view()),
+]
+
+</code></pre>
+<pre><code class="language-python">#forms.py
+from django import forms
+from django.core import validators
+class Myform(forms.Form):
+    telephone = forms.CharField(validators=[validators.RegexValidator(r'1[345678]\d{9}',message='请输入正确格式的手机号码！')])
+</code></pre>
+<pre><code class="language-html">#forms2.html
+&lt;form action=&quot;&quot; method=&quot;post&quot;&gt;
+    &lt;input type=&quot;text&quot; name=&quot;telephone&quot;&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;
+&lt;/form&gt;
+</code></pre>
+<h4 id="4在注册时查看是否已经注册的功能">4.在注册时查看是否已经注册的功能</h4>
+<pre><code class="language-python">#models.py
+from django.db import models
+
+class User(models.Model):
+    username = models.CharField(max_length=100)
+    telephone = models.CharField(max_length=11)
+</code></pre>
+<pre><code class="language-python">#views.py
+class RegisterView(View):
+    def get(self,request):
+        return render(request,'register.html')
+
+    def post(self,request):
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            telephone = form.cleaned_data.get('telephone')
+            User.objects.create(username=username,telephone=telephone)
+            return HttpResponse('注册成功！')
+        else:
+            print(form.get_errors())
+            return HttpResponse('注册失败！')
+</code></pre>
+<pre><code class="language-python">#urls.py
+ path('register/', views.RegisterView.as_view()),
+</code></pre>
+<pre><code class="language-python">#forms.py
+class RegisterForm(BaseForm):
+    username = forms.CharField(max_length=100)
+    telephone = forms.CharField(validators=[validators.RegexValidator(r'1[345678]\d{9}',message='请输入正确格式的手机号码！')])
+    pwd1 = forms.CharField(max_length=16,min_length=6)
+    pwd2 = forms.CharField(max_length=16,min_length=6)
+
+    def clean_telephone(self):
+    #只验证一个数值
+        telephone = self.cleaned_data.get('telephone')
+        exists = User.objects.filter(telephone=telephone).exists()
+        if exists:
+            raise forms.ValidationError(message='%s已经被注册！'%telephone)
+        # 如果验证没有问题，一定要记得把telephone返回回去
+        return telephone
+        
+    def clean(self):
+        # 如果来到了clean方法，说明之前每一个字段都验证成功了，这里写是否相等的逻辑,这里一定是cleaned_data，调用get方法
+        cleaned_data = super().clean()
+        pwd1 = cleaned_data.get('pwd1')
+        pwd2 = cleaned_data.get('pwd2')
+        if pwd1 != pwd2:
+            raise forms.ValidationError(message='两次密码输入不一致！')
+        return cleaned_data
+</code></pre>
+<pre><code class="language-html">&lt;form action=&quot;&quot; method=&quot;post&quot;&gt;
+    &lt;table&gt;
+        &lt;tr&gt;
+            &lt;td&gt;用户名：&lt;/td&gt;
+            &lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;username&quot;&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;手机号码：&lt;/td&gt;
+            &lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;telephone&quot;&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;密码：&lt;/td&gt;
+            &lt;td&gt;&lt;input type=&quot;password&quot; name=&quot;pwd1&quot;&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;重复密码：&lt;/td&gt;
+            &lt;td&gt;&lt;input type=&quot;password&quot; name=&quot;pwd2&quot;&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;&lt;/td&gt;
+            &lt;td&gt;&lt;input type=&quot;submit&quot; value=&quot;注册&quot;&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/table&gt;
+&lt;/form&gt;
+</code></pre>
+<h4 id="5modelform">5.Modelform</h4>
+<pre><code class="language-python">#forms.py
+#encoding: utf-8
+from django import forms
+from .models import Book,User
+
+class AddBookForm(forms.ModelForm):
+    def clean_page(self):
+        page = self.cleaned_data.get('page')
+        if page &gt; 100:
+            raise forms.ValidationError('页数不能大于100！')
+        return page
+
+    class Meta:
+        model = Book
+        # fields和exclude必须定义一个
+        fields = &quot;__all__&quot;
+        # fields = ['title','page']
+        # exclude = ['price']
+        error_messages = {
+            'page':{
+                'required': '请传入page参数！',
+                'invalid': '请输入一个可用的page参数！'
+            },
+            'title': {
+                'max_length': 'title不能超过100个字符！'
+            },
+            'price': {
+                'max_value': '图书价格不能超过100元！'
+            }
+        }
+
+class RegisterForm(forms.ModelForm):
+    pwd1 = forms.CharField(max_length=16,min_length=6)
+    pwd2 = forms.CharField(max_length=16,min_length=6)
+    def clean(self):
+        cleaned_data = super().clean()
+        pwd1 = cleaned_data.get('pwd1')
+        pwd2 = cleaned_data.get('pwd2')
+        if pwd1 != pwd2:
+            raise forms.ValidationError('两次密码输入不一致！')
+        return cleaned_data
+
+    class Meta:
+        model = User
+        exclude = ['password']
+
+</code></pre>
+<pre><code class="language-python">#models.py
+from django.db import models
+from django.core import validators
+
+class Book(models.Model):
+    title = models.CharField(max_length=100)
+    page = models.IntegerField()
+    price = models.FloatField(validators=[validators.MaxValueValidator(limit_value=1000)])
+
+
+class User(models.Model):
+    username = models.CharField(max_length=100)
+    password = models.CharField(max_length=16)
+    telephone = models.CharField(max_length=11,validators=[validators.RegexValidator(r'1[345678]\d{9}')])
+
+</code></pre>
+<pre><code class="language-python">from django.shortcuts import render
+from django.http import HttpResponse
+from .forms import AddBookForm,RegisterForm
+from django.views.decorators.http import require_POST
+
+def index(request):
+    return HttpResponse('index')
+
+def add_book(request):
+    form = AddBookForm(request.POST)
+    if form.is_valid():
+        # title = form.cleaned_data.get('title')
+        # page = form.cleaned_data.get(&quot;page&quot;)
+        # price = form.cleaned_data.get(&quot;price&quot;)
+        # print('title:%s'%title)
+        # print('page:%s'%page)
+        # print('price:%s'%price)
+        form.save()
+        return HttpResponse('success')
+    else:
+        print(form.errors.get_json_data())
+        return HttpResponse('FAIL')
+
+@require_POST
+def register(request):
+    form = RegisterForm(request.POST)
+    if form.is_valid():
+        user = form.save(commit=False)
+        user.password = form.cleaned_data.get('pwd1')
+        user.save()
+        return HttpResponse('success')
+    else:
+        return HttpResponse('fail')
+
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[设置`<iframe>`标签的大小]]></title>
         <id>https://906571331.github.io/yx.github.io/post/she-zhi-lessiframegreaterbiao-qian-de-da-xiao/</id>
@@ -995,46 +1314,6 @@ class Meta:
 		db_table = 'book_model'
 		#-号表示相反排序
 		ordering = ['-pub_date']
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[使用JavaScript实时获取系统时间]]></title>
-        <id>https://906571331.github.io/yx.github.io/post/shi-yong-javascript-shi-shi-huo-qu-xi-tong-shi-jian/</id>
-        <link href="https://906571331.github.io/yx.github.io/post/shi-yong-javascript-shi-shi-huo-qu-xi-tong-shi-jian/">
-        </link>
-        <updated>2020-04-08T02:15:46.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="本案例实现了使用js代码实时获取系统时间">本案例实现了使用js代码实时获取系统时间</h3>
-<pre><code class="language-html">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-	&lt;head&gt;
-		&lt;meta charset=&quot;utf-8&quot;&gt;
-		&lt;title&gt;实时获取系统时间&lt;/title&gt;
-		&lt;script language=&quot;JavaScript&quot;&gt;
-			function realSystime(clock){
-				var now=new Date();//创建Date对象
-				var year=now.getFullYear();//获取年份
-				var month=now.getMonth();//获取月份
-				var date=now.getDate();//获取日期
-				var day=now.getDay();//获取星期
-				var hour=now.getHours();//获取小时
-				var minu=now.getMinutes();//获取分钟
-				var sec=now.getSeconds();//获取秒
-				month=month+1;
-				var arr_week=new Array(&quot;星期日&quot;,&quot;星期一&quot;,&quot;星期二&quot;,&quot;星期三&quot;,&quot;星期四&quot;,&quot;星期五&quot;,&quot;星期六&quot;);
-				var week=arr_week[day];//获取中文格式的星期，是个数组
-				var time=year+&quot;年&quot;+month+&quot;月&quot;+date+&quot;日&quot; +week+&quot; &quot;+hour+&quot;:&quot;+minu+&quot;:&quot;+sec;//组合系统时间
-				clock.innerHTML=&quot;当前时间：&quot;+time;//显示系统时间
-			}
-			window.onload=function(){
-				window.setInterval(&quot;realSystime(clock)&quot;,1000);//实时获取并显示系统时间
-			}
-		&lt;/script&gt;
-	&lt;/head&gt;
-	&lt;body&gt;
-		&lt;div id=&quot;clock&quot;&gt;&lt;/div&gt;
-	&lt;/body&gt;
-&lt;/html&gt;
 </code></pre>
 ]]></content>
     </entry>
