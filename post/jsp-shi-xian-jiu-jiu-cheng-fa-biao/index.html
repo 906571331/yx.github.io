@@ -5,7 +5,7 @@
     
 <meta charset="utf-8" >
 
-<title>使用gitee解决github下载仓库下载速度缓慢的问题 | WuXin</title>
+<title>JSP实现九九乘法表 | WuXin</title>
 <meta name="description" content="成千上万个门口，总有一个人要先走。">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -80,18 +80,18 @@
       <div class="content-container">
         <div class="post-detail">
           
-            <div class="feature-container" style="background-image: url('https://906571331.github.io/yx.github.io//post-images/shi-yong-gitee-jie-jue-github-xia-zai-cang-ku-xia-zai-su-du-huan-man-de-wen-ti.jpg')">
+            <div class="feature-container" style="background-image: url('https://906571331.github.io/yx.github.io//post-images/jsp-shi-xian-jiu-jiu-cheng-fa-biao.jpg')">
             </div>
           
-          <h2 class="post-title">使用gitee解决github下载仓库下载速度缓慢的问题</h2>
+          <h2 class="post-title">JSP实现九九乘法表</h2>
           <div class="post-info post-detail-info">
-            <span><i class="icon-calendar-outline"></i> 2020-03-30</span>
+            <span><i class="icon-calendar-outline"></i> 2020-04-22</span>
             
               <span>
                 <i class="icon-pricetags-outline"></i>
                 
-                  <a href="https://906571331.github.io/yx.github.io/tag/IOUFjN4sc/">
-                    解决问题
+                  <a href="https://906571331.github.io/yx.github.io/tag/9zpFSDVIG/">
+                    jsp
                     
                   </a>
                 
@@ -99,26 +99,53 @@
             
           </div>
           <div class="post-content">
-            <h3 id="出现的问题">出现的问题</h3>
-<p>在github下载代码时总是出现网络延时等问题导致下载失败或下载缓慢</p>
-<h3 id="解决的办法">解决的办法</h3>
-<p>将github中的仓库导入到gitee中，然后从gitee中下载仓库<br>
-复制github中的仓库地址：<br>
-<img src="https://img-blog.csdnimg.cn/20200330175055393.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-在gitee中新建仓库：<img src="https://img-blog.csdnimg.cn/20200330175256587.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-选择导入已有仓库，将刚刚复制的github地址填入<br>
-<img src="https://img-blog.csdnimg.cn/20200330175320401.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-打开刚刚新建的仓库，点击下载，即可高速下载github中的仓库<br>
-<img src="https://img-blog.csdnimg.cn/20200330174943211.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
+            <p>JSP实现九九乘法表</p>
+<pre><code class="language-java">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
+    pageEncoding=&quot;UTF-8&quot;%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;ISO-8859-1&quot;&gt;
+&lt;title&gt;Insert title here&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;%	String str=&quot;&quot;;
+	for (int i=1;i&lt;=9;i++)
+	{
+		for (int j=1;j&lt;=9;j++)
+		{
+			str +=j+&quot;*&quot;+i+&quot;=&quot;+j*i;
+			str+=&quot;&amp;nbsp;&quot;;
+			str+=&quot;&amp;nbsp;&quot;;
+			str+=&quot;&amp;nbsp;&quot;;
+		}
+		str+=&quot;&lt;br&gt;&quot;;
+	}
+%&gt;
+&lt;%--这里的注释不会在压面中显示，但是这里会占一行 --%&gt;
+&lt;table width='440' height='150' border='1' align=&quot;center&quot;&gt;
+	&lt;tr&gt;
+		&lt;td height=30 align=&quot;center&quot;&gt;JSP九九乘法表&lt;/td&gt;
+	&lt;/tr&gt;
+		&lt;tr&gt;
+		&lt;td style=&quot;padding:3px&quot;&gt;&lt;%=str%&gt;
+		&lt;/td&gt;
+	&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20200422093134511.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
 
           </div>
         </div>
 
         
           <div class="next-post">
-            <a class="purple-link" href="https://906571331.github.io/yx.github.io/post/a-li-yun-fu-wu-qi-chu-xian-resource-stopwords-not-found-please-use-the-nltk-downloader-to-obtain-the-resource/">
+            <a class="purple-link" href="https://906571331.github.io/yx.github.io/post/django-ji-suan-fen-shu-suan-fa/">
               <h3 class="post-title">
-                下一篇：阿里云服务器出现  Resource stopwords not found.   Please use the NLTK Downloader to obtain the resource:
+                下一篇：Django计算分数算法
               </h3>
             </a>
           </div>

@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://906571331.github.io/yx.github.io/</id>
     <title>WuXin</title>
-    <updated>2020-04-21T02:40:41.973Z</updated>
+    <updated>2020-04-22T01:46:25.007Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://906571331.github.io/yx.github.io/"/>
     <link rel="self" href="https://906571331.github.io/yx.github.io/atom.xml"/>
@@ -10,6 +10,301 @@
     <logo>https://906571331.github.io/yx.github.io/images/avatar.png</logo>
     <icon>https://906571331.github.io/yx.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, WuXin</rights>
+    <entry>
+        <title type="html"><![CDATA[JSP实现九九乘法表]]></title>
+        <id>https://906571331.github.io/yx.github.io/post/jsp-shi-xian-jiu-jiu-cheng-fa-biao/</id>
+        <link href="https://906571331.github.io/yx.github.io/post/jsp-shi-xian-jiu-jiu-cheng-fa-biao/">
+        </link>
+        <updated>2020-04-22T01:45:44.000Z</updated>
+        <content type="html"><![CDATA[<p>JSP实现九九乘法表</p>
+<pre><code class="language-java">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
+    pageEncoding=&quot;UTF-8&quot;%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;ISO-8859-1&quot;&gt;
+&lt;title&gt;Insert title here&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;%	String str=&quot;&quot;;
+	for (int i=1;i&lt;=9;i++)
+	{
+		for (int j=1;j&lt;=9;j++)
+		{
+			str +=j+&quot;*&quot;+i+&quot;=&quot;+j*i;
+			str+=&quot;&amp;nbsp;&quot;;
+			str+=&quot;&amp;nbsp;&quot;;
+			str+=&quot;&amp;nbsp;&quot;;
+		}
+		str+=&quot;&lt;br&gt;&quot;;
+	}
+%&gt;
+&lt;%--这里的注释不会在压面中显示，但是这里会占一行 --%&gt;
+&lt;table width='440' height='150' border='1' align=&quot;center&quot;&gt;
+	&lt;tr&gt;
+		&lt;td height=30 align=&quot;center&quot;&gt;JSP九九乘法表&lt;/td&gt;
+	&lt;/tr&gt;
+		&lt;tr&gt;
+		&lt;td style=&quot;padding:3px&quot;&gt;&lt;%=str%&gt;
+		&lt;/td&gt;
+	&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20200422093134511.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Django计算分数算法]]></title>
+        <id>https://906571331.github.io/yx.github.io/post/django-ji-suan-fen-shu-suan-fa/</id>
+        <link href="https://906571331.github.io/yx.github.io/post/django-ji-suan-fen-shu-suan-fa/">
+        </link>
+        <updated>2020-04-21T12:20:10.000Z</updated>
+        <content type="html"><![CDATA[<h4 id="1最简单的计算分数">1.最简单的计算分数</h4>
+<pre><code class="language-python">correct_answer=[&quot;A&quot;,&quot;B&quot;,&quot;C&quot;]
+my_answer=[&quot;A&quot;,&quot;C&quot;,&quot;D&quot;]
+mark=0
+i=0
+while i&lt;3:
+    if correct_answer[i]==my_answer[i]:
+        mark+=1
+    i=i+1
+print(mark)	
+#运行结果：
+1
+</code></pre>
+<h4 id="2分模块计算">2.分模块计算</h4>
+<pre><code class="language-python">correct_answer=[&quot;A&quot;,&quot;B&quot;,&quot;C&quot;]
+my_answer=[&quot;A&quot;,&quot;C&quot;,&quot;D&quot;]
+mark=0
+i=0
+base_mark=0
+promote_mark=0
+major_mark=0
+while i&lt;3:
+    if i&lt;=1:
+        if correct_answer[i]==my_answer[i]:
+            base_mark+=1
+            mark=mark+1
+    else:
+        if correct_answer[i]==my_answer[i]:
+            mark=mark+1
+    i=i+1
+print(&quot;总分数为：&quot;,mark)
+print(&quot;基础分数为：&quot;,base_mark)
+</code></pre>
+<h4 id="3分三个模块进行计算">3.分三个模块进行计算</h4>
+<pre><code class="language-python">correct_answer=[&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;,&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;,&quot;A&quot;,&quot;B&quot;]
+my_answer=[&quot;A&quot;,&quot;C&quot;,&quot;C&quot;,&quot;A&quot;,&quot;C&quot;,&quot;D&quot;,&quot;C&quot;,&quot;C&quot;,&quot;D&quot;,&quot;A&quot;]
+mark=0
+i=0
+base_mark=0
+promote_mark=0
+major_mark=0
+promote_mark=0
+major_mark=0
+while i&lt;=9:
+    if i&lt;=3:
+        if correct_answer[i]==my_answer[i]:
+            base_mark+=1
+            mark=mark+1
+    elif i&lt;=6:
+        if correct_answer[i]==my_answer[i]:
+            mark=mark+1
+            promote_mark+=1
+    else:
+        if correct_answer[i]==my_answer[i]:
+            mark=mark+1
+            major_mark+=1	
+    i=i+1
+print(&quot;总分数为：&quot;,mark)
+print(&quot;基础分数为：&quot;,base_mark)
+print(&quot;提升分数为：&quot;,promote_mark)
+print(&quot;专业分数为：&quot;,major_mark)
+</code></pre>
+<p><img src="https://img-blog.csdnimg.cn/20200421083042661.png" alt="在这里插入图片描述" loading="lazy"><br>
+4.html实现表单选项</p>
+<pre><code class="language-html">		&lt;div class=&quot;layui-form-item&quot; pane=&quot;&quot;&gt;
+			&lt;label class=&quot;layui-form-label&quot;&gt;单选框&lt;/label&gt;
+			&lt;div class=&quot;layui-input-block&quot;&gt;
+				&lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;男&quot; title=&quot;男&quot;&gt;A选项
+				&lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;女&quot; title=&quot;女&quot;&gt;B选项
+				&lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;男&quot; title=&quot;男&quot;&gt;C选项
+				&lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;女&quot; title=&quot;女&quot;&gt;D选项
+				&lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20200421084426516.png" alt="在这里插入图片描述" loading="lazy"></figure>
+<h4 id="4下午的工作">4.下午的工作</h4>
+<pre><code class="language-python">#views.py
+from django.shortcuts import render
+from django.views.generic import View
+from django.http import HttpResponse
+from .models import Question,Exam,Subject
+from django.db import models
+# Create your views here.
+class ExamView(View):
+    def get(self,request):
+        subjetcs=Subject.objects.get(id=1)
+        print(subjetcs)
+        question=Question.objects.get(id=1)
+        print(id)
+        context={
+            &quot;question_statements&quot;:question.statments,
+            &quot;op_A&quot;: question.op_A,
+            &quot;op_B&quot;: question.op_B,
+            &quot;op_C&quot;: question.op_C,
+            &quot;op_D&quot;: question.op_D,
+        }
+
+        return render(request, &quot;exam.html&quot;,context=context)
+    def post(self,request):
+        question = request.POST.get('question')
+        question2=request.POST.get('question2')
+        options_list=re(request)
+        print(question)
+        print(question2)
+        my_answer=[]
+        my_answer.append(question)
+        my_answer.append(question2)
+        print(my_answer)
+        print(options_list)
+        return HttpResponse(&quot;success&quot;)
+def re(request):
+    option_list = []
+    options=Question.objects.all()
+    for option in options:
+        option_list.append(option.correct_op)
+    return option_list
+</code></pre>
+<pre><code class="language-python">#urls.py
+from django.urls import path
+from .views import ExamView
+urlpatterns=[
+    path(&quot;exam01/&quot;,ExamView.as_view())
+]
+</code></pre>
+<pre><code class="language-python">#models.py
+from django.db import models
+from users.models import User
+
+# Create your models here.
+
+#科目
+class Subject(models.Model):
+	name 			= models.CharField(max_length=255,verbose_name=&quot;科目名称&quot;)
+	description 	= models.TextField(verbose_name=&quot;科目描述&quot;)
+	cover_image 	= models.ImageField(upload_to = 'cover/',blank=True)
+	class Meta:
+		verbose_name=&quot;科目&quot;
+		verbose_name_plural=verbose_name
+	def __str__(self):
+		return self.name
+
+class Question(models.Model):
+	choice = (('A','A'),('B','B'),('C','C'),('D','D'))
+	subject 	= models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
+	statments 	= models.TextField(verbose_name=&quot;问题描述&quot;)
+	op_A 	= models.CharField(max_length=1000)
+	op_B 	= models.CharField(max_length=1000)
+	op_C 	= models.CharField(max_length=1000)
+	op_D 	= models.CharField(max_length=1000)
+	correct_op 	= models.CharField(choices=choice,max_length=10)
+	mark 		= models.IntegerField(default=1)
+	class Meta:
+		verbose_name=&quot;问题&quot;
+		verbose_name_plural=verbose_name
+	def __str__(self):
+		return self.statments
+
+
+class Exam(models.Model):
+	subject = models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
+	name = models.CharField(max_length=100,blank=True,verbose_name=&quot;本次考试名称&quot;)
+	class Meta:
+		verbose_name=&quot;考试&quot;
+		verbose_name_plural=verbose_name
+	def __str__(self):
+		return self.name
+
+class Mark(models.Model):
+	user = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name=&quot;用户&quot;)
+	subject = models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
+	exam = models.ForeignKey(Exam,on_delete=models.CASCADE,verbose_name=&quot;考试名称&quot;)
+	total_marks = models.CharField(max_length=10,verbose_name=&quot;总分数&quot;)
+	class Meta:
+		verbose_name=&quot;分数&quot;
+		verbose_name_plural=verbose_name
+	def __str__(self):
+		return self.total_marks
+
+# # class Rank(models.Model):
+# # 	pass
+
+</code></pre>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;这里是考试界面的首页&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;form action=&quot;&quot; method=&quot;post&quot;&gt;
+    {% csrf_token %}
+    &lt;tr&gt;
+        &lt;td&gt;第一题,请选择答案&lt;/td&gt;&lt;br&gt;
+        &lt;td&gt;A:这是A选项&lt;/td&gt;&lt;br&gt;
+        &lt;td&gt;B:这是B选项&lt;/td&gt;&lt;br&gt;
+        &lt;td&gt;C:这是C选项&lt;/td&gt;&lt;br&gt;
+        &lt;td&gt;D:这是D选项&lt;/td&gt;&lt;br&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;question&quot; value=&quot;A&quot;&gt;A&lt;/td&gt;
+        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;question&quot; value=&quot;B&quot;&gt;B&lt;/td&gt;
+        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;question&quot; value=&quot;C&quot;&gt;C&lt;/td&gt;
+        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;question&quot; value=&quot;D&quot;&gt;D&lt;/td&gt;
+        &lt;br&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;第二题,请选择答案&lt;/td&gt;&lt;br&gt;
+        &lt;td&gt;A:这是A选项&lt;/td&gt;&lt;br&gt;
+        &lt;td&gt;B:这是B选项&lt;/td&gt;&lt;br&gt;
+        &lt;td&gt;C:这是C选项&lt;/td&gt;&lt;br&gt;
+        &lt;td&gt;D:这是D选项&lt;/td&gt;&lt;br&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;question2&quot; value=&quot;A&quot;&gt;A&lt;/td&gt;
+        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;question2&quot; value=&quot;B&quot;&gt;B&lt;/td&gt;
+        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;question2&quot; value=&quot;C&quot;&gt;C&lt;/td&gt;
+        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;question2&quot; value=&quot;D&quot;&gt;D&lt;/td&gt;
+    &lt;/tr&gt;&lt;br&gt;
+        &lt;tr&gt;
+        &lt;td&gt;{{ question_statements }}&lt;/td&gt;&lt;br&gt;
+        &lt;td&gt;{{ op_A }}&lt;/td&gt;&lt;br&gt;
+        &lt;td&gt;{{ op_B }}&lt;/td&gt;&lt;br&gt;
+        &lt;td&gt;{{ op_C }}&lt;/td&gt;&lt;br&gt;
+        &lt;td&gt;{{ op_D }}&lt;/td&gt;&lt;br&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;question_id&quot; value=&quot;A&quot;&gt;A&lt;/td&gt;
+        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;question_id&quot; value=&quot;B&quot;&gt;B&lt;/td&gt;
+        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;question_id&quot; value=&quot;C&quot;&gt;C&lt;/td&gt;
+        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;question_id&quot; value=&quot;D&quot;&gt;D&lt;/td&gt;
+        &lt;br&gt;
+    &lt;/tr&gt;
+    &lt;input type=&quot;submit&quot; name=&quot;exam&quot; value=&quot;提交&quot;&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h4 id="效果">效果</h4>
+<figure data-type="image" tabindex="2"><img src="https://img-blog.csdnimg.cn/20200421201736839.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+<h4 id="存在的问题是不能循环遍历出同一科目或者同一考试下的所有题目">存在的问题是：不能循环遍历出同一科目或者同一考试下的所有题目</h4>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Django学习之表单]]></title>
         <id>https://906571331.github.io/yx.github.io/post/django-xue-xi-zhi-biao-dan/</id>
@@ -750,570 +1045,6 @@ class ChangeIntoAdmin(object):
         )
         return context
 xadmin.site.register(Book, ChangeIntoAdmin)
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Django学习笔记数据库（二）]]></title>
-        <id>https://906571331.github.io/yx.github.io/post/django-xue-xi-bi-ji-shu-ju-ku-er/</id>
-        <link href="https://906571331.github.io/yx.github.io/post/django-xue-xi-bi-ji-shu-ju-ku-er/">
-        </link>
-        <updated>2020-04-11T00:48:55.000Z</updated>
-        <content type="html"><![CDATA[<h4 id="1外键增加数据操作">1.外键：增加数据操作</h4>
-<pre><code class="language-python">#models.py
-#函数，可以提高代码的利用率
-def set_default():
-	return Category.object.get(pk=2)
-class Category(models.Model):
-    name=models.CharField(max_length=100)
-class Article(models.Model):
-    title=models.CharField(max_length=100)
-    content=models.TextField()
-    category=models.ForeignKey(&quot;Category&quot;,on_delete=models.CASCADE,bull=True)
-    
-#设置默认值    
-category=models.ForeignKey(&quot;Category&quot;,on_delete=models.SET_DEFAULT,default=Category.objects.get(pk=2))
-category=models.ForeignKey(&quot;Category&quot;,on_delete=models.SET(Category.objects.get(pk=2)))
-category=models.ForeignKey(&quot;Category&quot;,on_delete=models.SET(set_default))
-#使用的是别的app的外键，    
-forntuser=models.ForeignKey(&quot;app_name.frontname&quot;,on_delete=models.CASCADE)
-#on_delete=donothing，完全依靠数据库级别的约束
-</code></pre>
-<pre><code class="language-python">#views.py
-def indexxxx(request):
-    category=Category(name=&quot;最新文章&quot;)
-    category.save()
-    article=Article(title=&quot;标题&quot;,content=&quot;这是内容&quot;)
-    article.category=category
-    article.save()
-    return HttpResponse(&quot;success 添加文章和标签&quot;)
-</code></pre>
-<p>外键引用自己，可以用于盖楼式评论</p>
-<pre><code class="language-python">class comment(models.Model):
-    content=models.TextField()
-    origin_comment=models.ForeignKey(&quot;self&quot;,on_delete=models.CASCADE)
-    
-#或者写成    origin_comment=models.ForeignKey(&quot;comment&quot;,on_delete=models.CASCADE)
-#或者写成    origin_comment=models.ForeignKey(&quot;article.comment&quot;,on_delete=models.CASCADE)
-</code></pre>
-<h4 id="2外键删除数据操作">2.外键：删除数据操作</h4>
-<pre><code class="language-python">#views.py,级联操作，category删除时，文章也删除
-def delete_view(request):
-    category=Category.objects.get(pk=8)
-    category.delete()
-    return HttpResponse(&quot;delete success&quot;)
-</code></pre>
-<h1 id="表关系笔记">表关系笔记：</h1>
-<h2 id="一对多">一对多：</h2>
-<ol>
-<li>应用场景：比如文章和作者之间的关系。一个文章只能由一个作者编写，但是一个作者可以写多篇文章。文章和作者之间的关系就是典型的多对一的关系。</li>
-<li>实现方式：一对多或者多对一，都是通过<code>ForeignKey</code>来实现的。还是以文章和作者的案例进行讲解。</li>
-</ol>
-<pre><code class="language-python">class User(models.Model):
-    username = models.CharField(max_length=20)
-    password = models.CharField(max_length=100)
-
-class Article(models.Model):
-    title = models.CharField(max_length=100)
-    content = models.TextField()
-    author = models.ForeignKey(&quot;User&quot;,on_delete=models.CASCADE)
-</code></pre>
-<p>那么以后在给<code>Article</code>对象指定<code>author</code>，就可以使用以下代码来完成：</p>
-<pre><code class="language-python">article = Article(title='abc',content='123')
-author = User(username='zhiliao',password='111111')
-# 要先保存到数据库中
-author.save()
-article.author = author
-article.save()
-</code></pre>
-<p>并且以后如果想要获取某个用户下所有的文章，可以通过<code>article_set</code>来实现。示例代码如下：</p>
-<pre><code class="language-python">user = User.objects.first()
-# 获取第一个用户写的所有文章
-articles = user.article_set.all()
-for article in articles:
-    print(article)
-</code></pre>
-<p>获取一个标签下的所有文章</p>
-<pre><code class="language-python">#获取一个标签的所有文章
-category=Category.objects.first()
-articles=category.article_set.all()
-for article in articles:
-    print(article)
-</code></pre>
-<p>并且如果想要将文章添加到某个分类中。可以使用一下的方式：</p>
-<pre><code class="language-python">category = Category.objects.first()
-article = Article(title='bbb',content='vvv')
-article.author = FrontUser.objects.first()
-article.save()
-category.article_set.add(article,bulk=False)
-category.save()
-</code></pre>
-<ul>
-<li>使用<code>bulk=False</code>，那么Django会自动的保存article，而不需要在添加到category之前先保存article。</li>
-<li>或者是另外一种解决方式是，在添加到<code>category.article_set</code>中之前，先将<code>article</code>保存到数据库中。但是如果<code>article.category</code>不能为空，那么就产生一种死循环了，article没有<code>category</code>不能保存，而将article添加到<code>cateogry.artile_set</code>中，又需要article之前是已经存储到数据库中的。</li>
-<li>如果是上面的那种需求，建议使用<code>bulk=False</code>的解决方案。</li>
-</ul>
-<h2 id="一对一">一对一：</h2>
-<ol>
-<li>在Django中一对一是通过<code>models.OnetToOneField</code>来实现的。这个<code>OneToOneField</code>其实本质上就是一个外键，只不过这个外键有一个<code>唯一约束（unique key）</code>，来实现一对一。</li>
-<li>以后如果想要反向引用，那么是通过引用的模型的名字转换为小写的形式进行访问。比如以下模型：<pre><code class="language-python">class FrontUser(models.Model):
-    username = models.CharField(max_length=200)
-
-class UserExtension(models.Model):
-    school = models.CharField(max_length=100)
-    user = models.OneToOneField(&quot;FrontUser&quot;,on_delete=models.CASCADE)
-
-# 通过userextension来访问UserExtension对象
-user = FrontUser.objects.first()
-print(user.userextension)
-</code></pre>
-</li>
-</ol>
-<pre><code class="language-python">def one_to_one_view(request):
-	user=FrontUser.objects.first()
-	extension=UserExtension(schoole='zhiliao')
-	extension.user=user
-	extension.save()
-	return HttpResponse(&quot;success&quot;)
-</code></pre>
-<pre><code>`UserExtension`的对象，可以通过`user`来访问到对应的user对象。并且`FrontUser`对象可以使用`userextension`来访问对应的`UserExtension`对象。
-如果不想使用Django默认的引用属性名字。那么可以在`OneToOneField`中添加一个`related_name`参数。示例代码如下：
-```python
-class FrontUser(models.Model):
-    username = models.CharField(max_length=200)
-
-class UserExtension(models.Model):
-    school = models.CharField(max_length=100)
-    user = models.OneToOneField(&quot;FrontUser&quot;,on_delete=models.CASCADE,related_name='extension')
-
-# 通过extension来访问到UserExtension对象
-user = FrontUser.objects.first()
-print(user.extension)
-```
-那么以后就`FrontUser`的对象就可以通过`extension`属性来访问到对应的`UserExtension`对象。
-</code></pre>
-<h2 id="多对多">多对多：</h2>
-<ol>
-<li>
-<p>应用场景：比如文章和标签的关系。一篇文章可以有多个标签，一个标签可以被多个文章所引用。因此标签和文章的关系是典型的多对多的关系。</p>
-</li>
-<li>
-<p>实现方式：<code>Django</code>为这种多对多的实现提供了专门的<code>Field</code>。叫做<code>ManyToManyField</code>。还是拿文章和标签为例进行讲解。示例代码如下：</p>
-</li>
-</ol>
-<pre><code class="language-python">class Article(models.Model):
-    title = models.CharField(max_length=100)
-    content = models.TextField()
-    tags = models.ManyToManyField(&quot;Tag&quot;,related_name=&quot;articles&quot;)
-
-class Tag(models.Model):
-    name = models.CharField(max_length=50)
-</code></pre>
-<p>在数据库层面，实际上<code>Django</code>是为这种多对多的关系建立了一个中间表。这个中间表分别定义了两个外键，引用到<code>article</code>和<code>tag</code>两张表的主键。</p>
-<h1 id="查询条件笔记">查询条件笔记：</h1>
-<ol>
-<li>
-<p>exact：在底层会被翻译成<code>=</code>。</p>
-</li>
-<li>
-<p>iexact：在底层会被翻译成<code>LIKE</code>。</p>
-<ul>
-<li>LIKE和=：大部分情况下都是等价的，只有少数情况下是不等价的。</li>
-<li>exict和iexact：他们的区别其实就是LIKE和=的区别，因为exact会被翻译成=，而iexact会被翻译成LIKE。</li>
-<li>因为<code>field__exact=xxx</code>其实等价于<code>filed=xxx</code>，因此我们直接使用<code>filed=xxx</code>就可以了，并且因为大部分情况<code>exact</code>和<code>iexact</code>又是等价的，因此我们以后直接使用<code>field=xxx</code>就可以了。</li>
-</ul>
-</li>
-<li>
-<p>QuerySet.query：<code>query</code>可以用来查看这个<code>ORM</code>查询语句最终被翻译成的<code>SQL</code>语句。但是<code>query</code>只能被用在<code>QuerySet</code>对象上，不能用在普通的<code>ORM模型</code>上。因此如果你的查询语句是通过<code>get</code>来获取数据的，那么就不能使用<code>query</code>，因为<code>get</code>返回的是满足条件的<code>ORM</code>模型，而不是<code>QuerySet</code>。如果你是通过<code>filter</code>等其他返回<code>QuerySet</code>的方法查询的，那么就可以使用<code>query</code>。</p>
-</li>
-<li>
-<p>contains：使用大小写敏感的判断，某个字符串是否在指定的字段中。这个判断条件会使用大小敏感，因此在被翻译成<code>SQL</code>语句的时候，会使用<code>like binary</code>，而<code>like binary</code>就是使用大小写敏感的。</p>
-</li>
-<li>
-<p>icontains：使用大小写不敏感的判断，某个字符串是否被包含在指定的字段中。这个查询语句在被翻译成<code>SQL</code>的时候，使用的是<code>like</code>，而<code>like</code>在<code>MySQL</code>层面就是不区分大小写的。</p>
-</li>
-<li>
-<p>contains和icontains：在被翻译成<code>SQL</code>的时候使用的是<code>%hello%</code>，就是只要整个字符串中出现了<code>hello</code>都能过够被找到，而<code>iexact</code>没有百分号，那么意味着只有完全相等的时候才会被匹配到。</p>
-</li>
-<li>
-<p>in：可以直接指定某个字段的是否在某个集合中。示例代码如下：</p>
-<pre><code class="language-python">articles = Article.objects.filter(id__in=[1,2,3])
-</code></pre>
-<p>也可以通过其他的表的字段来判断是否在某个集合中。示例代码如下：</p>
-<pre><code class="language-python">categories = Category.objects.filter(article__id__in=[1,2,3])
-</code></pre>
-<p>如果要判断相关联的表的字段，那么也是通过<code>__</code>来连接。并且在做关联查询的时候，不需要写<code>models_set</code>，直接使用<code>模型的名字的小写化</code>就可以了。比如通过分类去查找相应的文章，那么通过<code>article__id__in</code>就可以了，而不是写成<code>article_set__id__in</code>的形式。当然如果你不想使用默认的形式，可以在外键定义的时候传递<code>related_query_name</code>来指定反向查询的名字。示例代码如下：</p>
-<pre><code class="language-python">class Category(models.Model):
-    name = models.CharField(max_length=100)
-
-    class Meta:
-        db_table = 'category'
-
-
-class Article(models.Model):
-    title = models.CharField(max_length=200)
-    content = models.TextField()
-    cateogry = models.ForeignKey(&quot;Category&quot;,on_delete=models.CASCADE,null=True,related_query_name='articles')
-
-    class Meta:
-        db_table = 'article'
-</code></pre>
-<p>因为在<code>cateogry</code>的<code>ForeignKey</code>中指定了<code>related_query_name</code>为<code>articles</code>，因此你不能再使用<code>article</code>来进行反向查询了。这时候就需要通过<code>articles__id__in</code>来进行反向查询。</p>
-<p>反向查询是将模型名字小写化。比如<code>article__in</code>。可以通过<code>related_query_name</code>来指定自己的方式，而不使用默认的方式。<br>
-反向引用是将模型名字小写化，然后再加上<code>_set</code>，比如<code>article_set</code>，可以通过<code>related_name</code>来指定自己的方式，而不是用默认的方式。</p>
-<p>并且，如果在做反向查询的时候，如果查询的字段就是模型的主键，那么可以省略掉这个字段，直接写成<code>article__in</code>就可以了，不需要这个<code>id</code>了。</p>
-<p><code>in</code>不仅仅可以指定列表/元组，还可以为<code>QuerySet</code>。比如要查询“文章标题中包含有hello的所有分类”，那么可以通过以下代码来实现：</p>
-<pre><code class="language-python">articles = Article.objects.filter(title__icontains='hello')
-categories = Category.objects.filter(articles__in=articles)
-for cateogry in categories:
-    print(cateogry)
-</code></pre>
-</li>
-<li>
-<p>gt、gte、lt、lte：代表的是大于、大于等于、小于、小于等于的条件。示例代码如下：</p>
-<pre><code class="language-python">articles = Article.objects.filter(id__lte=3)
-</code></pre>
-</li>
-<li>
-<p>startswith、istartswith、endswith、iendswith：表示以某个值开始，不区分大小写的以某个值开始、以某个值结束、不区分大小写的以某个值结束。示例代码如下：</p>
-<pre><code class="language-python">articles = Article.objects.filter(title__endswith=&quot;hello&quot;)
-</code></pre>
-</li>
-<li>
-<p>关于时间的查询条件：</p>
-<ul>
-<li>
-<p>range：可以指定一个时间段。并且时间应该标记为<code>aware</code>时间，不然django会报警告。示例代码如下：</p>
-<pre><code class="language-python">start_time = make_aware(datetime(year=2018,month=4,day=4,hour=17,minute=0,second=0))
-end_time = make_aware(datetime(year=2018,month=4,day=4,hour=18,minute=0,second=0))
-articles = Article.objects.filter(create_time__range=(start_time,end_time))
-print(articles.query)
-print(articles)
-</code></pre>
-</li>
-<li>
-<p>date：用年月日来进行过滤。如果想要使用这个过滤条件，那么前提必须要在<code>MySQL</code>中添加好那些时区文件。如何添加呢？参考教案。示例代码如下：</p>
-<pre><code class="language-python">articles = Article.objects.filter(create_time__date=datetime(year=2018,month=4,day=4))
-</code></pre>
-</li>
-<li>
-<p>year/month/day：表示根据年/月/日进行查找。示例代码如下：</p>
-<pre><code class="language-python">articles = Article.objects.filter(create_time__year__gte=2018)
-</code></pre>
-</li>
-<li>
-<p>week_day：根据星期来进行查找。1表示星期天，7表示星期六，2-6代表的是星期一到星期五。比如要查找星期三的所有文章，那么可以通过以下代码来实现：</p>
-<pre><code class="language-python">articles = Article.objects.filter(create_time__week_day=4)
-</code></pre>
-</li>
-<li>
-<p>time：根据分时秒来进行查找。如果要具体到秒，一般比较难匹配到，可以使用区间的方式来进行查找。区间使用<code>range</code>条件。比如想要获取17时/10分/27-28秒之间的文章，那么可以通过以下代码来实现：</p>
-<pre><code class="language-python">start_time = time(hour=17,minute=10,second=27)
-end_time = time(hour=17,minute=10,second=28)
-articles = Article.objects.filter(create_time__time__range=(start_time,end_time))
-</code></pre>
-</li>
-</ul>
-</li>
-</ol>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[djang学习笔记数据库（一）]]></title>
-        <id>https://906571331.github.io/yx.github.io/post/djang-xue-xi-bi-ji-shu-ju-ku-yi/</id>
-        <link href="https://906571331.github.io/yx.github.io/post/djang-xue-xi-bi-ji-shu-ju-ku-yi/">
-        </link>
-        <updated>2020-04-08T07:52:02.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="本篇博客记录了博主在学习django操作数据库时的笔记">本篇博客记录了博主在学习Django操作数据库时的笔记：</h3>
-<h4 id="1在有表单的页面viewspy的处理方式">1.在有表单的页面，views.py的处理方式:</h4>
-<pre><code class="language-python">#在urls.py中有个url是name=index
-#views.py
-def add_book(request):
-	if request.method=='GET':
-		return render(request,&quot;add_book.html&quot;)
-	else:
-		name=request.POST.get('name')
-		author=request.POST.get('author')
-		return redirect(reverse('index'))
-#url中传递多个值
-/?P&lt;book_id&gt;\d+/
-</code></pre>
-<h4 id="2最简单的orm模型">2.最简单的ORM模型</h4>
-<pre><code class="language-python">from djangfo.db import models
-#创建一个模型，对应表中的的一张表
-class Book(models.Model):
-	#创建模型中的一个属性，对应表中的一个字段，id可有可无，AutoField是自动增长，可以设置为主键
-	id=models.Autofield(primary_key=True)
-	#当属性是CharField时，必须制定最大长度
-	name=models.CharField(max_length=100,null=Flase)
-	author=models.CharField(max_length=100)
-	price = models.FloatField()
-#一个模型的对象，对应数据库表中的一条数据
-book =Book(name=&quot;三国演义&quot;，author=&quot;罗贯中&quot;，price=100)
-book.save()
-book.delete()
-</code></pre>
-<h4 id="3数据库迁移的两条命令">3.数据库迁移的两条命令</h4>
-<pre><code class="language-bash">python manage.py makemigrations
-python manage.py migrate
-</code></pre>
-<h4 id="4向数据库中插入数据">4.向数据库中插入数据</h4>
-<pre><code class="language-python">#views.py
-from .models import Book
-from django.http import HttpResponse
-def index(request):
-    #使用ORM添加一条数据到数据库中
-    book=Book(name=&quot;三国演义&quot;,author=&quot;罗贯中&quot;,price=100)
-    book.save()
-    return HttpResponse(&quot;图书添加成功&quot;)
-</code></pre>
-<pre><code class="language-python">#models.py
-from django.db import models
-#将普通的类映射为数据库中的ORM模型
-#必须将父类设置为models.Model类，或其子类
-class Book(models.Model):
-    #AutoField代表是自动增长
-    id=models.AutoField(primary_key=True)
-    #设置CharField时必须设置最大长度，Null=False不能为空
-    name=models.CharField(max_length=100,null=False)
-    author=models.CharField(max_length=100,null=False)
-    price=models.FloatField(null=False,default=0)
-</code></pre>
-<p><img src="https://img-blog.csdnimg.cn/20200407091940656.png" alt="在这里插入图片描述" loading="lazy"><br>
-<img src="https://img-blog.csdnimg.cn/2020040709195160.png" alt="在这里插入图片描述" loading="lazy"></p>
-<h4 id="5查找数据一">5.查找数据（一）</h4>
-<pre><code class="language-python">#views.py
-from .models import Book
-from django.http import HttpResponse
-def index(request):
-    #使用主键查找
-    Book.objects.get(pk=1)
-    return HttpResponse(&quot;图书查找成功&quot;)
-</code></pre>
-<pre><code class="language-python">#models.py
-from django.db import models
-#将普通的类映射为数据库中的ORM模型
-#必须将父类设置为models.Model类，或其子类
-class Book(models.Model):
-    #AutoField代表是自动增长
-    id=models.AutoField(primary_key=True)
-    #设置CharField时必须设置最大长度，Null=False不能为空
-    name=models.CharField(max_length=100,null=False)
-    author=models.CharField(max_length=100,null=False)
-    price=models.FloatField(null=False,default=0)
-</code></pre>
-<h4 id="6查找数据二">6.查找数据（二）</h4>
-<pre><code class="language-python">#models.py
-from django.db import models
-#将普通的类映射为数据库中的ORM模型
-#必须将父类设置为models.Model类，或其子类
-class Book(models.Model):
-    #AutoField代表是自动增长
-    id=models.AutoField(primary_key=True)
-    #设置CharField时必须设置最大长度，Null=False不能为空
-    name=models.CharField(max_length=100,null=False)
-    author=models.CharField(max_length=100,null=False)
-    price=models.FloatField(null=False,default=0)
-    #将以这种形式返回
-    def __str__(self):
-        return &quot;&lt;Book:({name},{author},{price})&gt;&quot;.format(name=self.name,author=self.author,price=self.price)
-</code></pre>
-<pre><code class="language-python">#views.py
-from .models import Book
-from django.http import HttpResponse
-def index(request):
-    #使用ORM添加一条数据到数据库中
-    # book=Book(name=&quot;三国演义&quot;,author=&quot;罗贯中&quot;,price=100)
-    # book.save()
-    book=Book.objects.get(pk=1)
-    print(book)
-    return HttpResponse(book)
-</code></pre>
-<h4 id="7过滤查找">7.过滤查找</h4>
-<pre><code class="language-python">#views.py
-#.first返回第一条
-def index(request):
-    #使用ORM添加一条数据到数据库中
-    # book=Book(name=&quot;三国演义&quot;,author=&quot;罗贯中&quot;,price=100)
-    # book.save()
-    # book=Book.objects.get(pk=1)
-    # print(book)
-    books=Book.objects.filter(name=&quot;三国演义&quot;).first()
-    print(books)
-    return HttpResponse(&quot;查找成功&quot;)
-</code></pre>
-<p>第一条为不加first，第二条为加.first<br>
-<img src="https://img-blog.csdnimg.cn/20200407093859633.png" alt="在这里插入图片描述" loading="lazy"></p>
-<h4 id="8删除数据">8.删除数据</h4>
-<pre><code class="language-python">def index(request):    
-	book=Book.objects.get(pk=1)
-    book.delete()
-    return HttpResponse(&quot;删除成功&quot;)
-</code></pre>
-<h4 id="9修改数据">9.修改数据</h4>
-<pre><code class="language-python">def index(request):    
-	book=Book.objects.get(pk=1)
-	book.price=90
-    book.save()
-    return HttpResponse(&quot;修改成功&quot;)
-</code></pre>
-<h4 id="10field详解">10.field详解</h4>
-<pre><code class="language-python">#必须设置primary_key，否则为一个普通的字段
-id=models.BigAutoField(primary_key=true)
-#如果删除则不显示
-removed=models.NullBooleanField()
-同时在views.py中如下设置
-article=Article(removed=False)
-article.save()
-</code></pre>
-<h4 id="python中的时区转换">python中的时区转换</h4>
-<p>pytz库是专门用来处理时区的库</p>
-<pre><code class="language-python">&gt;&gt;&gt; from datetime import datetime
-&gt;&gt;&gt; now=datetime.now()
-&gt;&gt;&gt; now
-datetime.datetime(2020, 4, 7, 2, 27, 35, 710567)
-&gt;&gt;&gt; import patz
-Traceback (most recent call last):
-  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
-ModuleNotFoundError: No module named 'patz'
-&gt;&gt;&gt; import pytz
-&gt;&gt;&gt; utc_timezone=pytz.timezone('UTC')
-&gt;&gt;&gt; now.astimezone(utc_timezone)
-datetime.datetime(2020, 4, 7, 9, 27, 35, 710567, tzinfo=&lt;UTC&gt;)
-&gt;&gt;&gt; now
-datetime.datetime(2020, 4, 7, 2, 27, 35, 710567)
-
-</code></pre>
-<h1 id="常用field笔记">常用Field笔记：</h1>
-<h2 id="navie时间和aware时间">navie时间和aware时间：</h2>
-<h3 id="什么是navie时间什么是aware时间">什么是navie时间？什么是aware时间？</h3>
-<ol>
-<li>navie时间：不知道自己的时间表示的是哪个时区的。也就是不知道自己几斤几两。比较幼稚。</li>
-<li>aware时间：知道自己的时间表示的是哪个时区的。也就是比较清醒。</li>
-</ol>
-<h3 id="pytz库">pytz库：</h3>
-<p>专门用来处理时区的库。这个库会经常更新一些时区的数据，不需要我们担心。并且这个库在安装Django的时候会默认的安装。如果没有安装，那么可以通过<code>pip install pytz</code>的方式进行安装。</p>
-<h3 id="astimezone方法">astimezone方法：</h3>
-<p>将一个时区的时间转换为另外一个时区的时间。这个方法只能被<code>aware</code>类型的时间调用。不能被<code>navie</code>类型的时间调用。<br>
-示例代码如下：</p>
-<pre><code class="language-python">import pytz
-from datetime import datetime
-now = datetime.now() # 这是一个navie类型的时间
-utc_timezone = pytz.timezone(&quot;UTC&quot;) # 定义UTC的时区对象
-utc_now = now.astimezone(utc_timezone) # 将当前的时间转换为UTC时区的时间
-&gt;&gt; ValueError: astimezone() cannot be applied to a naive datetime # 会抛出一个异常，原因就是因为navie类型的时间不能调用astimezone方法
-
-
-now = now.replace(tzinfo=pytz.timezone('Asia/Shanghai'))
-utc_now = now.astimezone(utc_timezone)
-# 这时候就可以正确的转换。
-</code></pre>
-<h3 id="replace方法">replace方法：</h3>
-<p>可以将一个时间的某些属性进行更改。</p>
-<h3 id="djangoutilstimezonenow方法">django.utils.timezone.now方法：</h3>
-<p>会根据<code>settings.py</code>中是否设置了<code>USE_TZ=True</code>获取当前的时间。如果设置了，那么就获取一个<code>aware</code>类型的<code>UTC</code>时间。如果没有设置，那么就会获取一个<code>navie</code>类型的时间。</p>
-<pre><code class="language-python">#models.py
-create_time=models.DateTimeField(default=timezone.now())
-#views.py
-book=Book(create_time=now())
-book.save()
-</code></pre>
-<p>和本地时间差8个小时<br>
-<img src="https://img-blog.csdnimg.cn/20200407180926600.png" alt="在这里插入图片描述" loading="lazy"><br>
-在本地显示时间时：<br>
-<img src="https://img-blog.csdnimg.cn/20200407182550898.png" alt="在这里插入图片描述" loading="lazy"></p>
-<pre><code class="language-python">#models.py
-create_time=models.DateTimeField(default=timezone.now())
-#auto_now_add第一次保存进数据库时
-create_time=models.DateTimeField(auto_now_add=True)
-</code></pre>
-<pre><code class="language-python"> #views.py
-def index()request:
-     book=Book.objects.get(pk=3)
-     create_time=book.create_time
-     return render(request,&quot;inde.html&quot;,context={'create_time':create_time})
-</code></pre>
-<pre><code class="language-html">#在头部引入
-{% load tz %}
-#在合适的地方，不加localtime也可以正确显示
-{{ create_time|localtime }}
-</code></pre>
-<h3 id="djangoutilstimezonelocaltime方法">django.utils.timezone.localtime方法：</h3>
-<p>会根据<code>setting.py</code>中的<code>TIME_ZONE</code>来将一个<code>aware</code>类型的时间转换为<code>TIME_ZONE</code>指定时区的时间。</p>
-<h2 id="datefield">DateField：</h2>
-<p>日期类型。在<code>Python</code>中是<code>datetime.date</code>类型，可以记录年月日。在映射到数据库中也是<code>date</code>类型。使用这个<code>Field</code>可以传递以下几个参数：</p>
-<ol>
-<li><code>auto_now</code>：在每次这个数据保存的时候，都使用当前的时间。比如作为一个记录修改日期的字段，可以将这个属性设置为<code>True</code>。更新时间</li>
-<li><code>auto_now_add</code>：在每次数据第一次被添加进去的时候，都使用当前的时间。比如作为一个记录第一次入库的字段，可以将这个属性设置为<code>True</code>。创建时间</li>
-</ol>
-<h2 id="datetimefield">DateTimeField：</h2>
-<p>日期时间类型，类似于<code>DateField</code>。不仅仅可以存储日期，还可以存储时间。映射到数据库中是<code>datetime</code>类型。这个<code>Field</code>也可以使用<code>auto_now</code>和<code>auto_now_add</code>两个属性。</p>
-<h2 id="timefield">TimeField：</h2>
-<p>时间类型。在数据库中是<code>time</code>类型。在<code>Python</code>中是<code>datetime.time</code>类型。</p>
-<h3 id="navie和aware介绍以及在django中的用法">navie和aware介绍以及在django中的用法：</h3>
-<p>https://docs.djangoproject.com/en/2.0/topics/i18n/timezones/</p>
-<h2 id="emailfield">EmailField：</h2>
-<p>类似于<code>CharField</code>。在数据库底层也是一个<code>varchar</code>类型。最大长度是254个字符。</p>
-<h2 id="filefield">FileField：</h2>
-<p>用来存储文件的。这个请参考后面的文件上传章节部分。</p>
-<h3 id="imagefield">ImageField：</h3>
-<p>用来存储图片文件的。这个请参考后面的图片上传章节部分。</p>
-<h3 id="floatfield">FloatField：</h3>
-<p>浮点类型。映射到数据库中是<code>float</code>类型。</p>
-<h3 id="integerfield">IntegerField：</h3>
-<p>整形。值的区间是<code>-2147483648——2147483647</code>。</p>
-<h3 id="bigintegerfield">BigIntegerField：</h3>
-<p>大整形。值的区间是<code>-9223372036854775808——9223372036854775807</code>。</p>
-<h3 id="positiveintegerfield">PositiveIntegerField：</h3>
-<p>正整形。值的区间是<code>0——2147483647</code>。</p>
-<h3 id="smallintegerfield">SmallIntegerField：</h3>
-<p>小整形。值的区间是<code>-32768——32767</code>。</p>
-<h3 id="positivesmallintegerfield">PositiveSmallIntegerField：</h3>
-<p>正小整形。值的区间是<code>0——32767</code>。</p>
-<h3 id="textfield">TextField：</h3>
-<p>大量的文本类型。映射到数据库中是longtext类型。</p>
-<h3 id="uuidfield">UUIDField：</h3>
-<p>只能存储<code>uuid</code>格式的字符串。<code>uuid</code>是一个32位的全球唯一的字符串，一般用来作为主键。</p>
-<h3 id="urlfield">URLField：</h3>
-<p>类似于<code>CharField</code>，只不过只能用来存储<code>url</code>格式的字符串。并且默认的<code>max_length</code>是200。</p>
-<h2 id="field常用的参数">Field常用的参数</h2>
-<h3 id="null">null：</h3>
-<p>如果设置为<code>True</code>，<code>Django</code>将会在映射表的时候指定是否为空。默认是为<code>False</code>。在使用字符串相关的<code>Field</code>（CharField/TextField）的时候，官方推荐尽量不要使用这个参数，也就是保持默认值<code>False</code>。因为<code>Django</code>在处理字符串相关的<code>Field</code>的时候，即使这个<code>Field</code>的<code>null=False</code>，如果你没有给这个<code>Field</code>传递任何值，那么<code>Django</code>也会使用一个空的字符串<code>&quot;&quot;</code>来作为默认值存储进去。因此如果再使用<code>null=True</code>，<code>Django</code>会产生两种空值的情形（NULL或者空字符串）。如果想要在表单验证的时候允许这个字符串为空，那么建议使用<code>blank=True</code>。如果你的<code>Field</code>是<code>BooleanField</code>，那么对应的可空的字段则为<code>NullBooleanField</code>。</p>
-<h3 id="blank">blank：</h3>
-<p>标识这个字段在表单验证的时候是否可以为空。默认是<code>False</code>。<br>
-这个和<code>null</code>是有区别的，<code>null</code>是一个纯数据库级别的。而<code>blank</code>是<code>表单验证</code>级别的。</p>
-<h3 id="db_column">db_column：</h3>
-<p>这个字段在数据库中的名字。如果没有设置这个参数，那么将会使用模型中属性的名字。</p>
-<h3 id="default">default：</h3>
-<p>默认值。可以为一个值，或者是一个函数，但是不支持<code>lambda</code>表达式。并且不支持列表/字典/集合等可变的数据结构。</p>
-<h3 id="primary_key">primary_key：</h3>
-<p>是否为主键。默认是<code>False</code>。</p>
-<h3 id="unique">unique：</h3>
-<p>在表中这个字段的值是否唯一。一般是设置手机号码/邮箱等。</p>
-<p>更多<code>Field</code>参数请参考官方文档：<a href="https://docs.djangoproject.com/zh-hans/2.0/ref/models/fields/">https://docs.djangoproject.com/zh-hans/2.0/ref/models/fields/</a></p>
-<h2 id="模型中meta配置">模型中<code>Meta</code>配置：</h2>
-<p>对于一些模型级别的配置。我们可以在模型中定义一个类，叫做<code>Meta</code>。然后在这个类中添加一些类属性来控制模型的作用。比如我们想要在数据库映射的时候使用自己指定的表名，而不是使用模型的名称。那么我们可以在<code>Meta</code>类中添加一个<code>db_table</code>的属性。示例代码如下：</p>
-<pre><code class="language-python">class Book(models.Model):
-    name = models.CharField(max_length=20,null=False)
-    desc = models.CharField(max_length=100,name='description',db_column=&quot;description1&quot;)
-
-class Meta:
-    db_table = 'book_model'
-</code></pre>
-<p>以下将对<code>Meta</code>类中的一些常用配置进行解释。</p>
-<h3 id="db_table">db_table：</h3>
-<p>这个模型映射到数据库中的表名。如果没有指定这个参数，那么在映射的时候将会使用模型名来作为默认的表名。</p>
-<h3 id="ordering">ordering：</h3>
-<p>设置在提取数据的排序方式。后面章节会讲到如何查找数据。比如我想在查找数据的时候根据添加的时间排序，那么示例代码如下：</p>
-<pre><code class="language-python">class Book(models.Model):
-	name = models.CharField(max_length=20,null=False)
-	desc = models.CharField(max_length=100,name='description',db_column=&quot;description1&quot;)
-	pub_date = models.DateTimeField(auto_now_add=True)
-
-	class Meta:
-		db_table = 'book_model'
-		#-号表示相反排序
-		ordering = ['-pub_date']
 </code></pre>
 ]]></content>
     </entry>
