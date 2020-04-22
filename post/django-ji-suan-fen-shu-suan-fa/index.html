@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://906571331.github.io/yx.github.io//favicon.ico?v=1587519981897">
+<link rel="shortcut icon" href="https://906571331.github.io/yx.github.io//favicon.ico?v=1587549155817">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://906571331.github.io/yx.github.io//styles/main.css">
 
@@ -30,7 +30,7 @@
   <div class="site-header">
     <div class="left">
       <a href="https://906571331.github.io/yx.github.io/">
-        <img class="avatar" src="https://906571331.github.io/yx.github.io//images/avatar.png?v=1587519981897" alt="" width="32px" height="32px">
+        <img class="avatar" src="https://906571331.github.io/yx.github.io//images/avatar.png?v=1587549155817" alt="" width="32px" height="32px">
       </a>
       <a href="https://906571331.github.io/yx.github.io/">
         <h1 class="site-title">WuXin</h1>
@@ -340,6 +340,271 @@ class Mark(models.Model):
 <h4 id="效果">效果</h4>
 <figure data-type="image" tabindex="2"><img src="https://img-blog.csdnimg.cn/20200421201736839.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
 <h4 id="存在的问题是不能循环遍历出同一科目或者同一考试下的所有题目">存在的问题是：不能循环遍历出同一科目或者同一考试下的所有题目</h4>
+<p><code>时间：2020年4月22日17:01:00</code><br>
+前端已经实现循环遍历，实现方法为：</p>
+<pre><code class="language-python">#views.py
+from django.shortcuts import render
+from django.views.generic import View
+from django.http import HttpResponse
+from .models import Question,Exam,Subject
+from django.db import models
+# Create your views here.
+class ExamView(View):
+    def get(self,request):
+        subjetcs1=Subject.objects.get(id=1)
+        print(subjetcs1)
+        question=Question.objects.filter(subject=subjetcs1)
+        context={
+            &quot;question&quot;:question,
+        }
+        return render(request, &quot;exam.html&quot;,context=context)
+    def post(self,request):
+        question = request.POST.get('question')
+        question2=request.POST.get('question2')
+        options_list=re(request)
+        print(question)
+        print(question2)
+        my_answer=[]
+        my_answer.append(question)
+        my_answer.append(question2)
+        print(my_answer)
+        print(options_list)
+        return HttpResponse(&quot;success&quot;)
+#打印所有题目的正确答案
+def re(request):
+    option_list = []
+    options=Question.objects.all()
+    for option in options:
+        option_list.append(option.correct_op)
+    return option_list
+
+</code></pre>
+<pre><code class="language-python">#models.py
+from django.db import models
+from users.models import User
+
+# Create your models here.
+
+#科目
+class Subject(models.Model):
+	name 			= models.CharField(max_length=255,verbose_name=&quot;科目名称&quot;)
+	description 	= models.TextField(verbose_name=&quot;科目描述&quot;)
+	cover_image 	= models.ImageField(upload_to = 'cover/',blank=True)
+	class Meta:
+		verbose_name=&quot;科目&quot;
+		verbose_name_plural=verbose_name
+	def __str__(self):
+		return self.name
+
+class Question(models.Model):
+	choice = (('A','A'),('B','B'),('C','C'),('D','D'))
+	subject 	= models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
+	statments 	= models.TextField(verbose_name=&quot;问题描述&quot;)
+	op_A 	= models.CharField(max_length=1000)
+	op_B 	= models.CharField(max_length=1000)
+	op_C 	= models.CharField(max_length=1000)
+	op_D 	= models.CharField(max_length=1000)
+	correct_op 	= models.CharField(choices=choice,max_length=10)
+	mark 		= models.IntegerField(default=1)
+	class Meta:
+		verbose_name=&quot;问题&quot;
+		verbose_name_plural=verbose_name
+	def __str__(self):
+		return self.statments
+
+
+class Exam(models.Model):
+	subject = models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
+	name = models.CharField(max_length=100,blank=True,verbose_name=&quot;本次考试名称&quot;)
+	class Meta:
+		verbose_name=&quot;考试&quot;
+		verbose_name_plural=verbose_name
+	def __str__(self):
+		return self.name
+
+class Mark(models.Model):
+	user = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name=&quot;用户&quot;)
+	subject = models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
+	exam = models.ForeignKey(Exam,on_delete=models.CASCADE,verbose_name=&quot;考试名称&quot;)
+	total_marks = models.CharField(max_length=10,verbose_name=&quot;总分数&quot;)
+	class Meta:
+		verbose_name=&quot;分数&quot;
+		verbose_name_plural=verbose_name
+	def __str__(self):
+		return self.total_marks
+
+</code></pre>
+<pre><code class="language-html">#exam.html
+&lt;form action=&quot;&quot; method=&quot;post&quot;&gt;
+    {% csrf_token %}
+{#循环读出所有的试题#}
+    {% for foo in question %}
+       &lt;tr&gt;
+        &lt;td&gt;{{ foo.statments}}&lt;/td&gt;&lt;br&gt;
+        &lt;td&gt;{{ foo.op_A }}&lt;/td&gt;&lt;br&gt;
+        &lt;td&gt;{{ foo.op_B }}&lt;/td&gt;&lt;br&gt;
+        &lt;td&gt;{{ foo.op_C }}&lt;/td&gt;&lt;br&gt;
+        &lt;td&gt;{{ foo.op_D }}&lt;/td&gt;&lt;br&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;{{ foo.id }}&quot; value=&quot;A&quot;&gt;A&lt;/td&gt;
+        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;{{ foo.id }}&quot; value=&quot;B&quot;&gt;B&lt;/td&gt;
+        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;{{ foo.id }}&quot; value=&quot;C&quot;&gt;C&lt;/td&gt;
+        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;{{ foo.id }}&quot; value=&quot;D&quot;&gt;D&lt;/td&gt;
+        &lt;br&gt;
+    &lt;/tr&gt;
+    {% endfor %}
+    &lt;input type=&quot;submit&quot; name=&quot;exam&quot; value=&quot;提交&quot;&gt;
+&lt;/form&gt;
+</code></pre>
+<p><code>时间：2020年4月22日17:45:31</code><br>
+实现了自动取出题目，答题，自动计算分数</p>
+<pre><code class="language-python">#views.py
+from django.shortcuts import render
+from django.views.generic import View
+from django.http import HttpResponse
+from .models import Question,Exam,Subject
+from django.db import models
+# Create your views here.
+class ExamView(View):
+    def get(self,request):
+        #获取id=1的科目
+        subjetcs1=Subject.objects.get(id=1)
+        #打印这个科目的名称，可省去
+        print(subjetcs1)
+        #获取到这个科目下的所有试题
+        question=Question.objects.filter(subject=subjetcs1)
+        context={
+            &quot;question&quot;:question,
+        }
+        return render(request, &quot;exam.html&quot;,context=context)
+    def post(self,request):
+        #设置用户答案为一个空列表
+        my_answer = []
+        #依次从前端的答案中读取用户的选择，一共3道题，所以，这里的4应该手动修改
+        for i in range(1,4):
+            answer1 = request.POST.get('%s'%i)
+            my_answer.append(answer1)
+            i+=1
+        print(&quot;用户答案为：&quot;,my_answer)
+        # 打印所有题目的正确答案
+        correct_answer=re(request)
+        print(&quot;正确答案为：&quot;,correct_answer)
+        #基础，提升，专业分数,总分数均初始化为0
+        base_mark=0
+        promote_mark=0
+        major_mark=0
+        total_mark=0
+        i=0
+        while i &lt;= 2:
+            if i &lt;= 0:
+                if correct_answer[i] == my_answer[i]:
+                    base_mark += 1
+                    total_mark = total_mark + 1
+            elif i &lt;= 1:
+                if correct_answer[i] == my_answer[i]:
+                    total_mark = total_mark + 1
+                    promote_mark += 1
+            else:
+                if correct_answer[i] == my_answer[i]:
+                    total_mark = total_mark + 1
+                    major_mark += 1
+            i = i + 1
+        print(&quot;总分数为：&quot;, total_mark)
+        print(&quot;基础分数为：&quot;, base_mark)
+        print(&quot;提升分数为：&quot;, promote_mark)
+        print(&quot;专业分数为：&quot;, major_mark)
+        return HttpResponse(&quot;success&quot;)
+#打印所有题目的正确答案
+def re(request):
+    option_list = []
+    options=Question.objects.all()
+    for option in options:
+        option_list.append(option.correct_op)
+    return option_list
+
+</code></pre>
+<pre><code class="language-python">#models.py
+from django.db import models
+from users.models import User
+
+# Create your models here.
+
+#科目
+class Subject(models.Model):
+	name 			= models.CharField(max_length=255,verbose_name=&quot;科目名称&quot;)
+	description 	= models.TextField(verbose_name=&quot;科目描述&quot;)
+	cover_image 	= models.ImageField(upload_to = 'cover/',blank=True)
+	class Meta:
+		verbose_name=&quot;科目&quot;
+		verbose_name_plural=verbose_name
+	def __str__(self):
+		return self.name
+
+class Question(models.Model):
+	choice = (('A','A'),('B','B'),('C','C'),('D','D'))
+	subject 	= models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
+	statments 	= models.TextField(verbose_name=&quot;问题描述&quot;)
+	op_A 	= models.CharField(max_length=1000)
+	op_B 	= models.CharField(max_length=1000)
+	op_C 	= models.CharField(max_length=1000)
+	op_D 	= models.CharField(max_length=1000)
+	correct_op 	= models.CharField(choices=choice,max_length=10)
+	mark 		= models.IntegerField(default=1)
+	class Meta:
+		verbose_name=&quot;问题&quot;
+		verbose_name_plural=verbose_name
+	def __str__(self):
+		return self.statments
+
+
+class Exam(models.Model):
+	subject = models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
+	name = models.CharField(max_length=100,blank=True,verbose_name=&quot;本次考试名称&quot;)
+	class Meta:
+		verbose_name=&quot;考试&quot;
+		verbose_name_plural=verbose_name
+	def __str__(self):
+		return self.name
+
+class Mark(models.Model):
+	user = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name=&quot;用户&quot;)
+	subject = models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
+	exam = models.ForeignKey(Exam,on_delete=models.CASCADE,verbose_name=&quot;考试名称&quot;)
+	total_marks = models.CharField(max_length=10,verbose_name=&quot;总分数&quot;)
+	class Meta:
+		verbose_name=&quot;分数&quot;
+		verbose_name_plural=verbose_name
+	def __str__(self):
+		return self.total_marks
+</code></pre>
+<pre><code class="language-html">&lt;form action=&quot;&quot; method=&quot;post&quot;&gt;
+{#    csrf_token保护#}
+    {% csrf_token %}
+    {#循环读出所有的试题#}
+    {% for foo in question %}
+       &lt;tr&gt;
+        {#每一道题的描述#}
+        &lt;td&gt;{{ foo.statments}}&lt;/td&gt;&lt;br&gt;
+        &lt;td&gt;{{ foo.op_A }}&lt;/td&gt;&lt;br&gt;
+        &lt;td&gt;{{ foo.op_B }}&lt;/td&gt;&lt;br&gt;
+        &lt;td&gt;{{ foo.op_C }}&lt;/td&gt;&lt;br&gt;
+        &lt;td&gt;{{ foo.op_D }}&lt;/td&gt;&lt;br&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;{{ foo.id }}&quot; value=&quot;A&quot;&gt;A&lt;/td&gt;
+        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;{{ foo.id }}&quot; value=&quot;B&quot;&gt;B&lt;/td&gt;
+        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;{{ foo.id }}&quot; value=&quot;C&quot;&gt;C&lt;/td&gt;
+        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;{{ foo.id }}&quot; value=&quot;D&quot;&gt;D&lt;/td&gt;
+        &lt;br&gt;
+    &lt;/tr&gt;
+    {% endfor %}
+    &lt;input type=&quot;submit&quot; name=&quot;exam&quot; value=&quot;提交&quot;&gt;
+&lt;/form&gt;
+</code></pre>
+<p>实现效果：<br>
+<img src="https://img-blog.csdnimg.cn/20200422174834865.png" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20200422174819919.png" alt="在这里插入图片描述" loading="lazy"></p>
 
           </div>
         </div>
