@@ -1,0 +1,688 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>Django实现考试系统 | WuXin</title>
+<meta name="description" content="成千上万个门口，总有一个人要先走。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://906571331.github.io/yx.github.io//favicon.ico?v=1587639054655">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://906571331.github.io/yx.github.io//styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://906571331.github.io/yx.github.io/">
+        <img class="avatar" src="https://906571331.github.io/yx.github.io//images/avatar.png?v=1587639054655" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://906571331.github.io/yx.github.io/">
+        <h1 class="site-title">WuXin</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="https://906571331.github.io/yx.github.io/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://906571331.github.io/yx.github.io/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="https://906571331.github.io/yx.github.io/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+            <div class="feature-container" style="background-image: url('https://906571331.github.io/yx.github.io//post-images/django-shi-xian-kao-shi-xi-tong.jpg')">
+            </div>
+          
+          <h2 class="post-title">Django实现考试系统</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2020-04-23</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://906571331.github.io/yx.github.io/tag/sR-2jrK5Z/">
+                    Django
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content">
+            <p><code>时间：2020年4月23日17:58:01</code><br>
+Django实现考试系统</p>
+<pre><code class="language-python">#views.py
+from django.shortcuts import render
+from django.views.generic import View
+from django.http import HttpResponse
+from .models import Question,Exam,Subject,Mark
+from django.db import models
+
+# Create your views here.
+class ExamView(View):
+    def get(self,request):
+        #获取id=1的科目
+        subjetcs1=Subject.objects.get(id=1)
+        #打印这个科目的名称，可省去
+        print(subjetcs1)
+        #获取到这个科目下的所有试题
+        question=Question.objects.filter(subject=subjetcs1)
+        context={
+            &quot;question&quot;:question,
+        }
+        return render(request, &quot;exam03.html&quot;,context=context)
+    def post(self,request):
+        #设置用户答案为一个空列表
+        if request.user.is_authenticated:
+            # uid=request.user.id
+            uid = request.user
+            uname=request.user.nick_name
+        subjetcs1 = Subject.objects.get(id=1)
+        current_exam=Exam.objects.get(id=1)
+        print(&quot;本次考试的科目为：&quot;,subjetcs1)
+        print(&quot;本次考试名称为：&quot;, current_exam)
+        print(uid)
+        print(uname)
+        my_answer = []
+        #依次从前端的答案中读取用户的选择，一共3道题，所以，这里的4应该手动修改
+        for i in range(1,4):
+            answer1 = request.POST.get('%s'%i)
+            my_answer.append(answer1)
+            i+=1
+        print(&quot;用户答案为：&quot;,my_answer)
+        # 打印所有题目的正确答案
+        correct_answer=re(request)
+        print(&quot;正确答案为：&quot;,correct_answer)
+        #基础，提升，专业分数,总分数均初始化为0
+        base_mark=0
+        promote_mark=0
+        major_mark=0
+        total_mark=0
+        i=0
+        while i &lt;= 2:
+            if i &lt;= 0:
+                if correct_answer[i] == my_answer[i]:
+                    base_mark += 1
+                    total_mark = total_mark + 1
+            elif i &lt;= 1:
+                if correct_answer[i] == my_answer[i]:
+                    total_mark = total_mark + 1
+                    promote_mark += 1
+            else:
+                if correct_answer[i] == my_answer[i]:
+                    total_mark = total_mark + 1
+                    major_mark += 1
+            i = i + 1
+        print(&quot;总分数为：&quot;, total_mark)
+        print(&quot;基础分数为：&quot;, base_mark)
+        print(&quot;提升分数为：&quot;, promote_mark)
+        print(&quot;专业分数为：&quot;, major_mark)
+        mark=Mark(user=uid,subject=subjetcs1,total_mark=total_mark,exam=current_exam,base_mark=base_mark,promote_mark=promote_mark,major_mark=major_mark)
+        mark.save()
+        return render(request,'commite_succcess.html')
+#打印所有题目的正确答案
+def re(request):
+    option_list = []
+    options=Question.objects.all()
+    for option in options:
+        option_list.append(option.correct_op)
+    return option_list
+
+</code></pre>
+<pre><code class="language-python">#models.py
+from django.db import models
+from datetime import datetime
+# Create your models here.
+from django.db import models
+from users.models import UserProfile
+# Create your models here.
+
+#科目
+class Subject(models.Model):
+	name 			= models.CharField(max_length=255,verbose_name=&quot;科目名称&quot;)
+	description 	= models.TextField(verbose_name=&quot;科目描述&quot;)
+	cover_image 	= models.ImageField(upload_to = 'cover/',blank=True)
+	class Meta:
+		verbose_name=&quot;科目&quot;
+		verbose_name_plural=verbose_name
+	def __str__(self):
+		return self.name
+
+class Question(models.Model):
+	choice = (('A','A'),('B','B'),('C','C'),('D','D'))
+	subject 	= models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
+	statments 	= models.TextField(verbose_name=&quot;问题描述&quot;)
+	op_A 	= models.CharField(max_length=1000)
+	op_B 	= models.CharField(max_length=1000)
+	op_C 	= models.CharField(max_length=1000)
+	op_D 	= models.CharField(max_length=1000)
+	correct_op 	= models.CharField(choices=choice,max_length=10)
+	mark 		= models.IntegerField(default=1)
+	class Meta:
+		verbose_name=&quot;题目&quot;
+		verbose_name_plural=verbose_name
+	def __str__(self):
+		return self.statments
+
+
+class Exam(models.Model):
+	user = models.ForeignKey(UserProfile,on_delete=models.CASCADE,verbose_name=&quot;用户&quot;)
+	subject = models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
+	name = models.CharField(max_length=100,blank=True,verbose_name=&quot;本次考试名称&quot;)
+	class Meta:
+		verbose_name=&quot;考试&quot;
+		verbose_name_plural=verbose_name
+	def __str__(self):
+		return self.name
+
+class Mark(models.Model):
+	user = models.ForeignKey(UserProfile,on_delete=models.CASCADE,verbose_name=&quot;用户&quot;)
+	subject = models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
+	exam = models.ForeignKey(Exam,on_delete=models.CASCADE,verbose_name=&quot;考试名称&quot;)
+	total_mark = models.CharField(max_length=10,verbose_name=&quot;总分数&quot;)
+	base_mark = models.CharField(max_length=10,verbose_name=&quot;基础分数&quot;)
+	promote_mark = models.CharField(max_length=10,verbose_name=&quot;提升分数&quot;)
+	major_mark = models.CharField(max_length=10,verbose_name=&quot;专业分数&quot;)
+	class Meta:
+		verbose_name=&quot;分数&quot;
+		verbose_name_plural=verbose_name
+	def __str__(self):
+		return self.total_mark
+
+# # class Rank(models.Model):
+# # 	pass
+
+</code></pre>
+<pre><code class="language-python">#urls.py
+from django.urls import path
+from .views import ExamView
+app_name = &quot;exam&quot;
+urlpatterns=[
+    path(&quot;exam01/&quot;,ExamView.as_view(),name='exam_start'),
+]
+</code></pre>
+<pre><code class="language-python">#adminx.py
+from django.shortcuts import render
+import xadmin
+from .models import *
+from users.models import UserProfile
+from xadmin import views
+
+class SubjectAdmin(object):
+	#可以显示的列
+    list_display=[&quot;name&quot;,&quot;description&quot;,&quot;cover_image&quot;]
+    #查找的设置
+    search_fields=[&quot;name&quot;,&quot;description&quot;,&quot;cover_image&quot;]
+    #过滤器的设置
+    list_filter=[&quot;name&quot;,&quot;description&quot;,&quot;cover_image&quot;]
+    #可以在当前页面编辑的列
+    list_editable=[&quot;name&quot;,&quot;description&quot;,&quot;cover_image&quot;]
+    model_icon=&quot;fa fa-bath&quot;
+class QuestionAdmin(object):
+	#可以显示的列
+    list_display=[&quot;subject&quot;,&quot;statments&quot;,&quot;op_A&quot;,&quot;op_B&quot;,&quot;op_C&quot;,&quot;op_D&quot;]
+    #查找的设置
+    search_fields=[&quot;subject&quot;,&quot;statments&quot;,&quot;op_A&quot;,&quot;op_B&quot;,&quot;op_C&quot;,&quot;op_D&quot;]
+    #过滤器的设置
+    list_filter=[&quot;subject&quot;,&quot;statments&quot;,&quot;op_A&quot;,&quot;op_B&quot;,&quot;op_C&quot;,&quot;op_D&quot;]
+    #可以在当前页面编辑的列
+    list_editable=[&quot;subject&quot;,&quot;statments&quot;,&quot;op_A&quot;,&quot;op_B&quot;,&quot;op_C&quot;,&quot;op_D&quot;]
+    model_icon=&quot;fa fa-bath&quot;
+class ExamAdmin(object):
+	#可以显示的列
+    list_display=[&quot;subject&quot;,&quot;name&quot;]
+    #查找的设置
+    search_fields=[&quot;subject&quot;,&quot;name&quot;]
+    #过滤器的设置
+    list_filter=[&quot;subject&quot;,&quot;name&quot;]
+    #可以在当前页面编辑的列
+    list_editable=[&quot;subject&quot;,&quot;name&quot;]
+    model_icon=&quot;fa fa-bath&quot;
+class MarkAdmin(object):
+	#可以显示的列
+    list_display=[&quot;user&quot;,&quot;subject&quot;,&quot;exam&quot;,&quot;total_mark&quot;]
+    #查找的设置
+    search_fields=[&quot;user&quot;,&quot;subject&quot;,&quot;exam&quot;,&quot;total_mark&quot;]
+    #过滤器的设置
+    list_filter=[&quot;user&quot;,&quot;subject&quot;,&quot;exam&quot;,&quot;total_mark&quot;]
+    #可以在当前页面编辑的列
+    list_editable=[&quot;user&quot;,&quot;subject&quot;,&quot;exam&quot;]
+    model_icon=&quot;fa fa-bath&quot;
+xadmin.site.register(Subject, SubjectAdmin)
+xadmin.site.register(Question, QuestionAdmin)
+xadmin.site.register(Exam, ExamAdmin)
+xadmin.site.register(Mark, MarkAdmin)
+</code></pre>
+<pre><code class="language-html">{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}考试页面{% endblock %}
+{% block custom_css %}
+{% endblock %}
+&lt;!--正文--&gt;
+{% block content %}
+
+&lt;form action=&quot;&quot; method=&quot;post&quot; class=&quot;exam_form&quot; style=&quot;font-family: 微软雅黑;font-size: 20px;&quot; align=&quot;center&quot;&gt;
+{#    csrf_token保护#}
+    {% csrf_token %}
+    {#循环读出所有的试题#}
+    {% for foo in question %}
+       &lt;tr&gt;
+        {#每一道题的描述#}
+        &lt;td&gt;{{ foo.statments}}&lt;/td&gt;&lt;br&gt;
+        &lt;td&gt;{{ foo.op_A }}&lt;/td&gt;&lt;br&gt;
+        &lt;td&gt;{{ foo.op_B }}&lt;/td&gt;&lt;br&gt;
+        &lt;td&gt;{{ foo.op_C }}&lt;/td&gt;&lt;br&gt;
+        &lt;td&gt;{{ foo.op_D }}&lt;/td&gt;&lt;br&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;{{ foo.id }}&quot; value=&quot;A&quot;&gt;A&lt;/td&gt;
+        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;{{ foo.id }}&quot; value=&quot;B&quot;&gt;B&lt;/td&gt;
+        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;{{ foo.id }}&quot; value=&quot;C&quot;&gt;C&lt;/td&gt;
+        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;{{ foo.id }}&quot; value=&quot;D&quot;&gt;D&lt;/td&gt;
+        &lt;br&gt;
+    &lt;/tr&gt;
+    {% endfor %}
+    &lt;input type=&quot;submit&quot; name=&quot;exam&quot; value=&quot;提交&quot;&gt;
+&lt;/form&gt;
+{% endblock %}
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20200423180130674.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+<h4 id="后台数据可视化">后台数据可视化</h4>
+<pre><code class="language-python">#views.py
+from django.shortcuts import render
+from django.views.generic import View
+from django.http import HttpResponse
+from .models import Question,Exam,Subject,Mark
+from django.db import models
+
+# Create your views here.
+class ExamView(View):
+    def get(self,request):
+        #获取id=1的科目
+        subjetcs1=Subject.objects.get(id=1)
+        #打印这个科目的名称，可省去
+        print(subjetcs1)
+        #获取到这个科目下的所有试题
+        question=Question.objects.filter(subject=subjetcs1)
+        context={
+            &quot;question&quot;:question,
+        }
+        return render(request, &quot;exam03.html&quot;,context=context)
+    def post(self,request):
+        #设置用户答案为一个空列表
+        if request.user.is_authenticated:
+            # uid=request.user.id
+            uid = request.user
+            uname=request.user.nick_name
+        subjetcs1 = Subject.objects.get(id=1)
+        current_exam=Exam.objects.get(id=1)
+        print(&quot;本次考试的科目为：&quot;,subjetcs1)
+        print(&quot;本次考试名称为：&quot;, current_exam)
+        print(uid)
+        print(uname)
+        my_answer = []
+        #依次从前端的答案中读取用户的选择，一共3道题，所以，这里的4应该手动修改
+        for i in range(1,4):
+            answer1 = request.POST.get('%s'%i)
+            my_answer.append(answer1)
+            i+=1
+        print(&quot;用户答案为：&quot;,my_answer)
+        # 打印所有题目的正确答案
+        correct_answer=re(request)
+        print(&quot;正确答案为：&quot;,correct_answer)
+        #基础，提升，专业分数,总分数均初始化为0
+        base_mark=0
+        promote_mark=0
+        major_mark=0
+        total_mark=0
+        i=0
+        while i &lt;= 2:
+            if i &lt;= 0:
+                if correct_answer[i] == my_answer[i]:
+                    base_mark += 1
+                    total_mark = total_mark + 1
+            elif i &lt;= 1:
+                if correct_answer[i] == my_answer[i]:
+                    total_mark = total_mark + 1
+                    promote_mark += 1
+            else:
+                if correct_answer[i] == my_answer[i]:
+                    total_mark = total_mark + 1
+                    major_mark += 1
+            i = i + 1
+        print(&quot;总分数为：&quot;, total_mark)
+        print(&quot;基础分数为：&quot;, base_mark)
+        print(&quot;提升分数为：&quot;, promote_mark)
+        print(&quot;专业分数为：&quot;, major_mark)
+        mark=Mark(user=uid,subject=subjetcs1,total_mark=total_mark,exam=current_exam,base_mark=base_mark,promote_mark=promote_mark,major_mark=major_mark)
+        mark.save()
+        return render(request,'commite_succcess.html')
+#打印所有题目的正确答案
+def re(request):
+    option_list = []
+    options=Question.objects.all()
+    for option in options:
+        option_list.append(option.correct_op)
+    return option_list
+
+# Create your views here.
+
+</code></pre>
+<pre><code class="language-python">#models.py
+from django.db import models
+from datetime import datetime
+# Create your models here.
+from django.db import models
+from users.models import UserProfile
+# Create your models here.
+
+#科目
+class Subject(models.Model):
+	name 			= models.CharField(max_length=255,verbose_name=&quot;科目名称&quot;)
+	description 	= models.TextField(verbose_name=&quot;科目描述&quot;)
+	cover_image 	= models.ImageField(upload_to = 'cover/',blank=True)
+	class Meta:
+		verbose_name=&quot;科目&quot;
+		verbose_name_plural=verbose_name
+	def __str__(self):
+		return self.name
+
+class Question(models.Model):
+	choice = (('A','A'),('B','B'),('C','C'),('D','D'))
+	subject 	= models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
+	statments 	= models.TextField(verbose_name=&quot;问题描述&quot;)
+	op_A 	= models.CharField(max_length=1000)
+	op_B 	= models.CharField(max_length=1000)
+	op_C 	= models.CharField(max_length=1000)
+	op_D 	= models.CharField(max_length=1000)
+	correct_op 	= models.CharField(choices=choice,max_length=10)
+	mark 		= models.IntegerField(default=1)
+	class Meta:
+		verbose_name=&quot;题目&quot;
+		verbose_name_plural=verbose_name
+	def __str__(self):
+		return self.statments
+
+
+class Exam(models.Model):
+	user = models.ForeignKey(UserProfile,on_delete=models.CASCADE,verbose_name=&quot;用户&quot;)
+	subject = models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
+	name = models.CharField(max_length=100,blank=True,verbose_name=&quot;本次考试名称&quot;)
+	class Meta:
+		verbose_name=&quot;考试&quot;
+		verbose_name_plural=verbose_name
+	def __str__(self):
+		return self.name
+
+class Mark(models.Model):
+	user = models.ForeignKey(UserProfile,on_delete=models.CASCADE,verbose_name=&quot;用户&quot;)
+	subject = models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
+	exam = models.ForeignKey(Exam,on_delete=models.CASCADE,verbose_name=&quot;考试名称&quot;)
+	total_mark = models.CharField(max_length=10,verbose_name=&quot;总分数&quot;)
+	base_mark = models.CharField(max_length=10,verbose_name=&quot;基础分数&quot;)
+	promote_mark = models.CharField(max_length=10,verbose_name=&quot;提升分数&quot;)
+	major_mark = models.CharField(max_length=10,verbose_name=&quot;专业分数&quot;)
+	class Meta:
+		verbose_name=&quot;分数&quot;
+		verbose_name_plural=verbose_name
+	def __str__(self):
+		return self.total_mark
+
+# # class Rank(models.Model):
+# # 	pass
+class Keshi(models.Model):
+    keshi = models.CharField(max_length=10, verbose_name=&quot;分数可视化&quot;)
+    class Meta:
+        verbose_name = &quot;分数可视化&quot;
+        verbose_name_plural = verbose_name
+
+</code></pre>
+<pre><code class="language-python">#adminx.py
+from django.shortcuts import render
+import xadmin
+from .models import *
+from users.models import UserProfile
+from xadmin import views
+from xadmin.views import CommAdminView
+class SubjectAdmin(object):
+	#可以显示的列
+    list_display=[&quot;name&quot;,&quot;description&quot;,&quot;cover_image&quot;]
+    #查找的设置
+    search_fields=[&quot;name&quot;,&quot;description&quot;,&quot;cover_image&quot;]
+    #过滤器的设置
+    list_filter=[&quot;name&quot;,&quot;description&quot;,&quot;cover_image&quot;]
+    #可以在当前页面编辑的列
+    list_editable=[&quot;name&quot;,&quot;description&quot;,&quot;cover_image&quot;]
+    model_icon=&quot;fa fa-bath&quot;
+class QuestionAdmin(object):
+	#可以显示的列
+    list_display=[&quot;subject&quot;,&quot;statments&quot;,&quot;op_A&quot;,&quot;op_B&quot;,&quot;op_C&quot;,&quot;op_D&quot;]
+    #查找的设置
+    search_fields=[&quot;subject&quot;,&quot;statments&quot;,&quot;op_A&quot;,&quot;op_B&quot;,&quot;op_C&quot;,&quot;op_D&quot;]
+    #过滤器的设置
+    list_filter=[&quot;subject&quot;,&quot;statments&quot;,&quot;op_A&quot;,&quot;op_B&quot;,&quot;op_C&quot;,&quot;op_D&quot;]
+    #可以在当前页面编辑的列
+    list_editable=[&quot;subject&quot;,&quot;statments&quot;,&quot;op_A&quot;,&quot;op_B&quot;,&quot;op_C&quot;,&quot;op_D&quot;]
+    model_icon=&quot;fa fa-bath&quot;
+class ExamAdmin(object):
+	#可以显示的列
+    list_display=[&quot;subject&quot;,&quot;name&quot;]
+    #查找的设置
+    search_fields=[&quot;subject&quot;,&quot;name&quot;]
+    #过滤器的设置
+    list_filter=[&quot;subject&quot;,&quot;name&quot;]
+    #可以在当前页面编辑的列
+    list_editable=[&quot;subject&quot;,&quot;name&quot;]
+    model_icon=&quot;fa fa-bath&quot;
+class MarkAdmin(object):
+	#可以显示的列
+    list_display=[&quot;user&quot;,&quot;subject&quot;,&quot;exam&quot;,&quot;total_mark&quot;]
+    #查找的设置
+    search_fields=[&quot;user&quot;,&quot;subject&quot;,&quot;exam&quot;,&quot;total_mark&quot;]
+    #过滤器的设置
+    list_filter=[&quot;user&quot;,&quot;subject&quot;,&quot;exam&quot;,&quot;total_mark&quot;]
+    #可以在当前页面编辑的列
+    list_editable=[&quot;user&quot;,&quot;subject&quot;,&quot;exam&quot;]
+    model_icon=&quot;fa fa-bath&quot;
+
+
+class ChangeIntoAdmin(object):
+    # 指向自定义的页面
+    object_list_template = 'mark_001.html'
+    # 重写方法，把要展示的数据更新到 context
+    def get_context(self):
+        context = CommAdminView.get_context(self)
+        #获取所有的用户
+        exams = Mark.objects.all()
+        #获取用户的一个属性，将显示到
+        base_list = []
+        #获取用户名
+        name_list = []
+        promote_list=[]
+        for exam in exams:
+            name_list.append(exam.user.nick_name)
+            base_list.append(exam.base_mark)
+            promote_list.append(exam.promote_mark)
+        context.update(
+            {
+                'name_list': name_list,
+                'base_list': base_list,
+                'promote_list': promote_list,
+            }
+        )
+        return context
+#进行注册
+
+
+xadmin.site.register(Keshi, ChangeIntoAdmin)
+xadmin.site.register(Subject, SubjectAdmin)
+xadmin.site.register(Question, QuestionAdmin)
+xadmin.site.register(Exam, ExamAdmin)
+xadmin.site.register(Mark, MarkAdmin)
+
+</code></pre>
+<pre><code class="language-python">#mark_001.html
+{% extends 'xadmin/base_site.html' %}
+{% load staticfiles %}
+{# 去掉标签栏 #}
+{% block content-nav %}
+
+{% endblock %}
+{% block extrastyle %}
+     &lt;script src=&quot;{% static 'js/echarts.min.js' %}&quot;  charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://libs.baidu.com/jquery/1.11.1/jquery.min.js&quot;&gt;&lt;/script&gt;
+{% endblock %}
+{% block content %}
+&lt;div&gt;zhelishige
+    &lt;div id=&quot;chart_1&quot; style=&quot;width:500px; height:350px&quot;&gt;在这里&lt;/div&gt;
+    &lt;div id=&quot;chart_2&quot; style=&quot;width:500px; height:350px&quot;&gt;在这里&lt;/div&gt;
+&lt;a&gt;这里还有个a标签&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+        var myChart = echarts.init(document.getElementById('chart_1'));
+option = {
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data:{{ name_list|safe}},
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [{
+        data:{{ base_list |safe}},
+        type: 'line',
+        areaStyle: {}
+    }]
+};
+        myChart.setOption(option);
+&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+        var myChart = echarts.init(document.getElementById('chart_2'));
+option = {
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data:{{ name_list|safe}},
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [{
+        data:{{ promote_list |safe}},
+        type: 'line',
+        areaStyle: {}
+    }]
+};
+        myChart.setOption(option);
+&lt;/script&gt;
+{% endblock content %}
+
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://img-blog.csdnimg.cn/20200423184715923.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://906571331.github.io/yx.github.io/post/jsp-shi-xian-jiu-jiu-cheng-fa-biao/">
+              <h3 class="post-title">
+                下一篇：JSP实现九九乘法表
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">成千上万个门口，总有一个人要先走。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://blog.csdn.net/qq_42092076" target="_blank">Gridea</a> | <a class="rss" href="https://906571331.github.io/yx.github.io//atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>
