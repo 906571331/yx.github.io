@@ -5,7 +5,7 @@
     
 <meta charset="utf-8" >
 
-<title>django-xadmin实现自定义后台，进行个性化显示 | WuXin</title>
+<title>Django | WuXin</title>
 <meta name="description" content="成千上万个门口，总有一个人要先走。">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -78,80 +78,62 @@
 
 
       <div class="content-container">
-        <div class="post-detail">
-          
-            <div class="feature-container" style="background-image: url('https://906571331.github.io/yx.github.io//post-images/django-xadmin-shi-xian-zi-ding-yi-hou-tai-jin-xing-ge-xing-hua-xian-shi.jpg')">
-            </div>
-          
-          <h2 class="post-title">django-xadmin实现自定义后台，进行个性化显示</h2>
-          <div class="post-info post-detail-info">
-            <span><i class="icon-calendar-outline"></i> 2020-04-16</span>
-            
-              <span>
-                <i class="icon-pricetags-outline"></i>
-                
-                  <a href="https://906571331.github.io/yx.github.io/tag/sR-2jrK5Z/">
-                    Django
-                    
-                  </a>
-                
-              </span>
-            
-          </div>
-          <div class="post-content">
-            <p>在实际的开发中，通常需要对Django的后台管理页面进行个性化定制，本篇博客将介绍如何个性化定制后台。</p>
-<h4 id="1在任意的adminx中自定义类如下所示">1.在任意的adminx中自定义类，如下所示：</h4>
-<pre><code class="language-python">#adminx.py
-class ChangeIntoAdmin(object):
-    # 指向自定义的页面，并且在templates创建名字为base111.html的页面
-    object_list_template = 'base111.html'
-    # 重写方法，把要展示的数据更新到 context
-    def get_context(self):
-    	#读取所需要的数据
-        context = CommAdminView.get_context(self)
-        bill_message = Book.objects.all()
-        context.update(
-            {
-                'title': '转入分析',
-            }
-        )
-        return context
-#进行注册，注册到名字为Book的列表页下面
-xadmin.site.register(Book, ChangeIntoAdmin)
-</code></pre>
-<pre><code class="language-html"># base111.html
-#继承自xadmin/base_site.html
-{% extends 'xadmin/base_site.html' %}
 
-{# 去掉标签栏 #}
-{% block content-nav %}
-
-{% endblock %}
-
-{% block content %}
-#显示传入的数据
-{{ title }}
-{% endblock content %}
-</code></pre>
-<p>效果如下：<img src="https://img-blog.csdnimg.cn/20200416200122973.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-未修改前：<br>
-<img src="https://img-blog.csdnimg.cn/20200416200108299.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
-
-          </div>
+        <div class="current-tag-container">
+          <h2 class="title">
+            <i class="icon icon-pricetags-outline"></i> Django
+          </h2> 
         </div>
 
         
-          <div class="next-post">
-            <a class="purple-link" href="https://906571331.github.io/yx.github.io/post/django-kai-fa-zhong-yu-dao-no-module-named-captcha-de-wen-ti-jie-jue-fang-fa/">
-              <h3 class="post-title">
-                下一篇：django开发中遇到No module named &#39;captcha的问题解决方法
-              </h3>
-            </a>
-          </div>
-          
+<section class="post-item">
+    <div class="content">
+      <a href="https://906571331.github.io/yx.github.io/post/echarts-zhong-yin-ru-json-wen-jian/">
+        <h2 class="post-title">echarts中引入json文件</h2>
+      </a>
+      <div class="post-abstract">
+        
       </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2020-03-19</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://906571331.github.io/yx.github.io/tag/ENxH7AZ31/">
+                echarts
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://906571331.github.io/yx.github.io/tag/sR-2jrK5Z/">
+                Django
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+      <a href="https://906571331.github.io/yx.github.io/post/echarts-zhong-yin-ru-json-wen-jian/">
+        <div class="feature-container" style="background-image: url('https://906571331.github.io/yx.github.io//post-images/echarts-zhong-yin-ru-json-wen-jian.jpg')">
+        </div>
+      </a>
+    
+  </section>
 
-      
+
+<div class="pagination-container">
+  
+    <a href="https://906571331.github.io/yx.github.io/tag/sR-2jrK5Z/page/2/" class="prev"><i class="icon-arrow-ios-back-outline"></i> 上一页</a>
+  
+  
+</div>
+
+
+      </div>
 
       <div class="site-footer">
   <div class="slogan">成千上万个门口，总有一个人要先走。</div>
