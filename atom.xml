@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://906571331.github.io/yx.github.io/</id>
     <title>WuXin</title>
-    <updated>2020-04-24T01:55:33.060Z</updated>
+    <updated>2020-04-25T09:01:07.503Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://906571331.github.io/yx.github.io/"/>
     <link rel="self" href="https://906571331.github.io/yx.github.io/atom.xml"/>
@@ -10,6 +10,34 @@
     <logo>https://906571331.github.io/yx.github.io/images/avatar.png</logo>
     <icon>https://906571331.github.io/yx.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, WuXin</rights>
+    <entry>
+        <title type="html"><![CDATA[Django2中@login_required的用法]]></title>
+        <id>https://906571331.github.io/yx.github.io/post/django2-zhong-login_required-de-yong-fa/</id>
+        <link href="https://906571331.github.io/yx.github.io/post/django2-zhong-login_required-de-yong-fa/">
+        </link>
+        <updated>2020-04-25T08:58:07.000Z</updated>
+        <content type="html"><![CDATA[<h4 id="在开发中会遇到这样的需求即在用户未登录时不对用户开放某些页面这种需求在django2中解决办法为">在开发中会遇到这样的需求：即在用户未登录时不对用户开放某些页面，这种需求在Django2中解决办法为：</h4>
+<ul>
+<li><code>1.在settings.py中添加：</code></li>
+</ul>
+<pre><code class="language-python">#settings.py
+AUTH_USER_MODEL = 'users.UserProfile'
+#这个根据登录URL的不同进行修改
+LOGIN_URL=&quot;login&quot;
+#附：urls.py中的设置：
+    path('login/',LoginView.as_view(),name = 'login'),
+</code></pre>
+<ul>
+<li><code>2.在相应的视图中添加：</code></li>
+</ul>
+<pre><code class="language-python">from django.contrib.auth.decorators import login_required
+# Create your views here.
+from django.utils.decorators import method_decorator
+@method_decorator(login_required,name='dispatch')
+</code></pre>
+<p>同时解决使用<code>@login_required</code>后出现<code>'function' object has no attribute 'as_view'</code>的问题，解决方案：<code>使用以上的方法</code></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Django实现考试系统]]></title>
         <id>https://906571331.github.io/yx.github.io/post/django-shi-xian-kao-shi-xi-tong/</id>
@@ -1677,28 +1705,6 @@ xadmin.site.register(Book, ChangeIntoAdmin)
 <p>效果如下：<img src="https://img-blog.csdnimg.cn/20200416200122973.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
 未修改前：<br>
 <img src="https://img-blog.csdnimg.cn/20200416200108299.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[django开发中遇到No module named 'captcha的问题解决方法]]></title>
-        <id>https://906571331.github.io/yx.github.io/post/django-kai-fa-zhong-yu-dao-no-module-named-captcha-de-wen-ti-jie-jue-fang-fa/</id>
-        <link href="https://906571331.github.io/yx.github.io/post/django-kai-fa-zhong-yu-dao-no-module-named-captcha-de-wen-ti-jie-jue-fang-fa/">
-        </link>
-        <updated>2020-04-16T08:26:23.000Z</updated>
-        <content type="html"><![CDATA[<h4 id="在django开发中遇到如下问题">在Django开发中遇到如下问题</h4>
-<pre><code class="language-python">    from captcha.fields import CaptchaField
-ModuleNotFoundError: No module named 'captcha.fields'
-</code></pre>
-<h4 id="解决方法">解决方法：</h4>
-<p>安装django-simple-captcha</p>
-<pre><code class="language-python">pip install django-simple-captcha
-</code></pre>
-<h4 id="在开发中遇到以下错误">在开发中遇到以下错误</h4>
-<pre><code class="language-python">HINT: Add or change a related_name argument to the definition for 'User.user_permissions' or 'UserProfile.user_permissions'.
-</code></pre>
-<p>解决方案：在settings.py中添加：</p>
-<pre><code class="language-python">AUTH_USER_MODEL = 'Users.UserProfile'
-</code></pre>
 ]]></content>
     </entry>
 </feed>
