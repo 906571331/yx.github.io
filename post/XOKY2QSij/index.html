@@ -5,7 +5,7 @@
     
 <meta charset="utf-8" >
 
-<title>博客 | WuXin</title>
+<title>在Django中引入日志功能： | WuXin</title>
 <meta name="description" content="成千上万个门口，总有一个人要先走。">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -78,53 +78,88 @@
 
 
       <div class="content-container">
-
-        <div class="current-tag-container">
-          <h2 class="title">
-            <i class="icon icon-pricetags-outline"></i> 博客
-          </h2> 
-        </div>
-
-        
-<section class="post-item">
-    <div class="content">
-      <a href="https://906571331.github.io/yx.github.io/post/shi-yong-gridea-shi-fen-zhong-da-jian-ge-ren-bo-ke/">
-        <h2 class="post-title">使用Gridea十分钟搭建个人博客</h2>
-      </a>
-      <div class="post-abstract">
-        
-      </div>
-      <div class="post-info">
-        <span><i class="icon icon-calendar-outline"></i> 2020-03-07</span>
-        
-          <span>
-            <i class="icon icon-pricetags-outline"></i>
+        <div class="post-detail">
+          
+            <div class="feature-container" style="background-image: url('https://906571331.github.io/yx.github.io//post-images/XOKY2QSij.jpg')">
+            </div>
+          
+          <h2 class="post-title">在Django中引入日志功能：</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2020-04-27</span>
             
-              <a href="https://906571331.github.io/yx.github.io/tag/yav--AgjH/">
-                博客
+              <span>
+                <i class="icon-pricetags-outline"></i>
                 
-              </a>
+                  <a href="https://906571331.github.io/yx.github.io/tag/sR-2jrK5Z/">
+                    Django
+                    
+                  </a>
+                
+              </span>
             
-          </span>
-        
-      </div>
-    </div>
-    
-      <a href="https://906571331.github.io/yx.github.io/post/shi-yong-gridea-shi-fen-zhong-da-jian-ge-ren-bo-ke/">
-        <div class="feature-container" style="background-image: url('https://906571331.github.io/yx.github.io//post-images/shi-yong-gridea-shi-fen-zhong-da-jian-ge-ren-bo-ke.jpg')">
+          </div>
+          <div class="post-content">
+            <p><code>在Django中引入日志功能：</code><br>
+<code>1.</code>在settings.py中加入以下代码：</p>
+<pre><code class="language-python">LOGGING = {
+    # 版本
+    'version': 1,
+    # 是否禁用已存在的日志器
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'formrat': '%(levelname)s %(asctime)s %(module)s %(lineno)d %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(module)s %(lineno)d %(message)s'
+        },
+    },
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(BASE_DIR, &quot;logs/user.log&quot;),  # 日志文件的位置
+            'maxBytes': 300 * 1024 * 1024,
+            'backupCount': 10,
+            'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        'django': {  # 定义了一个名为django的日志器
+            'handlers': ['console', 'file'],
+            'propagate': True,
+            'level': 'INFO',  # 日志器接收的最低日志级别
+        },
+    }
+</code></pre>
+<p><code>2.</code>新建一个名为logs的文件夹，重新启动Django项目即可将日志记录到user.logs的文件中</p>
+
+          </div>
         </div>
-      </a>
-    
-  </section>
 
-
-<div class="pagination-container">
-  
-  
-</div>
-
-
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://906571331.github.io/yx.github.io/post/0H_lhPduB/">
+              <h3 class="post-title">
+                下一篇：django实现考试系统优化2
+              </h3>
+            </a>
+          </div>
+          
       </div>
+
+      
 
       <div class="site-footer">
   <div class="slogan">成千上万个门口，总有一个人要先走。</div>
