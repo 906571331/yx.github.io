@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://906571331.github.io/yx.github.io/</id>
     <title>WuXin</title>
-    <updated>2020-04-27T08:16:35.096Z</updated>
+    <updated>2020-04-27T09:13:45.232Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://906571331.github.io/yx.github.io/"/>
     <link rel="self" href="https://906571331.github.io/yx.github.io/atom.xml"/>
@@ -10,6 +10,59 @@
     <logo>https://906571331.github.io/yx.github.io/images/avatar.png</logo>
     <icon>https://906571331.github.io/yx.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, WuXin</rights>
+    <entry>
+        <title type="html"><![CDATA[ueditor在Django中的使用]]></title>
+        <id>https://906571331.github.io/yx.github.io/post/4y-2Nv7x-/</id>
+        <link href="https://906571331.github.io/yx.github.io/post/4y-2Nv7x-/">
+        </link>
+        <updated>2020-04-27T09:10:16.000Z</updated>
+        <content type="html"><![CDATA[<p>在修改models.py中的字段后，需要进行数据库的迁移</p>
+<pre><code class="language-python">#urls.py
+path('ueditor/',include('DjangoUeditor.urls' )),
+</code></pre>
+<pre><code class="language-python">#adminx.py
+class QuestionAdmin(object):
+	#可以显示的列
+    list_display=[&quot;subject&quot;,&quot;statments&quot;,&quot;op_A&quot;,&quot;op_B&quot;,&quot;op_C&quot;,&quot;op_D&quot;]
+    #查找的设置
+    search_fields=[&quot;subject&quot;,&quot;statments&quot;,&quot;op_A&quot;,&quot;op_B&quot;,&quot;op_C&quot;,&quot;op_D&quot;]
+    #过滤器的设置
+    list_filter=[&quot;subject&quot;,&quot;statments&quot;,&quot;op_A&quot;,&quot;op_B&quot;,&quot;op_C&quot;,&quot;op_D&quot;]
+    #可以在当前页面编辑的列，当后台设置为ueditor时，这里设置为不能修改，否则会报错
+    #list_editable=[&quot;subject&quot;,&quot;statments&quot;,&quot;op_A&quot;,&quot;op_B&quot;,&quot;op_C&quot;,&quot;op_D&quot;]
+    model_icon=&quot;fa fa-bath&quot;
+    #将statements字段设置为ueditor类型
+    style_fields = {&quot;statments&quot;: &quot;ueditor&quot;}
+</code></pre>
+<pre><code class="language-python">#models.py中的设置：
+from DjangoUeditor.models import UEditorField
+class Question(models.Model):
+	choice = (('A','A'),('B','B'),('C','C'),('D','D'))
+	subject 	= models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
+	# statments 	= models.TextField(verbose_name=&quot;问题描述&quot;)
+	statments = UEditorField(verbose_name=u'题目描述', width=600, height=300, imagePath=&quot;exam/ueditor/&quot;,
+						  filePath=&quot;exam/ueditor/&quot;, default='')
+	op_A 	= models.CharField(max_length=1000)
+	op_B 	= models.CharField(max_length=1000)
+	op_C 	= models.CharField(max_length=1000)
+	op_D 	= models.CharField(max_length=1000)
+	correct_op 	= models.CharField(choices=choice,max_length=10)
+	mark 		= models.IntegerField(default=1)
+	class Meta:
+		verbose_name=&quot;题目&quot;
+		verbose_name_plural=verbose_name
+	def __str__(self):
+		return self.statments
+</code></pre>
+<pre><code class="language-html">        {#每一道题的描述#}
+        &lt;td&gt;{% autoescape off %}
+             {{ foo.statments}}
+             {% endautoescape %}&lt;/td&gt;
+           &lt;br&gt;
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20200427171242288.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[在Django中引入日志功能：]]></title>
         <id>https://906571331.github.io/yx.github.io/post/XOKY2QSij/</id>
@@ -1850,30 +1903,6 @@ def register(request):
     }
     return render(request,&quot;bofang.html&quot;,context=context)
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[pycharm连接虚拟机中的django项目]]></title>
-        <id>https://906571331.github.io/yx.github.io/post/pycharm-lian-jie-xu-ni-ji-zhong-de-django-xiang-mu/</id>
-        <link href="https://906571331.github.io/yx.github.io/post/pycharm-lian-jie-xu-ni-ji-zhong-de-django-xiang-mu/">
-        </link>
-        <updated>2020-04-18T08:48:19.000Z</updated>
-        <content type="html"><![CDATA[<p>1.在配置好环境以后，打开pycharm，点击文件，新项目，创建一个Pure Python项目，打开添加远程<br>
-<img src="https://img-blog.csdnimg.cn/20200418162635495.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-2.点击SSH，按下面的要求进行配置<br>
-<img src="https://img-blog.csdnimg.cn/20200418163337630.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-进来以后发现，显示没有文件，<br>
-<img src="https://img-blog.csdnimg.cn/20200418163501574.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-3.接下来点击工具--&gt;&gt;Deployment---&gt;&gt;Configuration<br>
-<img src="https://img-blog.csdnimg.cn/20200418163550530.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-<img src="https://img-blog.csdnimg.cn/2020041816394794.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-在Mappings中的设置：<br>
-<img src="https://img-blog.csdnimg.cn/20200418164055119.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-4.点击确定，在左侧的目录栏中，右击项目名称----&gt;Deployment---&gt;Download，从虚拟机中将项目导入<br>
-<img src="https://img-blog.csdnimg.cn/20200418164159667.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-<code>常见的问题</code><br>
-1.下次打开虚拟机，发现虚拟机中的项目无法正确导入，可能是虚拟机中的ip已换，解决方案请移步：<a href="https://blog.csdn.net/qq_42092076/article/details/105263238">解决Django开发中pycharm连接不到虚拟机的问题</a><br>
-2.其他问题可关注博客：<a href="https://blog.csdn.net/qq_42092076">博客</a></p>
 ]]></content>
     </entry>
 </feed>

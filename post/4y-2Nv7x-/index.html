@@ -5,7 +5,7 @@
     
 <meta charset="utf-8" >
 
-<title>关于 | WuXin</title>
+<title>ueditor在Django中的使用 | WuXin</title>
 <meta name="description" content="成千上万个门口，总有一个人要先走。">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -80,24 +80,70 @@
       <div class="content-container">
         <div class="post-detail">
           
-          <h2 class="post-title">关于</h2>
+          <h2 class="post-title">ueditor在Django中的使用</h2>
           <div class="post-info post-detail-info">
-            <span><i class="icon-calendar-outline"></i> 2019-01-25</span>
+            <span><i class="icon-calendar-outline"></i> 2020-04-27</span>
             
           </div>
           <div class="post-content">
-            <blockquote>
-<p>很高兴遇见你！🤝</p>
-</blockquote>
-<h2 id="本站将会分享一些计算机的学习知识包括常用的网站-c语言-网络安全-信息安全django开发等等">🏠 本站将会分享一些计算机的学习知识，包括常用的网站、C语言、网络安全、信息安全，Django开发等等</h2>
-<h2 id="感同恶鬼争高下不向霸王让寸分">👨‍💻感同恶鬼争高下，不向霸王让寸分！</h2>
-<h2 id="爱好网络安全">⛹ 爱好网络安全</h2>
-<h2 id="博主的csdn博客httpsblogcsdnnetqq_42092076">📬 博主的CSDN博客：https://blog.csdn.net/qq_42092076</h2>
+            <p>在修改models.py中的字段后，需要进行数据库的迁移</p>
+<pre><code class="language-python">#urls.py
+path('ueditor/',include('DjangoUeditor.urls' )),
+</code></pre>
+<pre><code class="language-python">#adminx.py
+class QuestionAdmin(object):
+	#可以显示的列
+    list_display=[&quot;subject&quot;,&quot;statments&quot;,&quot;op_A&quot;,&quot;op_B&quot;,&quot;op_C&quot;,&quot;op_D&quot;]
+    #查找的设置
+    search_fields=[&quot;subject&quot;,&quot;statments&quot;,&quot;op_A&quot;,&quot;op_B&quot;,&quot;op_C&quot;,&quot;op_D&quot;]
+    #过滤器的设置
+    list_filter=[&quot;subject&quot;,&quot;statments&quot;,&quot;op_A&quot;,&quot;op_B&quot;,&quot;op_C&quot;,&quot;op_D&quot;]
+    #可以在当前页面编辑的列，当后台设置为ueditor时，这里设置为不能修改，否则会报错
+    #list_editable=[&quot;subject&quot;,&quot;statments&quot;,&quot;op_A&quot;,&quot;op_B&quot;,&quot;op_C&quot;,&quot;op_D&quot;]
+    model_icon=&quot;fa fa-bath&quot;
+    #将statements字段设置为ueditor类型
+    style_fields = {&quot;statments&quot;: &quot;ueditor&quot;}
+</code></pre>
+<pre><code class="language-python">#models.py中的设置：
+from DjangoUeditor.models import UEditorField
+class Question(models.Model):
+	choice = (('A','A'),('B','B'),('C','C'),('D','D'))
+	subject 	= models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
+	# statments 	= models.TextField(verbose_name=&quot;问题描述&quot;)
+	statments = UEditorField(verbose_name=u'题目描述', width=600, height=300, imagePath=&quot;exam/ueditor/&quot;,
+						  filePath=&quot;exam/ueditor/&quot;, default='')
+	op_A 	= models.CharField(max_length=1000)
+	op_B 	= models.CharField(max_length=1000)
+	op_C 	= models.CharField(max_length=1000)
+	op_D 	= models.CharField(max_length=1000)
+	correct_op 	= models.CharField(choices=choice,max_length=10)
+	mark 		= models.IntegerField(default=1)
+	class Meta:
+		verbose_name=&quot;题目&quot;
+		verbose_name_plural=verbose_name
+	def __str__(self):
+		return self.statments
+</code></pre>
+<pre><code class="language-html">        {#每一道题的描述#}
+        &lt;td&gt;{% autoescape off %}
+             {{ foo.statments}}
+             {% endautoescape %}&lt;/td&gt;
+           &lt;br&gt;
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20200427171242288.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
 
           </div>
         </div>
 
         
+          <div class="next-post">
+            <a class="purple-link" href="https://906571331.github.io/yx.github.io/post/XOKY2QSij/">
+              <h3 class="post-title">
+                下一篇：在Django中引入日志功能：
+              </h3>
+            </a>
+          </div>
+          
       </div>
 
       
