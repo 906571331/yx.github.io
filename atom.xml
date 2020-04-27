@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://906571331.github.io/yx.github.io/</id>
     <title>WuXin</title>
-    <updated>2020-04-27T09:13:45.232Z</updated>
+    <updated>2020-04-27T11:17:11.397Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://906571331.github.io/yx.github.io/"/>
     <link rel="self" href="https://906571331.github.io/yx.github.io/atom.xml"/>
@@ -10,6 +10,70 @@
     <logo>https://906571331.github.io/yx.github.io/images/avatar.png</logo>
     <icon>https://906571331.github.io/yx.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, WuXin</rights>
+    <entry>
+        <title type="html"><![CDATA[django获取各种形式的表单内容]]></title>
+        <id>https://906571331.github.io/yx.github.io/post/y4MYiiqzl/</id>
+        <link href="https://906571331.github.io/yx.github.io/post/y4MYiiqzl/">
+        </link>
+        <updated>2020-04-27T11:16:45.000Z</updated>
+        <content type="html"><![CDATA[<p>Django框架获取各种form表单数据</p>
+<h4 id="1django中获取textpassword">1.Django中获取text，password</h4>
+<pre><code class="language-python">　　名字：&lt;input type=&quot;text&quot; name=&quot;name&quot;&gt;&lt;br&gt;&lt;br&gt;
+　　密码：&lt;input type=&quot;password&quot; name=&quot;password&quot;&gt;
+</code></pre>
+<p>Form表单提交数据时使用的是post方式，所以在后端接收参数的时候需要先判断请求方式为post时才能请求到数据</p>
+<pre><code class="language-python">　　name = request.POST.get('name')
+　　password = request.POST.get('password')
+</code></pre>
+<h4 id="2django中获取单选框">2.Django中获取单选框</h4>
+<pre><code class="language-python">　　性别：&lt;input type=&quot;radio&quot; name=&quot;gender&quot; value=&quot;man&quot;&gt;男
+　　　　&lt;input type=&quot;radio&quot; name=&quot;gender&quot; value=&quot;woman&quot;&gt;女
+　　　　#此时获取到的值是woman或者man
+　　　　gender = request.POST.get('gender')
+</code></pre>
+<h4 id="3django中获取单选的复选框">3.Django中获取单选的复选框</h4>
+<p>单选复选框：<input type="checkbox" name="is_tuanyuan" value="is_tuanyuan">是否是团员</p>
+<p>此时如果选中该选项，获取到的值是value后面的，若没有选中即是None</p>
+<pre><code class="language-python">　　is_tuanyuan = request.POST.get('is_tuanyuan')
+</code></pre>
+<p>Django中获取复选框</p>
+<pre><code class="language-python">　　复选框：&lt;input type=&quot;checkbox&quot; name=&quot;joy&quot; value=&quot;sing&quot;&gt;唱歌
+
+　　　　　　&lt;input type=&quot;checkbox&quot; name=&quot;joy&quot; value=&quot;dance&quot;&gt;跳舞
+</code></pre>
+<p>这里应该使用getlist获取多选框，获取到的是列表形式，用get获取只能得到最后一个选项</p>
+<pre><code class="language-python">　　joy = request.POST.getlist('joy')
+</code></pre>
+<h4 id="4django中获取单选下拉框">4.Django中获取单选下拉框</h4>
+<p>去过哪些城市？单选</p>
+<pre><code class="language-python">　　&lt;select name=&quot;city&quot;&gt;
+　　　　&lt;option&gt;北京&lt;/option&gt;
+　　　　&lt;option&gt;天津&lt;/option&gt;
+　　　　&lt;option&gt;南京&lt;/option&gt;
+　　&lt;/select&gt;
+</code></pre>
+<p>这里获取到的就直接是option里面的内容</p>
+<pre><code class="language-python">　　city = request.POST.get('city')
+</code></pre>
+<p>Django中获取多选的下拉框</p>
+<pre><code class="language-python">#去过哪些城市？多选
+　　&lt;select multiple name=&quot;more_city&quot;&gt;
+　　　　&lt;option&gt;北京&lt;/option&gt;
+　　　　&lt;option&gt;天津&lt;/option&gt;
+　　　　&lt;option&gt;南京&lt;/option&gt;
+　　&lt;/select&gt;
+</code></pre>
+<p>这里涉及到多个值得获取，需要使用getlist，获取到的是列表，get依然只能获取到一个值，用户在使用时按住Ctrl即可以实现多选</p>
+<pre><code class="language-python">　　 more_city = request.POST.getlist('more_city') 
+</code></pre>
+<h4 id="5django中获取文本域">5.Django中获取文本域</h4>
+<pre><code class="language-python">　　&lt;textarea name=&quot;more_text&quot; placeholder=&quot;请输入备注&quot;&gt;&lt;/textarea&gt;
+</code></pre>
+<p>获取方法：</p>
+<pre><code class="language-python">　　more_text = request.POST.get('more_text')
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[ueditor在Django中的使用]]></title>
         <id>https://906571331.github.io/yx.github.io/post/4y-2Nv7x-/</id>
@@ -1855,53 +1919,6 @@ def register(request):
     else:
         return HttpResponse('fail')
 
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[设置`<iframe>`标签的大小]]></title>
-        <id>https://906571331.github.io/yx.github.io/post/she-zhi-lessiframegreaterbiao-qian-de-da-xiao/</id>
-        <link href="https://906571331.github.io/yx.github.io/post/she-zhi-lessiframegreaterbiao-qian-de-da-xiao/">
-        </link>
-        <updated>2020-04-19T12:20:53.000Z</updated>
-        <content type="html"><![CDATA[<h4 id=""></h4>
-<p><code>&lt;ifrarme&gt;</code>标签的大小设置，Django填入<code>&lt;ifrarme&gt;</code>标签后自动设置大小</p>
-<pre><code class="language-html">&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-&lt;head&gt;
-    &lt;meta charset=&quot;UTF-8&quot;&gt;
-    &lt;title&gt;Title&lt;/title&gt;
-    &lt;style&gt;
-        .container{
-       width: 1700px;
-            height:500px;
-       margin: 0 auto;
-       border: 1px solid #f00;
-       text-align: center;
-     }
- iframe{
-         border: 1px solid #000;
-       width: 1700px;
-         height: 600px;
-     }
-    &lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-
- &lt;div class=&quot;container&quot;&gt;
- {% autoescape off %}
-     {{ info }}
-     {% endautoescape %}
- &lt;/div&gt;
-
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-<pre><code class="language-python">def bofang(request):
-    context={
-        &quot;info&quot;:'&lt;iframe src=&quot;//player.bilibili.com/player.html?aid=455345011&amp;bvid=BV1x5411x7kE&amp;cid=179274496&amp;page=1&quot; scrolling=&quot;yes&quot; border=&quot;0&quot; frameborder=&quot;no&quot; framespacing=&quot;0&quot; allowfullscreen=&quot;true&quot; &gt; &lt;/iframe&gt;'
-    }
-    return render(request,&quot;bofang.html&quot;,context=context)
 </code></pre>
 ]]></content>
     </entry>
