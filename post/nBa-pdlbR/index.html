@@ -5,7 +5,7 @@
     
 <meta charset="utf-8" >
 
-<title>使用JavaScript实时获取系统时间 | WuXin</title>
+<title>jsp使用request.getParameter时显示乱码的解决方案 | WuXin</title>
 <meta name="description" content="成千上万个门口，总有一个人要先走。">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -80,18 +80,25 @@
       <div class="content-container">
         <div class="post-detail">
           
-            <div class="feature-container" style="background-image: url('https://906571331.github.io/yx.github.io//post-images/shi-yong-javascript-shi-shi-huo-qu-xi-tong-shi-jian.jpg')">
+            <div class="feature-container" style="background-image: url('https://906571331.github.io/yx.github.io//post-images/nBa-pdlbR.jpg')">
             </div>
           
-          <h2 class="post-title">使用JavaScript实时获取系统时间</h2>
+          <h2 class="post-title">jsp使用request.getParameter时显示乱码的解决方案</h2>
           <div class="post-info post-detail-info">
-            <span><i class="icon-calendar-outline"></i> 2020-04-08</span>
+            <span><i class="icon-calendar-outline"></i> 2020-05-03</span>
             
               <span>
                 <i class="icon-pricetags-outline"></i>
                 
-                  <a href="https://906571331.github.io/yx.github.io/tag/zJiFYZXVl/">
-                    前端
+                  <a href="https://906571331.github.io/yx.github.io/tag/9zpFSDVIG/">
+                    jsp
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://906571331.github.io/yx.github.io/tag/IOUFjN4sc/">
+                    解决问题
                     
                   </a>
                 
@@ -99,47 +106,33 @@
             
           </div>
           <div class="post-content">
-            <h3 id="本案例实现了使用js代码实时获取系统时间">本案例实现了使用js代码实时获取系统时间</h3>
-<pre><code class="language-html">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-	&lt;head&gt;
-		&lt;meta charset=&quot;utf-8&quot;&gt;
-		&lt;title&gt;实时获取系统时间&lt;/title&gt;
-		&lt;script language=&quot;JavaScript&quot;&gt;
-			function realSystime(clock){
-				var now=new Date();//创建Date对象
-				var year=now.getFullYear();//获取年份
-				var month=now.getMonth();//获取月份
-				var date=now.getDate();//获取日期
-				var day=now.getDay();//获取星期
-				var hour=now.getHours();//获取小时
-				var minu=now.getMinutes();//获取分钟
-				var sec=now.getSeconds();//获取秒
-				month=month+1;
-				var arr_week=new Array(&quot;星期日&quot;,&quot;星期一&quot;,&quot;星期二&quot;,&quot;星期三&quot;,&quot;星期四&quot;,&quot;星期五&quot;,&quot;星期六&quot;);
-				var week=arr_week[day];//获取中文格式的星期，是个数组
-				var time=year+&quot;年&quot;+month+&quot;月&quot;+date+&quot;日&quot; +week+&quot; &quot;+hour+&quot;:&quot;+minu+&quot;:&quot;+sec;//组合系统时间
-				clock.innerHTML=&quot;当前时间：&quot;+time;//显示系统时间
-			}
-			window.onload=function(){
-				window.setInterval(&quot;realSystime(clock)&quot;,1000);//实时获取并显示系统时间
-			}
-		&lt;/script&gt;
-	&lt;/head&gt;
-	&lt;body&gt;
-		&lt;div id=&quot;clock&quot;&gt;&lt;/div&gt;
-	&lt;/body&gt;
-&lt;/html&gt;
+            <p>Tomcat 7在使用request.getParameter获取前面页面传来的参数值时，会出现乱码的现象，解决方案有两种：<br>
+<code>1</code>:使用：</p>
+<pre><code class="language-java">&lt;%=new String(request.getParameter(&quot;username&quot;).getBytes(&quot;iso-8859-1&quot;),&quot;UTF-8&quot;) %&gt;
 </code></pre>
+<p>代替：</p>
+<pre><code class="language-java">&lt;%=request.getParameter(&quot;username&quot;) %&gt;
+</code></pre>
+<p><code>2</code>或者修改server.xml文件，找到此文件，进行修改<br>
+<img src="https://img-blog.csdnimg.cn/20200503145111100.png" alt="在这里插入图片描述" loading="lazy"><br>
+将<code>useBodyEncodingForURI=&quot;true&quot;</code>改为<code>useBodyEncodingForURI=&quot;false&quot;</code>，效果如图所示：</p>
+<pre><code class="language-java">&lt;Connector URIEncoding=&quot;UTF-8&quot; connectionTimeout=&quot;20000&quot; port=&quot;8081&quot; protocol=&quot;HTTP/1.1&quot; redirectPort=&quot;8443&quot; useBodyEncodingForURI=&quot;false&quot;/&gt;
+</code></pre>
+<p><code>useBodyEncodingForURI</code>参数表示是否用<code>request.setCharacterEncoding</code>参数对URL提交的数据和表单中GET方式提交的数据进行重新编码，在默认情况下，该参数为<code>false</code>。<br>
+URIEncoding参数指定对所有GET方式请求进行统一的重新编码（解码）的编码。<br>
+<code>JSP</code>中其他常见的问题<br>
+<code>1</code><a href="https://blog.csdn.net/qq_42092076/article/details/104790088">解决jsp开发中eclipse无法创建Dynamic web project</a></p>
+<p><code>2</code><a href="https://blog.csdn.net/qq_42092076/article/details/104789471">解决JSP开发中出现的Tomcat启动时闪退的问题</a></p>
+<p><code>3</code><a href="https://blog.csdn.net/qq_42092076/article/details/104936671">JSP开发中tomcat访问URL带有中文名称的HTML文件显示404错误</a></p>
 
           </div>
         </div>
 
         
           <div class="next-post">
-            <a class="purple-link" href="https://906571331.github.io/yx.github.io/post/django-xue-xi-mo-ban-pian/">
+            <a class="purple-link" href="https://906571331.github.io/yx.github.io/post/y4MYiiqzl/">
               <h3 class="post-title">
-                下一篇：django学习模板篇
+                下一篇：django获取各种形式的表单内容
               </h3>
             </a>
           </div>
