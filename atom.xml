@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://906571331.github.io/yx.github.io/</id>
     <title>WuXin</title>
-    <updated>2020-05-03T07:00:41.874Z</updated>
+    <updated>2020-05-06T14:54:46.214Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://906571331.github.io/yx.github.io/"/>
     <link rel="self" href="https://906571331.github.io/yx.github.io/atom.xml"/>
@@ -10,6 +10,115 @@
     <logo>https://906571331.github.io/yx.github.io/images/avatar.png</logo>
     <icon>https://906571331.github.io/yx.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, WuXin</rights>
+    <entry>
+        <title type="html"><![CDATA[阿里云服务器下jupyter notebook 安装、远程访问以及处理错误]]></title>
+        <id>https://906571331.github.io/yx.github.io/post/4dpJZ8owu/</id>
+        <link href="https://906571331.github.io/yx.github.io/post/4dpJZ8owu/">
+        </link>
+        <updated>2020-05-06T14:51:49.000Z</updated>
+        <content type="html"><![CDATA[<h4 id="一安装所需的环境">一.安装所需的环境</h4>
+<pre><code class="language-python">1.	在虚拟环境中安装jupyter
+(jiqistudy)&gt; pip install jupyter -i  https://pypi.tuna.tsinghua.edu.cn/simple/
+2.	安装所需的python库
+(jiqistudy)&gt; pip install numpy -i  https://pypi.tuna.tsinghua.edu.cn/simple/
+(jiqistudy)&gt; pip install matplotlib -i https://pypi.tuna.tsinghua.edu.cn/simple/
+(jiqistudy)&gt; pip install pandas -i  https://pypi.tuna.tsinghua.edu.cn/simple/
+(jiqistudy)&gt; pip install sklearn -i  https://pypi.tuna.tsinghua.edu.cn/simple/
+3.	创建目标目录并进入
+(jiqistudy)&gt; mkdir algorithm
+(jiqistudy)&gt; cd algorithm
+4.	启动jupyter notebook
+(jiqistudy)&gt; jupyter notebook
+</code></pre>
+<h4 id="二-jupyter远程访问配置">二、jupyter远程访问配置</h4>
+<p>1、生成配置文件（~/.jupyter/jupyter_notebook_config.py）</p>
+<pre><code class="language-python">jupyter notebook --generate-config
+</code></pre>
+<p>2、生成密钥</p>
+<pre><code class="language-python">jupyter notebook password  # 自己造一个密码输入一确认一次
+vim ~/.jupyter/jupyter_notebook_config.json
+</code></pre>
+<p>记下密钥，sha1:...<br>
+3、编辑配置文件</p>
+<pre><code class="language-python">vim ~/.jupyter/jupyter_notebook_config.py
+</code></pre>
+<p>修改以下几项：</p>
+<pre><code class="language-python">c.NotebookApp.ip='*'                                  # 就是设置所有ip皆可访问  
+c.NotebookApp.password = u'sha1:03...       # 刚才复制的那个密文'  
+c.NotebookApp.open_browser = False       # 禁止自动打开浏览器  
+c.NotebookApp.port =1234                         #随便指定一个端口  
+</code></pre>
+<p>设置端口后要在阿里云控制台把这个端口打开<br>
+<img src="https://img-blog.csdnimg.cn/20200506224226754.png" alt="在这里插入图片描述" loading="lazy"><br>
+在浏览器中输入：公网ip:刚刚指定的端口，输入密码，即可进入<br>
+<img src="https://img-blog.csdnimg.cn/20200506224300542.png" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20200506224417486.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<code>注</code>：若出现错误</p>
+<pre><code class="language-python">OSError: [Errno 99]Cannot assign requested address
+</code></pre>
+<p>解决方法修改/etc/hosts<br>
+首先获取本机内网ip和本机hostname</p>
+<pre><code class="language-python">ifconfig    # 获取本机内网ip
+vi /etc/hostname    # 获取hostname
+</code></pre>
+<p><img src="https://img-blog.csdnimg.cn/20200506224605998.png" alt="在这里插入图片描述" loading="lazy"><br>
+进入/etc/hosts，添加上一行内容</p>
+<pre><code class="language-python">内网ip   hostname   # 上面获取的那两个
+</code></pre>
+<p>启动：</p>
+<pre><code class="language-python">启动jupyter notebook
+(jiqistudy)&gt; jupyter notebook
+</code></pre>
+<p><code>若出现如下错误，请参考：</code><br>
+1.<a href="https://blog.csdn.net/qq_42092076/article/details/105961463">workon: command not found处理方法</a><br>
+2.<a href="https://blog.csdn.net/qq_42092076/article/details/105960519">ubuntu安装matplotlib时报错处理</a></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[workon: command not found处理方法]]></title>
+        <id>https://906571331.github.io/yx.github.io/post/8i0Lx-8dx/</id>
+        <link href="https://906571331.github.io/yx.github.io/post/8i0Lx-8dx/">
+        </link>
+        <updated>2020-05-06T14:35:31.000Z</updated>
+        <content type="html"><![CDATA[<pre><code class="language-python">$ workon django
+$ workon: command not found
+</code></pre>
+<p>以前安装了虚拟环境，但是使用workon时发现命令不存在，处理方法：重新激活虚拟环境</p>
+<pre><code class="language-python"> source /usr/share/virtualenvwrapper/virtualenvwrapper.sh 
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[ubuntu安装matplotlib时报错处理]]></title>
+        <id>https://906571331.github.io/yx.github.io/post/1Ff4JgIDs/</id>
+        <link href="https://906571331.github.io/yx.github.io/post/1Ff4JgIDs/">
+        </link>
+        <updated>2020-05-06T14:32:43.000Z</updated>
+        <content type="html"><![CDATA[<p>阿里云安装matplotlib时出现如下错误：</p>
+<pre><code class="language-python">(jiqistudy) root@iZ2zeemzp51mlbzarwptwwZ:~# pip install matplotlib
+Collecting matplotlib
+  Downloading http://mirrors.cloud.aliyuncs.com/pypi/packages/4a/30/eb8e7dd8e3609f05c6920fa82f189302c832e5a0f6667aa96f952056bc0c/matplotlib-3.2.1.tar.gz (40.3MB)
+    100% |████████████████████████████████| 40.3MB 29.3MB/s 
+    Complete output from command python setup.py egg_info:
+    Traceback (most recent call last):
+      File &quot;&lt;string&gt;&quot;, line 1, in &lt;module&gt;
+      File &quot;/tmp/pip-build-c_f1ecmg/matplotlib/setup.py&quot;, line 139
+        raise IOError(f&quot;Failed to download jquery-ui.  Please download &quot;
+                                                                       ^
+    SyntaxError: invalid syntax
+    
+    ----------------------------------------
+Command &quot;python setup.py egg_info&quot; failed with error code 1 in /tmp/pip-build-c_f1ecmg/matplotlib/
+You are using pip version 8.1.1, however version 20.1 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.
+</code></pre>
+<p>解决方案：</p>
+<pre><code class="language-python">pip install --upgrade setuptools
+python -m pip install --upgrade pip
+</code></pre>
+<p>再次安装matplotlib时就不会报错</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[jsp使用request.getParameter时显示乱码的解决方案]]></title>
         <id>https://906571331.github.io/yx.github.io/post/nBa-pdlbR/</id>
@@ -527,1106 +636,6 @@ from django.utils.decorators import method_decorator
 @method_decorator(login_required,name='dispatch')
 </code></pre>
 <p>同时解决使用<code>@login_required</code>后出现<code>'function' object has no attribute 'as_view'</code>的问题，解决方案：<code>使用以上的方法</code></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Django实现考试系统]]></title>
-        <id>https://906571331.github.io/yx.github.io/post/django-shi-xian-kao-shi-xi-tong/</id>
-        <link href="https://906571331.github.io/yx.github.io/post/django-shi-xian-kao-shi-xi-tong/">
-        </link>
-        <updated>2020-04-23T10:50:26.000Z</updated>
-        <content type="html"><![CDATA[<p><code>时间：2020年4月23日17:58:01</code><br>
-Django实现考试系统</p>
-<pre><code class="language-python">#views.py
-from django.shortcuts import render
-from django.views.generic import View
-from django.http import HttpResponse
-from .models import Question,Exam,Subject,Mark
-from django.db import models
-
-# Create your views here.
-class ExamView(View):
-    def get(self,request):
-        #获取id=1的科目
-        subjetcs1=Subject.objects.get(id=1)
-        #打印这个科目的名称，可省去
-        print(subjetcs1)
-        #获取到这个科目下的所有试题
-        question=Question.objects.filter(subject=subjetcs1)
-        context={
-            &quot;question&quot;:question,
-        }
-        return render(request, &quot;exam03.html&quot;,context=context)
-    def post(self,request):
-        #设置用户答案为一个空列表
-        if request.user.is_authenticated:
-            # uid=request.user.id
-            uid = request.user
-            uname=request.user.nick_name
-        subjetcs1 = Subject.objects.get(id=1)
-        current_exam=Exam.objects.get(id=1)
-        print(&quot;本次考试的科目为：&quot;,subjetcs1)
-        print(&quot;本次考试名称为：&quot;, current_exam)
-        print(uid)
-        print(uname)
-        my_answer = []
-        #依次从前端的答案中读取用户的选择，一共3道题，所以，这里的4应该手动修改
-        for i in range(1,4):
-            answer1 = request.POST.get('%s'%i)
-            my_answer.append(answer1)
-            i+=1
-        print(&quot;用户答案为：&quot;,my_answer)
-        # 打印所有题目的正确答案
-        correct_answer=re(request)
-        print(&quot;正确答案为：&quot;,correct_answer)
-        #基础，提升，专业分数,总分数均初始化为0
-        base_mark=0
-        promote_mark=0
-        major_mark=0
-        total_mark=0
-        i=0
-        while i &lt;= 2:
-            if i &lt;= 0:
-                if correct_answer[i] == my_answer[i]:
-                    base_mark += 1
-                    total_mark = total_mark + 1
-            elif i &lt;= 1:
-                if correct_answer[i] == my_answer[i]:
-                    total_mark = total_mark + 1
-                    promote_mark += 1
-            else:
-                if correct_answer[i] == my_answer[i]:
-                    total_mark = total_mark + 1
-                    major_mark += 1
-            i = i + 1
-        print(&quot;总分数为：&quot;, total_mark)
-        print(&quot;基础分数为：&quot;, base_mark)
-        print(&quot;提升分数为：&quot;, promote_mark)
-        print(&quot;专业分数为：&quot;, major_mark)
-        mark=Mark(user=uid,subject=subjetcs1,total_mark=total_mark,exam=current_exam,base_mark=base_mark,promote_mark=promote_mark,major_mark=major_mark)
-        mark.save()
-        return render(request,'commite_succcess.html')
-#打印所有题目的正确答案
-def re(request):
-    option_list = []
-    options=Question.objects.all()
-    for option in options:
-        option_list.append(option.correct_op)
-    return option_list
-
-</code></pre>
-<pre><code class="language-python">#models.py
-from django.db import models
-from datetime import datetime
-# Create your models here.
-from django.db import models
-from users.models import UserProfile
-# Create your models here.
-
-#科目
-class Subject(models.Model):
-	name 			= models.CharField(max_length=255,verbose_name=&quot;科目名称&quot;)
-	description 	= models.TextField(verbose_name=&quot;科目描述&quot;)
-	cover_image 	= models.ImageField(upload_to = 'cover/',blank=True)
-	class Meta:
-		verbose_name=&quot;科目&quot;
-		verbose_name_plural=verbose_name
-	def __str__(self):
-		return self.name
-
-class Question(models.Model):
-	choice = (('A','A'),('B','B'),('C','C'),('D','D'))
-	subject 	= models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
-	statments 	= models.TextField(verbose_name=&quot;问题描述&quot;)
-	op_A 	= models.CharField(max_length=1000)
-	op_B 	= models.CharField(max_length=1000)
-	op_C 	= models.CharField(max_length=1000)
-	op_D 	= models.CharField(max_length=1000)
-	correct_op 	= models.CharField(choices=choice,max_length=10)
-	mark 		= models.IntegerField(default=1)
-	class Meta:
-		verbose_name=&quot;题目&quot;
-		verbose_name_plural=verbose_name
-	def __str__(self):
-		return self.statments
-
-
-class Exam(models.Model):
-	user = models.ForeignKey(UserProfile,on_delete=models.CASCADE,verbose_name=&quot;用户&quot;)
-	subject = models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
-	name = models.CharField(max_length=100,blank=True,verbose_name=&quot;本次考试名称&quot;)
-	class Meta:
-		verbose_name=&quot;考试&quot;
-		verbose_name_plural=verbose_name
-	def __str__(self):
-		return self.name
-
-class Mark(models.Model):
-	user = models.ForeignKey(UserProfile,on_delete=models.CASCADE,verbose_name=&quot;用户&quot;)
-	subject = models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
-	exam = models.ForeignKey(Exam,on_delete=models.CASCADE,verbose_name=&quot;考试名称&quot;)
-	total_mark = models.CharField(max_length=10,verbose_name=&quot;总分数&quot;)
-	base_mark = models.CharField(max_length=10,verbose_name=&quot;基础分数&quot;)
-	promote_mark = models.CharField(max_length=10,verbose_name=&quot;提升分数&quot;)
-	major_mark = models.CharField(max_length=10,verbose_name=&quot;专业分数&quot;)
-	class Meta:
-		verbose_name=&quot;分数&quot;
-		verbose_name_plural=verbose_name
-	def __str__(self):
-		return self.total_mark
-
-# # class Rank(models.Model):
-# # 	pass
-
-</code></pre>
-<pre><code class="language-python">#urls.py
-from django.urls import path
-from .views import ExamView
-app_name = &quot;exam&quot;
-urlpatterns=[
-    path(&quot;exam01/&quot;,ExamView.as_view(),name='exam_start'),
-]
-</code></pre>
-<pre><code class="language-python">#adminx.py
-from django.shortcuts import render
-import xadmin
-from .models import *
-from users.models import UserProfile
-from xadmin import views
-
-class SubjectAdmin(object):
-	#可以显示的列
-    list_display=[&quot;name&quot;,&quot;description&quot;,&quot;cover_image&quot;]
-    #查找的设置
-    search_fields=[&quot;name&quot;,&quot;description&quot;,&quot;cover_image&quot;]
-    #过滤器的设置
-    list_filter=[&quot;name&quot;,&quot;description&quot;,&quot;cover_image&quot;]
-    #可以在当前页面编辑的列
-    list_editable=[&quot;name&quot;,&quot;description&quot;,&quot;cover_image&quot;]
-    model_icon=&quot;fa fa-bath&quot;
-class QuestionAdmin(object):
-	#可以显示的列
-    list_display=[&quot;subject&quot;,&quot;statments&quot;,&quot;op_A&quot;,&quot;op_B&quot;,&quot;op_C&quot;,&quot;op_D&quot;]
-    #查找的设置
-    search_fields=[&quot;subject&quot;,&quot;statments&quot;,&quot;op_A&quot;,&quot;op_B&quot;,&quot;op_C&quot;,&quot;op_D&quot;]
-    #过滤器的设置
-    list_filter=[&quot;subject&quot;,&quot;statments&quot;,&quot;op_A&quot;,&quot;op_B&quot;,&quot;op_C&quot;,&quot;op_D&quot;]
-    #可以在当前页面编辑的列
-    list_editable=[&quot;subject&quot;,&quot;statments&quot;,&quot;op_A&quot;,&quot;op_B&quot;,&quot;op_C&quot;,&quot;op_D&quot;]
-    model_icon=&quot;fa fa-bath&quot;
-class ExamAdmin(object):
-	#可以显示的列
-    list_display=[&quot;subject&quot;,&quot;name&quot;]
-    #查找的设置
-    search_fields=[&quot;subject&quot;,&quot;name&quot;]
-    #过滤器的设置
-    list_filter=[&quot;subject&quot;,&quot;name&quot;]
-    #可以在当前页面编辑的列
-    list_editable=[&quot;subject&quot;,&quot;name&quot;]
-    model_icon=&quot;fa fa-bath&quot;
-class MarkAdmin(object):
-	#可以显示的列
-    list_display=[&quot;user&quot;,&quot;subject&quot;,&quot;exam&quot;,&quot;total_mark&quot;]
-    #查找的设置
-    search_fields=[&quot;user&quot;,&quot;subject&quot;,&quot;exam&quot;,&quot;total_mark&quot;]
-    #过滤器的设置
-    list_filter=[&quot;user&quot;,&quot;subject&quot;,&quot;exam&quot;,&quot;total_mark&quot;]
-    #可以在当前页面编辑的列
-    list_editable=[&quot;user&quot;,&quot;subject&quot;,&quot;exam&quot;]
-    model_icon=&quot;fa fa-bath&quot;
-xadmin.site.register(Subject, SubjectAdmin)
-xadmin.site.register(Question, QuestionAdmin)
-xadmin.site.register(Exam, ExamAdmin)
-xadmin.site.register(Mark, MarkAdmin)
-</code></pre>
-<pre><code class="language-html">{% extends 'base.html' %}
-{% load staticfiles %}
-{% block title %}考试页面{% endblock %}
-{% block custom_css %}
-{% endblock %}
-&lt;!--正文--&gt;
-{% block content %}
-
-&lt;form action=&quot;&quot; method=&quot;post&quot; class=&quot;exam_form&quot; style=&quot;font-family: 微软雅黑;font-size: 20px;&quot; align=&quot;center&quot;&gt;
-{#    csrf_token保护#}
-    {% csrf_token %}
-    {#循环读出所有的试题#}
-    {% for foo in question %}
-       &lt;tr&gt;
-        {#每一道题的描述#}
-        &lt;td&gt;{{ foo.statments}}&lt;/td&gt;&lt;br&gt;
-        &lt;td&gt;{{ foo.op_A }}&lt;/td&gt;&lt;br&gt;
-        &lt;td&gt;{{ foo.op_B }}&lt;/td&gt;&lt;br&gt;
-        &lt;td&gt;{{ foo.op_C }}&lt;/td&gt;&lt;br&gt;
-        &lt;td&gt;{{ foo.op_D }}&lt;/td&gt;&lt;br&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;{{ foo.id }}&quot; value=&quot;A&quot;&gt;A&lt;/td&gt;
-        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;{{ foo.id }}&quot; value=&quot;B&quot;&gt;B&lt;/td&gt;
-        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;{{ foo.id }}&quot; value=&quot;C&quot;&gt;C&lt;/td&gt;
-        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;{{ foo.id }}&quot; value=&quot;D&quot;&gt;D&lt;/td&gt;
-        &lt;br&gt;
-    &lt;/tr&gt;
-    {% endfor %}
-    &lt;input type=&quot;submit&quot; name=&quot;exam&quot; value=&quot;提交&quot;&gt;
-&lt;/form&gt;
-{% endblock %}
-</code></pre>
-<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20200423180130674.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
-<h4 id="后台数据可视化">后台数据可视化</h4>
-<pre><code class="language-python">#views.py
-from django.shortcuts import render
-from django.views.generic import View
-from django.http import HttpResponse
-from .models import Question,Exam,Subject,Mark
-from django.db import models
-
-# Create your views here.
-class ExamView(View):
-    def get(self,request):
-        #获取id=1的科目
-        subjetcs1=Subject.objects.get(id=1)
-        #打印这个科目的名称，可省去
-        print(subjetcs1)
-        #获取到这个科目下的所有试题
-        question=Question.objects.filter(subject=subjetcs1)
-        context={
-            &quot;question&quot;:question,
-        }
-        return render(request, &quot;exam03.html&quot;,context=context)
-    def post(self,request):
-        #设置用户答案为一个空列表
-        if request.user.is_authenticated:
-            # uid=request.user.id
-            uid = request.user
-            uname=request.user.nick_name
-        subjetcs1 = Subject.objects.get(id=1)
-        current_exam=Exam.objects.get(id=1)
-        print(&quot;本次考试的科目为：&quot;,subjetcs1)
-        print(&quot;本次考试名称为：&quot;, current_exam)
-        print(uid)
-        print(uname)
-        my_answer = []
-        #依次从前端的答案中读取用户的选择，一共3道题，所以，这里的4应该手动修改
-        for i in range(1,4):
-            answer1 = request.POST.get('%s'%i)
-            my_answer.append(answer1)
-            i+=1
-        print(&quot;用户答案为：&quot;,my_answer)
-        # 打印所有题目的正确答案
-        correct_answer=re(request)
-        print(&quot;正确答案为：&quot;,correct_answer)
-        #基础，提升，专业分数,总分数均初始化为0
-        base_mark=0
-        promote_mark=0
-        major_mark=0
-        total_mark=0
-        i=0
-        while i &lt;= 2:
-            if i &lt;= 0:
-                if correct_answer[i] == my_answer[i]:
-                    base_mark += 1
-                    total_mark = total_mark + 1
-            elif i &lt;= 1:
-                if correct_answer[i] == my_answer[i]:
-                    total_mark = total_mark + 1
-                    promote_mark += 1
-            else:
-                if correct_answer[i] == my_answer[i]:
-                    total_mark = total_mark + 1
-                    major_mark += 1
-            i = i + 1
-        print(&quot;总分数为：&quot;, total_mark)
-        print(&quot;基础分数为：&quot;, base_mark)
-        print(&quot;提升分数为：&quot;, promote_mark)
-        print(&quot;专业分数为：&quot;, major_mark)
-        mark=Mark(user=uid,subject=subjetcs1,total_mark=total_mark,exam=current_exam,base_mark=base_mark,promote_mark=promote_mark,major_mark=major_mark)
-        mark.save()
-        return render(request,'commite_succcess.html')
-#打印所有题目的正确答案
-def re(request):
-    option_list = []
-    options=Question.objects.all()
-    for option in options:
-        option_list.append(option.correct_op)
-    return option_list
-
-# Create your views here.
-
-</code></pre>
-<pre><code class="language-python">#models.py
-from django.db import models
-from datetime import datetime
-# Create your models here.
-from django.db import models
-from users.models import UserProfile
-# Create your models here.
-
-#科目
-class Subject(models.Model):
-	name 			= models.CharField(max_length=255,verbose_name=&quot;科目名称&quot;)
-	description 	= models.TextField(verbose_name=&quot;科目描述&quot;)
-	cover_image 	= models.ImageField(upload_to = 'cover/',blank=True)
-	class Meta:
-		verbose_name=&quot;科目&quot;
-		verbose_name_plural=verbose_name
-	def __str__(self):
-		return self.name
-
-class Question(models.Model):
-	choice = (('A','A'),('B','B'),('C','C'),('D','D'))
-	subject 	= models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
-	statments 	= models.TextField(verbose_name=&quot;问题描述&quot;)
-	op_A 	= models.CharField(max_length=1000)
-	op_B 	= models.CharField(max_length=1000)
-	op_C 	= models.CharField(max_length=1000)
-	op_D 	= models.CharField(max_length=1000)
-	correct_op 	= models.CharField(choices=choice,max_length=10)
-	mark 		= models.IntegerField(default=1)
-	class Meta:
-		verbose_name=&quot;题目&quot;
-		verbose_name_plural=verbose_name
-	def __str__(self):
-		return self.statments
-
-
-class Exam(models.Model):
-	user = models.ForeignKey(UserProfile,on_delete=models.CASCADE,verbose_name=&quot;用户&quot;)
-	subject = models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
-	name = models.CharField(max_length=100,blank=True,verbose_name=&quot;本次考试名称&quot;)
-	class Meta:
-		verbose_name=&quot;考试&quot;
-		verbose_name_plural=verbose_name
-	def __str__(self):
-		return self.name
-
-class Mark(models.Model):
-	user = models.ForeignKey(UserProfile,on_delete=models.CASCADE,verbose_name=&quot;用户&quot;)
-	subject = models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
-	exam = models.ForeignKey(Exam,on_delete=models.CASCADE,verbose_name=&quot;考试名称&quot;)
-	total_mark = models.CharField(max_length=10,verbose_name=&quot;总分数&quot;)
-	base_mark = models.CharField(max_length=10,verbose_name=&quot;基础分数&quot;)
-	promote_mark = models.CharField(max_length=10,verbose_name=&quot;提升分数&quot;)
-	major_mark = models.CharField(max_length=10,verbose_name=&quot;专业分数&quot;)
-	class Meta:
-		verbose_name=&quot;分数&quot;
-		verbose_name_plural=verbose_name
-	def __str__(self):
-		return self.total_mark
-
-# # class Rank(models.Model):
-# # 	pass
-class Keshi(models.Model):
-    keshi = models.CharField(max_length=10, verbose_name=&quot;分数可视化&quot;)
-    class Meta:
-        verbose_name = &quot;分数可视化&quot;
-        verbose_name_plural = verbose_name
-
-</code></pre>
-<pre><code class="language-python">#adminx.py
-from django.shortcuts import render
-import xadmin
-from .models import *
-from users.models import UserProfile
-from xadmin import views
-from xadmin.views import CommAdminView
-class SubjectAdmin(object):
-	#可以显示的列
-    list_display=[&quot;name&quot;,&quot;description&quot;,&quot;cover_image&quot;]
-    #查找的设置
-    search_fields=[&quot;name&quot;,&quot;description&quot;,&quot;cover_image&quot;]
-    #过滤器的设置
-    list_filter=[&quot;name&quot;,&quot;description&quot;,&quot;cover_image&quot;]
-    #可以在当前页面编辑的列
-    list_editable=[&quot;name&quot;,&quot;description&quot;,&quot;cover_image&quot;]
-    model_icon=&quot;fa fa-bath&quot;
-class QuestionAdmin(object):
-	#可以显示的列
-    list_display=[&quot;subject&quot;,&quot;statments&quot;,&quot;op_A&quot;,&quot;op_B&quot;,&quot;op_C&quot;,&quot;op_D&quot;]
-    #查找的设置
-    search_fields=[&quot;subject&quot;,&quot;statments&quot;,&quot;op_A&quot;,&quot;op_B&quot;,&quot;op_C&quot;,&quot;op_D&quot;]
-    #过滤器的设置
-    list_filter=[&quot;subject&quot;,&quot;statments&quot;,&quot;op_A&quot;,&quot;op_B&quot;,&quot;op_C&quot;,&quot;op_D&quot;]
-    #可以在当前页面编辑的列
-    list_editable=[&quot;subject&quot;,&quot;statments&quot;,&quot;op_A&quot;,&quot;op_B&quot;,&quot;op_C&quot;,&quot;op_D&quot;]
-    model_icon=&quot;fa fa-bath&quot;
-class ExamAdmin(object):
-	#可以显示的列
-    list_display=[&quot;subject&quot;,&quot;name&quot;]
-    #查找的设置
-    search_fields=[&quot;subject&quot;,&quot;name&quot;]
-    #过滤器的设置
-    list_filter=[&quot;subject&quot;,&quot;name&quot;]
-    #可以在当前页面编辑的列
-    list_editable=[&quot;subject&quot;,&quot;name&quot;]
-    model_icon=&quot;fa fa-bath&quot;
-class MarkAdmin(object):
-	#可以显示的列
-    list_display=[&quot;user&quot;,&quot;subject&quot;,&quot;exam&quot;,&quot;total_mark&quot;]
-    #查找的设置
-    search_fields=[&quot;user&quot;,&quot;subject&quot;,&quot;exam&quot;,&quot;total_mark&quot;]
-    #过滤器的设置
-    list_filter=[&quot;user&quot;,&quot;subject&quot;,&quot;exam&quot;,&quot;total_mark&quot;]
-    #可以在当前页面编辑的列
-    list_editable=[&quot;user&quot;,&quot;subject&quot;,&quot;exam&quot;]
-    model_icon=&quot;fa fa-bath&quot;
-
-
-class ChangeIntoAdmin(object):
-    # 指向自定义的页面
-    object_list_template = 'mark_001.html'
-    # 重写方法，把要展示的数据更新到 context
-    def get_context(self):
-        context = CommAdminView.get_context(self)
-        #获取所有的用户
-        exams = Mark.objects.all()
-        #获取用户的一个属性，将显示到
-        base_list = []
-        #获取用户名
-        name_list = []
-        promote_list=[]
-        for exam in exams:
-            name_list.append(exam.user.nick_name)
-            base_list.append(exam.base_mark)
-            promote_list.append(exam.promote_mark)
-        context.update(
-            {
-                'name_list': name_list,
-                'base_list': base_list,
-                'promote_list': promote_list,
-            }
-        )
-        return context
-#进行注册
-
-
-xadmin.site.register(Keshi, ChangeIntoAdmin)
-xadmin.site.register(Subject, SubjectAdmin)
-xadmin.site.register(Question, QuestionAdmin)
-xadmin.site.register(Exam, ExamAdmin)
-xadmin.site.register(Mark, MarkAdmin)
-
-</code></pre>
-<pre><code class="language-python">#mark_001.html
-{% extends 'xadmin/base_site.html' %}
-{% load staticfiles %}
-{# 去掉标签栏 #}
-{% block content-nav %}
-
-{% endblock %}
-{% block extrastyle %}
-     &lt;script src=&quot;{% static 'js/echarts.min.js' %}&quot;  charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-    &lt;script src=&quot;https://libs.baidu.com/jquery/1.11.1/jquery.min.js&quot;&gt;&lt;/script&gt;
-{% endblock %}
-{% block content %}
-&lt;div&gt;zhelishige
-    &lt;div id=&quot;chart_1&quot; style=&quot;width:500px; height:350px&quot;&gt;在这里&lt;/div&gt;
-    &lt;div id=&quot;chart_2&quot; style=&quot;width:500px; height:350px&quot;&gt;在这里&lt;/div&gt;
-&lt;a&gt;这里还有个a标签&lt;/a&gt;
-&lt;/div&gt;
-
-&lt;script type=&quot;text/javascript&quot;&gt;
-        var myChart = echarts.init(document.getElementById('chart_1'));
-option = {
-    xAxis: {
-        type: 'category',
-        boundaryGap: false,
-        data:{{ name_list|safe}},
-    },
-    yAxis: {
-        type: 'value'
-    },
-    series: [{
-        data:{{ base_list |safe}},
-        type: 'line',
-        areaStyle: {}
-    }]
-};
-        myChart.setOption(option);
-&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot;&gt;
-        var myChart = echarts.init(document.getElementById('chart_2'));
-option = {
-    xAxis: {
-        type: 'category',
-        boundaryGap: false,
-        data:{{ name_list|safe}},
-    },
-    yAxis: {
-        type: 'value'
-    },
-    series: [{
-        data:{{ promote_list |safe}},
-        type: 'line',
-        areaStyle: {}
-    }]
-};
-        myChart.setOption(option);
-&lt;/script&gt;
-{% endblock content %}
-
-</code></pre>
-<figure data-type="image" tabindex="2"><img src="https://img-blog.csdnimg.cn/20200423184715923.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[JSP实现九九乘法表]]></title>
-        <id>https://906571331.github.io/yx.github.io/post/jsp-shi-xian-jiu-jiu-cheng-fa-biao/</id>
-        <link href="https://906571331.github.io/yx.github.io/post/jsp-shi-xian-jiu-jiu-cheng-fa-biao/">
-        </link>
-        <updated>2020-04-22T01:45:44.000Z</updated>
-        <content type="html"><![CDATA[<p>JSP实现九九乘法表</p>
-<pre><code class="language-java">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
-    pageEncoding=&quot;UTF-8&quot;%&gt;
-&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-&lt;meta charset=&quot;ISO-8859-1&quot;&gt;
-&lt;title&gt;Insert title here&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-
-&lt;%	String str=&quot;&quot;;
-	for (int i=1;i&lt;=9;i++)
-	{
-		for (int j=1;j&lt;=9;j++)
-		{
-			str +=j+&quot;*&quot;+i+&quot;=&quot;+j*i;
-			str+=&quot;&amp;nbsp;&quot;;
-			str+=&quot;&amp;nbsp;&quot;;
-			str+=&quot;&amp;nbsp;&quot;;
-		}
-		str+=&quot;&lt;br&gt;&quot;;
-	}
-%&gt;
-&lt;%--这里的注释不会在压面中显示，但是这里会占一行 --%&gt;
-&lt;table width='440' height='150' border='1' align=&quot;center&quot;&gt;
-	&lt;tr&gt;
-		&lt;td height=30 align=&quot;center&quot;&gt;JSP九九乘法表&lt;/td&gt;
-	&lt;/tr&gt;
-		&lt;tr&gt;
-		&lt;td style=&quot;padding:3px&quot;&gt;&lt;%=str%&gt;
-		&lt;/td&gt;
-	&lt;/tr&gt;
-&lt;/table&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20200422093134511.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Django计算分数算法]]></title>
-        <id>https://906571331.github.io/yx.github.io/post/django-ji-suan-fen-shu-suan-fa/</id>
-        <link href="https://906571331.github.io/yx.github.io/post/django-ji-suan-fen-shu-suan-fa/">
-        </link>
-        <updated>2020-04-21T12:20:10.000Z</updated>
-        <content type="html"><![CDATA[<h4 id="1最简单的计算分数">1.最简单的计算分数</h4>
-<pre><code class="language-python">correct_answer=[&quot;A&quot;,&quot;B&quot;,&quot;C&quot;]
-my_answer=[&quot;A&quot;,&quot;C&quot;,&quot;D&quot;]
-mark=0
-i=0
-while i&lt;3:
-    if correct_answer[i]==my_answer[i]:
-        mark+=1
-    i=i+1
-print(mark)	
-#运行结果：
-1
-</code></pre>
-<h4 id="2分模块计算">2.分模块计算</h4>
-<pre><code class="language-python">correct_answer=[&quot;A&quot;,&quot;B&quot;,&quot;C&quot;]
-my_answer=[&quot;A&quot;,&quot;C&quot;,&quot;D&quot;]
-mark=0
-i=0
-base_mark=0
-promote_mark=0
-major_mark=0
-while i&lt;3:
-    if i&lt;=1:
-        if correct_answer[i]==my_answer[i]:
-            base_mark+=1
-            mark=mark+1
-    else:
-        if correct_answer[i]==my_answer[i]:
-            mark=mark+1
-    i=i+1
-print(&quot;总分数为：&quot;,mark)
-print(&quot;基础分数为：&quot;,base_mark)
-</code></pre>
-<h4 id="3分三个模块进行计算">3.分三个模块进行计算</h4>
-<pre><code class="language-python">correct_answer=[&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;,&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;,&quot;A&quot;,&quot;B&quot;]
-my_answer=[&quot;A&quot;,&quot;C&quot;,&quot;C&quot;,&quot;A&quot;,&quot;C&quot;,&quot;D&quot;,&quot;C&quot;,&quot;C&quot;,&quot;D&quot;,&quot;A&quot;]
-mark=0
-i=0
-base_mark=0
-promote_mark=0
-major_mark=0
-promote_mark=0
-major_mark=0
-while i&lt;=9:
-    if i&lt;=3:
-        if correct_answer[i]==my_answer[i]:
-            base_mark+=1
-            mark=mark+1
-    elif i&lt;=6:
-        if correct_answer[i]==my_answer[i]:
-            mark=mark+1
-            promote_mark+=1
-    else:
-        if correct_answer[i]==my_answer[i]:
-            mark=mark+1
-            major_mark+=1	
-    i=i+1
-print(&quot;总分数为：&quot;,mark)
-print(&quot;基础分数为：&quot;,base_mark)
-print(&quot;提升分数为：&quot;,promote_mark)
-print(&quot;专业分数为：&quot;,major_mark)
-</code></pre>
-<p><img src="https://img-blog.csdnimg.cn/20200421083042661.png" alt="在这里插入图片描述" loading="lazy"><br>
-4.html实现表单选项</p>
-<pre><code class="language-html">		&lt;div class=&quot;layui-form-item&quot; pane=&quot;&quot;&gt;
-			&lt;label class=&quot;layui-form-label&quot;&gt;单选框&lt;/label&gt;
-			&lt;div class=&quot;layui-input-block&quot;&gt;
-				&lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;男&quot; title=&quot;男&quot;&gt;A选项
-				&lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;女&quot; title=&quot;女&quot;&gt;B选项
-				&lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;男&quot; title=&quot;男&quot;&gt;C选项
-				&lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;女&quot; title=&quot;女&quot;&gt;D选项
-				&lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;
-			&lt;/div&gt;
-		&lt;/div&gt;
-</code></pre>
-<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20200421084426516.png" alt="在这里插入图片描述" loading="lazy"></figure>
-<h4 id="4下午的工作">4.下午的工作</h4>
-<pre><code class="language-python">#views.py
-from django.shortcuts import render
-from django.views.generic import View
-from django.http import HttpResponse
-from .models import Question,Exam,Subject
-from django.db import models
-# Create your views here.
-class ExamView(View):
-    def get(self,request):
-        subjetcs=Subject.objects.get(id=1)
-        print(subjetcs)
-        question=Question.objects.get(id=1)
-        print(id)
-        context={
-            &quot;question_statements&quot;:question.statments,
-            &quot;op_A&quot;: question.op_A,
-            &quot;op_B&quot;: question.op_B,
-            &quot;op_C&quot;: question.op_C,
-            &quot;op_D&quot;: question.op_D,
-        }
-
-        return render(request, &quot;exam.html&quot;,context=context)
-    def post(self,request):
-        question = request.POST.get('question')
-        question2=request.POST.get('question2')
-        options_list=re(request)
-        print(question)
-        print(question2)
-        my_answer=[]
-        my_answer.append(question)
-        my_answer.append(question2)
-        print(my_answer)
-        print(options_list)
-        return HttpResponse(&quot;success&quot;)
-def re(request):
-    option_list = []
-    options=Question.objects.all()
-    for option in options:
-        option_list.append(option.correct_op)
-    return option_list
-</code></pre>
-<pre><code class="language-python">#urls.py
-from django.urls import path
-from .views import ExamView
-urlpatterns=[
-    path(&quot;exam01/&quot;,ExamView.as_view())
-]
-</code></pre>
-<pre><code class="language-python">#models.py
-from django.db import models
-from users.models import User
-
-# Create your models here.
-
-#科目
-class Subject(models.Model):
-	name 			= models.CharField(max_length=255,verbose_name=&quot;科目名称&quot;)
-	description 	= models.TextField(verbose_name=&quot;科目描述&quot;)
-	cover_image 	= models.ImageField(upload_to = 'cover/',blank=True)
-	class Meta:
-		verbose_name=&quot;科目&quot;
-		verbose_name_plural=verbose_name
-	def __str__(self):
-		return self.name
-
-class Question(models.Model):
-	choice = (('A','A'),('B','B'),('C','C'),('D','D'))
-	subject 	= models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
-	statments 	= models.TextField(verbose_name=&quot;问题描述&quot;)
-	op_A 	= models.CharField(max_length=1000)
-	op_B 	= models.CharField(max_length=1000)
-	op_C 	= models.CharField(max_length=1000)
-	op_D 	= models.CharField(max_length=1000)
-	correct_op 	= models.CharField(choices=choice,max_length=10)
-	mark 		= models.IntegerField(default=1)
-	class Meta:
-		verbose_name=&quot;问题&quot;
-		verbose_name_plural=verbose_name
-	def __str__(self):
-		return self.statments
-
-
-class Exam(models.Model):
-	subject = models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
-	name = models.CharField(max_length=100,blank=True,verbose_name=&quot;本次考试名称&quot;)
-	class Meta:
-		verbose_name=&quot;考试&quot;
-		verbose_name_plural=verbose_name
-	def __str__(self):
-		return self.name
-
-class Mark(models.Model):
-	user = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name=&quot;用户&quot;)
-	subject = models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
-	exam = models.ForeignKey(Exam,on_delete=models.CASCADE,verbose_name=&quot;考试名称&quot;)
-	total_marks = models.CharField(max_length=10,verbose_name=&quot;总分数&quot;)
-	class Meta:
-		verbose_name=&quot;分数&quot;
-		verbose_name_plural=verbose_name
-	def __str__(self):
-		return self.total_marks
-
-# # class Rank(models.Model):
-# # 	pass
-
-</code></pre>
-<pre><code class="language-html">&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-&lt;head&gt;
-    &lt;meta charset=&quot;UTF-8&quot;&gt;
-    &lt;title&gt;这里是考试界面的首页&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;form action=&quot;&quot; method=&quot;post&quot;&gt;
-    {% csrf_token %}
-    &lt;tr&gt;
-        &lt;td&gt;第一题,请选择答案&lt;/td&gt;&lt;br&gt;
-        &lt;td&gt;A:这是A选项&lt;/td&gt;&lt;br&gt;
-        &lt;td&gt;B:这是B选项&lt;/td&gt;&lt;br&gt;
-        &lt;td&gt;C:这是C选项&lt;/td&gt;&lt;br&gt;
-        &lt;td&gt;D:这是D选项&lt;/td&gt;&lt;br&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;question&quot; value=&quot;A&quot;&gt;A&lt;/td&gt;
-        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;question&quot; value=&quot;B&quot;&gt;B&lt;/td&gt;
-        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;question&quot; value=&quot;C&quot;&gt;C&lt;/td&gt;
-        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;question&quot; value=&quot;D&quot;&gt;D&lt;/td&gt;
-        &lt;br&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;第二题,请选择答案&lt;/td&gt;&lt;br&gt;
-        &lt;td&gt;A:这是A选项&lt;/td&gt;&lt;br&gt;
-        &lt;td&gt;B:这是B选项&lt;/td&gt;&lt;br&gt;
-        &lt;td&gt;C:这是C选项&lt;/td&gt;&lt;br&gt;
-        &lt;td&gt;D:这是D选项&lt;/td&gt;&lt;br&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;question2&quot; value=&quot;A&quot;&gt;A&lt;/td&gt;
-        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;question2&quot; value=&quot;B&quot;&gt;B&lt;/td&gt;
-        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;question2&quot; value=&quot;C&quot;&gt;C&lt;/td&gt;
-        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;question2&quot; value=&quot;D&quot;&gt;D&lt;/td&gt;
-    &lt;/tr&gt;&lt;br&gt;
-        &lt;tr&gt;
-        &lt;td&gt;{{ question_statements }}&lt;/td&gt;&lt;br&gt;
-        &lt;td&gt;{{ op_A }}&lt;/td&gt;&lt;br&gt;
-        &lt;td&gt;{{ op_B }}&lt;/td&gt;&lt;br&gt;
-        &lt;td&gt;{{ op_C }}&lt;/td&gt;&lt;br&gt;
-        &lt;td&gt;{{ op_D }}&lt;/td&gt;&lt;br&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;question_id&quot; value=&quot;A&quot;&gt;A&lt;/td&gt;
-        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;question_id&quot; value=&quot;B&quot;&gt;B&lt;/td&gt;
-        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;question_id&quot; value=&quot;C&quot;&gt;C&lt;/td&gt;
-        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;question_id&quot; value=&quot;D&quot;&gt;D&lt;/td&gt;
-        &lt;br&gt;
-    &lt;/tr&gt;
-    &lt;input type=&quot;submit&quot; name=&quot;exam&quot; value=&quot;提交&quot;&gt;
-&lt;/form&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-<h4 id="效果">效果</h4>
-<figure data-type="image" tabindex="2"><img src="https://img-blog.csdnimg.cn/20200421201736839.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
-<h4 id="存在的问题是不能循环遍历出同一科目或者同一考试下的所有题目">存在的问题是：不能循环遍历出同一科目或者同一考试下的所有题目</h4>
-<p><code>时间：2020年4月22日17:01:00</code><br>
-前端已经实现循环遍历，实现方法为：</p>
-<pre><code class="language-python">#views.py
-from django.shortcuts import render
-from django.views.generic import View
-from django.http import HttpResponse
-from .models import Question,Exam,Subject
-from django.db import models
-# Create your views here.
-class ExamView(View):
-    def get(self,request):
-        subjetcs1=Subject.objects.get(id=1)
-        print(subjetcs1)
-        question=Question.objects.filter(subject=subjetcs1)
-        context={
-            &quot;question&quot;:question,
-        }
-        return render(request, &quot;exam.html&quot;,context=context)
-    def post(self,request):
-        question = request.POST.get('question')
-        question2=request.POST.get('question2')
-        options_list=re(request)
-        print(question)
-        print(question2)
-        my_answer=[]
-        my_answer.append(question)
-        my_answer.append(question2)
-        print(my_answer)
-        print(options_list)
-        return HttpResponse(&quot;success&quot;)
-#打印所有题目的正确答案
-def re(request):
-    option_list = []
-    options=Question.objects.all()
-    for option in options:
-        option_list.append(option.correct_op)
-    return option_list
-
-</code></pre>
-<pre><code class="language-python">#models.py
-from django.db import models
-from users.models import User
-
-# Create your models here.
-
-#科目
-class Subject(models.Model):
-	name 			= models.CharField(max_length=255,verbose_name=&quot;科目名称&quot;)
-	description 	= models.TextField(verbose_name=&quot;科目描述&quot;)
-	cover_image 	= models.ImageField(upload_to = 'cover/',blank=True)
-	class Meta:
-		verbose_name=&quot;科目&quot;
-		verbose_name_plural=verbose_name
-	def __str__(self):
-		return self.name
-
-class Question(models.Model):
-	choice = (('A','A'),('B','B'),('C','C'),('D','D'))
-	subject 	= models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
-	statments 	= models.TextField(verbose_name=&quot;问题描述&quot;)
-	op_A 	= models.CharField(max_length=1000)
-	op_B 	= models.CharField(max_length=1000)
-	op_C 	= models.CharField(max_length=1000)
-	op_D 	= models.CharField(max_length=1000)
-	correct_op 	= models.CharField(choices=choice,max_length=10)
-	mark 		= models.IntegerField(default=1)
-	class Meta:
-		verbose_name=&quot;问题&quot;
-		verbose_name_plural=verbose_name
-	def __str__(self):
-		return self.statments
-
-
-class Exam(models.Model):
-	subject = models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
-	name = models.CharField(max_length=100,blank=True,verbose_name=&quot;本次考试名称&quot;)
-	class Meta:
-		verbose_name=&quot;考试&quot;
-		verbose_name_plural=verbose_name
-	def __str__(self):
-		return self.name
-
-class Mark(models.Model):
-	user = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name=&quot;用户&quot;)
-	subject = models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
-	exam = models.ForeignKey(Exam,on_delete=models.CASCADE,verbose_name=&quot;考试名称&quot;)
-	total_marks = models.CharField(max_length=10,verbose_name=&quot;总分数&quot;)
-	class Meta:
-		verbose_name=&quot;分数&quot;
-		verbose_name_plural=verbose_name
-	def __str__(self):
-		return self.total_marks
-
-</code></pre>
-<pre><code class="language-html">#exam.html
-&lt;form action=&quot;&quot; method=&quot;post&quot;&gt;
-    {% csrf_token %}
-{#循环读出所有的试题#}
-    {% for foo in question %}
-       &lt;tr&gt;
-        &lt;td&gt;{{ foo.statments}}&lt;/td&gt;&lt;br&gt;
-        &lt;td&gt;{{ foo.op_A }}&lt;/td&gt;&lt;br&gt;
-        &lt;td&gt;{{ foo.op_B }}&lt;/td&gt;&lt;br&gt;
-        &lt;td&gt;{{ foo.op_C }}&lt;/td&gt;&lt;br&gt;
-        &lt;td&gt;{{ foo.op_D }}&lt;/td&gt;&lt;br&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;{{ foo.id }}&quot; value=&quot;A&quot;&gt;A&lt;/td&gt;
-        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;{{ foo.id }}&quot; value=&quot;B&quot;&gt;B&lt;/td&gt;
-        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;{{ foo.id }}&quot; value=&quot;C&quot;&gt;C&lt;/td&gt;
-        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;{{ foo.id }}&quot; value=&quot;D&quot;&gt;D&lt;/td&gt;
-        &lt;br&gt;
-    &lt;/tr&gt;
-    {% endfor %}
-    &lt;input type=&quot;submit&quot; name=&quot;exam&quot; value=&quot;提交&quot;&gt;
-&lt;/form&gt;
-</code></pre>
-<p><code>时间：2020年4月22日17:45:31</code><br>
-实现了自动取出题目，答题，自动计算分数</p>
-<pre><code class="language-python">#views.py
-from django.shortcuts import render
-from django.views.generic import View
-from django.http import HttpResponse
-from .models import Question,Exam,Subject
-from django.db import models
-# Create your views here.
-class ExamView(View):
-    def get(self,request):
-        #获取id=1的科目
-        subjetcs1=Subject.objects.get(id=1)
-        #打印这个科目的名称，可省去
-        print(subjetcs1)
-        #获取到这个科目下的所有试题
-        question=Question.objects.filter(subject=subjetcs1)
-        context={
-            &quot;question&quot;:question,
-        }
-        return render(request, &quot;exam.html&quot;,context=context)
-    def post(self,request):
-        #设置用户答案为一个空列表
-        my_answer = []
-        #依次从前端的答案中读取用户的选择，一共3道题，所以，这里的4应该手动修改
-        for i in range(1,4):
-            answer1 = request.POST.get('%s'%i)
-            my_answer.append(answer1)
-            i+=1
-        print(&quot;用户答案为：&quot;,my_answer)
-        # 打印所有题目的正确答案
-        correct_answer=re(request)
-        print(&quot;正确答案为：&quot;,correct_answer)
-        #基础，提升，专业分数,总分数均初始化为0
-        base_mark=0
-        promote_mark=0
-        major_mark=0
-        total_mark=0
-        i=0
-        while i &lt;= 2:
-            if i &lt;= 0:
-                if correct_answer[i] == my_answer[i]:
-                    base_mark += 1
-                    total_mark = total_mark + 1
-            elif i &lt;= 1:
-                if correct_answer[i] == my_answer[i]:
-                    total_mark = total_mark + 1
-                    promote_mark += 1
-            else:
-                if correct_answer[i] == my_answer[i]:
-                    total_mark = total_mark + 1
-                    major_mark += 1
-            i = i + 1
-        print(&quot;总分数为：&quot;, total_mark)
-        print(&quot;基础分数为：&quot;, base_mark)
-        print(&quot;提升分数为：&quot;, promote_mark)
-        print(&quot;专业分数为：&quot;, major_mark)
-        return HttpResponse(&quot;success&quot;)
-#打印所有题目的正确答案
-def re(request):
-    option_list = []
-    options=Question.objects.all()
-    for option in options:
-        option_list.append(option.correct_op)
-    return option_list
-
-</code></pre>
-<pre><code class="language-python">#models.py
-from django.db import models
-from users.models import User
-
-# Create your models here.
-
-#科目
-class Subject(models.Model):
-	name 			= models.CharField(max_length=255,verbose_name=&quot;科目名称&quot;)
-	description 	= models.TextField(verbose_name=&quot;科目描述&quot;)
-	cover_image 	= models.ImageField(upload_to = 'cover/',blank=True)
-	class Meta:
-		verbose_name=&quot;科目&quot;
-		verbose_name_plural=verbose_name
-	def __str__(self):
-		return self.name
-
-class Question(models.Model):
-	choice = (('A','A'),('B','B'),('C','C'),('D','D'))
-	subject 	= models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
-	statments 	= models.TextField(verbose_name=&quot;问题描述&quot;)
-	op_A 	= models.CharField(max_length=1000)
-	op_B 	= models.CharField(max_length=1000)
-	op_C 	= models.CharField(max_length=1000)
-	op_D 	= models.CharField(max_length=1000)
-	correct_op 	= models.CharField(choices=choice,max_length=10)
-	mark 		= models.IntegerField(default=1)
-	class Meta:
-		verbose_name=&quot;问题&quot;
-		verbose_name_plural=verbose_name
-	def __str__(self):
-		return self.statments
-
-
-class Exam(models.Model):
-	subject = models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
-	name = models.CharField(max_length=100,blank=True,verbose_name=&quot;本次考试名称&quot;)
-	class Meta:
-		verbose_name=&quot;考试&quot;
-		verbose_name_plural=verbose_name
-	def __str__(self):
-		return self.name
-
-class Mark(models.Model):
-	user = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name=&quot;用户&quot;)
-	subject = models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
-	exam = models.ForeignKey(Exam,on_delete=models.CASCADE,verbose_name=&quot;考试名称&quot;)
-	total_marks = models.CharField(max_length=10,verbose_name=&quot;总分数&quot;)
-	class Meta:
-		verbose_name=&quot;分数&quot;
-		verbose_name_plural=verbose_name
-	def __str__(self):
-		return self.total_marks
-</code></pre>
-<pre><code class="language-html">&lt;form action=&quot;&quot; method=&quot;post&quot;&gt;
-{#    csrf_token保护#}
-    {% csrf_token %}
-    {#循环读出所有的试题#}
-    {% for foo in question %}
-       &lt;tr&gt;
-        {#每一道题的描述#}
-        &lt;td&gt;{{ foo.statments}}&lt;/td&gt;&lt;br&gt;
-        &lt;td&gt;{{ foo.op_A }}&lt;/td&gt;&lt;br&gt;
-        &lt;td&gt;{{ foo.op_B }}&lt;/td&gt;&lt;br&gt;
-        &lt;td&gt;{{ foo.op_C }}&lt;/td&gt;&lt;br&gt;
-        &lt;td&gt;{{ foo.op_D }}&lt;/td&gt;&lt;br&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;{{ foo.id }}&quot; value=&quot;A&quot;&gt;A&lt;/td&gt;
-        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;{{ foo.id }}&quot; value=&quot;B&quot;&gt;B&lt;/td&gt;
-        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;{{ foo.id }}&quot; value=&quot;C&quot;&gt;C&lt;/td&gt;
-        &lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;{{ foo.id }}&quot; value=&quot;D&quot;&gt;D&lt;/td&gt;
-        &lt;br&gt;
-    &lt;/tr&gt;
-    {% endfor %}
-    &lt;input type=&quot;submit&quot; name=&quot;exam&quot; value=&quot;提交&quot;&gt;
-&lt;/form&gt;
-</code></pre>
-<p>实现效果：<br>
-<img src="https://img-blog.csdnimg.cn/20200422174834865.png" alt="在这里插入图片描述" loading="lazy"><br>
-<img src="https://img-blog.csdnimg.cn/20200422174819919.png" alt="在这里插入图片描述" loading="lazy"></p>
 ]]></content>
     </entry>
 </feed>

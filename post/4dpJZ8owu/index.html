@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>阿里云服务器下jupyter notebook 安装、远程访问以及处理错误 | WuXin</title>
+<meta name="description" content="成千上万个门口，总有一个人要先走。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://906571331.github.io/yx.github.io//favicon.ico?v=1588776881798">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://906571331.github.io/yx.github.io//styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://906571331.github.io/yx.github.io/">
+        <img class="avatar" src="https://906571331.github.io/yx.github.io//images/avatar.png?v=1588776881798" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://906571331.github.io/yx.github.io/">
+        <h1 class="site-title">WuXin</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="https://906571331.github.io/yx.github.io/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://906571331.github.io/yx.github.io/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="https://906571331.github.io/yx.github.io/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">阿里云服务器下jupyter notebook 安装、远程访问以及处理错误</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2020-05-06</span>
+            
+          </div>
+          <div class="post-content">
+            <h4 id="一安装所需的环境">一.安装所需的环境</h4>
+<pre><code class="language-python">1.	在虚拟环境中安装jupyter
+(jiqistudy)&gt; pip install jupyter -i  https://pypi.tuna.tsinghua.edu.cn/simple/
+2.	安装所需的python库
+(jiqistudy)&gt; pip install numpy -i  https://pypi.tuna.tsinghua.edu.cn/simple/
+(jiqistudy)&gt; pip install matplotlib -i https://pypi.tuna.tsinghua.edu.cn/simple/
+(jiqistudy)&gt; pip install pandas -i  https://pypi.tuna.tsinghua.edu.cn/simple/
+(jiqistudy)&gt; pip install sklearn -i  https://pypi.tuna.tsinghua.edu.cn/simple/
+3.	创建目标目录并进入
+(jiqistudy)&gt; mkdir algorithm
+(jiqistudy)&gt; cd algorithm
+4.	启动jupyter notebook
+(jiqistudy)&gt; jupyter notebook
+</code></pre>
+<h4 id="二-jupyter远程访问配置">二、jupyter远程访问配置</h4>
+<p>1、生成配置文件（~/.jupyter/jupyter_notebook_config.py）</p>
+<pre><code class="language-python">jupyter notebook --generate-config
+</code></pre>
+<p>2、生成密钥</p>
+<pre><code class="language-python">jupyter notebook password  # 自己造一个密码输入一确认一次
+vim ~/.jupyter/jupyter_notebook_config.json
+</code></pre>
+<p>记下密钥，sha1:...<br>
+3、编辑配置文件</p>
+<pre><code class="language-python">vim ~/.jupyter/jupyter_notebook_config.py
+</code></pre>
+<p>修改以下几项：</p>
+<pre><code class="language-python">c.NotebookApp.ip='*'                                  # 就是设置所有ip皆可访问  
+c.NotebookApp.password = u'sha1:03...       # 刚才复制的那个密文'  
+c.NotebookApp.open_browser = False       # 禁止自动打开浏览器  
+c.NotebookApp.port =1234                         #随便指定一个端口  
+</code></pre>
+<p>设置端口后要在阿里云控制台把这个端口打开<br>
+<img src="https://img-blog.csdnimg.cn/20200506224226754.png" alt="在这里插入图片描述" loading="lazy"><br>
+在浏览器中输入：公网ip:刚刚指定的端口，输入密码，即可进入<br>
+<img src="https://img-blog.csdnimg.cn/20200506224300542.png" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20200506224417486.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<code>注</code>：若出现错误</p>
+<pre><code class="language-python">OSError: [Errno 99]Cannot assign requested address
+</code></pre>
+<p>解决方法修改/etc/hosts<br>
+首先获取本机内网ip和本机hostname</p>
+<pre><code class="language-python">ifconfig    # 获取本机内网ip
+vi /etc/hostname    # 获取hostname
+</code></pre>
+<p><img src="https://img-blog.csdnimg.cn/20200506224605998.png" alt="在这里插入图片描述" loading="lazy"><br>
+进入/etc/hosts，添加上一行内容</p>
+<pre><code class="language-python">内网ip   hostname   # 上面获取的那两个
+</code></pre>
+<p>启动：</p>
+<pre><code class="language-python">启动jupyter notebook
+(jiqistudy)&gt; jupyter notebook
+</code></pre>
+<p><code>若出现如下错误，请参考：</code><br>
+1.<a href="https://blog.csdn.net/qq_42092076/article/details/105961463">workon: command not found处理方法</a><br>
+2.<a href="https://blog.csdn.net/qq_42092076/article/details/105960519">ubuntu安装matplotlib时报错处理</a></p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://906571331.github.io/yx.github.io/post/8i0Lx-8dx/">
+              <h3 class="post-title">
+                下一篇：workon: command not found处理方法
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">成千上万个门口，总有一个人要先走。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://blog.csdn.net/qq_42092076" target="_blank">WYX</a> | <a class="rss" href="https://906571331.github.io/yx.github.io//atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>
