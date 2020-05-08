@@ -5,7 +5,7 @@
     
 <meta charset="utf-8" >
 
-<title>使用gitee解决github下载仓库下载速度缓慢的问题 | WuXin</title>
+<title>ubuntu安装虚拟环境 | WuXin</title>
 <meta name="description" content="成千上万个门口，总有一个人要先走。">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -80,45 +80,45 @@
       <div class="content-container">
         <div class="post-detail">
           
-            <div class="feature-container" style="background-image: url('https://906571331.github.io/yx.github.io//post-images/shi-yong-gitee-jie-jue-github-xia-zai-cang-ku-xia-zai-su-du-huan-man-de-wen-ti.jpg')">
-            </div>
-          
-          <h2 class="post-title">使用gitee解决github下载仓库下载速度缓慢的问题</h2>
+          <h2 class="post-title">ubuntu安装虚拟环境</h2>
           <div class="post-info post-detail-info">
-            <span><i class="icon-calendar-outline"></i> 2020-03-30</span>
-            
-              <span>
-                <i class="icon-pricetags-outline"></i>
-                
-                  <a href="https://906571331.github.io/yx.github.io/tag/IOUFjN4sc/">
-                    解决问题
-                    
-                  </a>
-                
-              </span>
+            <span><i class="icon-calendar-outline"></i> 2020-05-07</span>
             
           </div>
           <div class="post-content">
-            <h3 id="出现的问题">出现的问题</h3>
-<p>在github下载代码时总是出现网络延时等问题导致下载失败或下载缓慢</p>
-<h3 id="解决的办法">解决的办法</h3>
-<p>将github中的仓库导入到gitee中，然后从gitee中下载仓库<br>
-复制github中的仓库地址：<br>
-<img src="https://img-blog.csdnimg.cn/20200330175055393.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-在gitee中新建仓库：<img src="https://img-blog.csdnimg.cn/20200330175256587.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-选择导入已有仓库，将刚刚复制的github地址填入<br>
-<img src="https://img-blog.csdnimg.cn/20200330175320401.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-打开刚刚新建的仓库，点击下载，即可高速下载github中的仓库<br>
-<img src="https://img-blog.csdnimg.cn/20200330174943211.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
+            <h4 id="1在ubuntu中安装虚拟环境">1.在ubuntu中安装虚拟环境</h4>
+<pre><code class="language-python">#安装virtualv包
+sudo apt-get install virtualenv 
+#安装virtualvwrapper包
+sudo apt-get install virtualenvwrapper 
+#运行virtualenvwrapper.sh
+source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
+</code></pre>
+<h4 id="2验证虚拟环境是否安装成功并创建一个新的虚拟环境">2.验证虚拟环境是否安装成功并创建一个新的虚拟环境</h4>
+<pre><code class="language-python">#创建一个新的虚拟环境
+mkvirtualenv --python=/usr/bin/python3 [虚拟环境名称]  
+ #应用虚拟环境
+workon [虚拟环境名称]
+</code></pre>
+<h4 id="其他命令">其他命令</h4>
+<pre><code class="language-python">#查看所有的虚拟环境
+workon +Tab键 +Tab键
+#退出当前虚拟环境
+deactivate [虚拟环境名称]
+#删除虚拟环境
+rmvirtualenv [虚拟环境名称]
+#列出所有的虚拟环境
+lsvirtualenv [虚拟环境名称]
+</code></pre>
 
           </div>
         </div>
 
         
           <div class="next-post">
-            <a class="purple-link" href="https://906571331.github.io/yx.github.io/post/a-li-yun-fu-wu-qi-chu-xian-resource-stopwords-not-found-please-use-the-nltk-downloader-to-obtain-the-resource/">
+            <a class="purple-link" href="https://906571331.github.io/yx.github.io/post/4dpJZ8owu/">
               <h3 class="post-title">
-                下一篇：阿里云服务器出现  Resource stopwords not found.   Please use the NLTK Downloader to obtain the resource:
+                下一篇：阿里云服务器下jupyter notebook 安装、远程访问以及处理错误
               </h3>
             </a>
           </div>
