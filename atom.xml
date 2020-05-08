@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://906571331.github.io/yx.github.io/</id>
     <title>WuXin</title>
-    <updated>2020-05-08T08:36:27.997Z</updated>
+    <updated>2020-05-08T08:39:35.229Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://906571331.github.io/yx.github.io/"/>
     <link rel="self" href="https://906571331.github.io/yx.github.io/atom.xml"/>
@@ -183,7 +183,8 @@ vi /etc/hostname    # 获取hostname
 <p><code>若出现如下错误，请参考：</code><br>
 1.<a href="https://blog.csdn.net/qq_42092076/article/details/105961463">workon: command not found处理方法</a><br>
 2.<a href="https://blog.csdn.net/qq_42092076/article/details/105960519">ubuntu安装matplotlib时报错处理</a><br>
-3.<a href="https://blog.csdn.net/qq_42092076/article/details/105969420">jupyter重启失败KernelRestarter: restart failed</a></p>
+3.<a href="https://blog.csdn.net/qq_42092076/article/details/105969420">jupyter重启失败KernelRestarter: restart failed</a><br>
+4.<a href="https://blog.csdn.net/qq_42092076/article/details/105999846">pandas安装报错</a></p>
 ]]></content>
     </entry>
     <entry>
