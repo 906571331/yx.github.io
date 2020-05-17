@@ -1,0 +1,233 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>JSP禁止表单从服务器外部提交，并判断提交地址 | WuXin</title>
+<meta name="description" content="成千上万个门口，总有一个人要先走。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://906571331.github.io/yx.github.io//favicon.ico?v=1589701211473">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://906571331.github.io/yx.github.io//styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://906571331.github.io/yx.github.io/">
+        <img class="avatar" src="https://906571331.github.io/yx.github.io//images/avatar.png?v=1589701211473" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://906571331.github.io/yx.github.io/">
+        <h1 class="site-title">WuXin</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="https://906571331.github.io/yx.github.io/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://906571331.github.io/yx.github.io/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="https://906571331.github.io/yx.github.io/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+            <div class="feature-container" style="background-image: url('https://906571331.github.io/yx.github.io//post-images/HSMUx2oTA.jpg')">
+            </div>
+          
+          <h2 class="post-title">JSP禁止表单从服务器外部提交，并判断提交地址</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2020-05-17</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://906571331.github.io/yx.github.io/tag/9zpFSDVIG/">
+                    jsp
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content">
+            <h4 id="indexjsp">index.jsp</h4>
+<pre><code class="language-html">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
+    pageEncoding=&quot;UTF-8&quot;%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;title&gt;Insert title here&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;form action=&quot;dealwith.jsp&quot; method=&quot;post&quot;&gt;
+用户名：&lt;input type=&quot;text&quot; name=&quot;username&quot;&gt;&lt;br&gt;
+密码：&lt;input type=&quot;password&quot;   name=&quot;password&quot;&gt;&lt;br&gt;
+提交：&lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;&lt;br&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h4 id="indexhtml">index.html</h4>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;title&gt;Insert title here&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;form action=&quot;http://localhost:8081/2020年5月13日/dealwith.jsp&quot; method=&quot;post&quot;&gt;
+用户名：&lt;input type=&quot;text&quot; name=&quot;username&quot;&gt;&lt;br&gt;
+密码：&lt;input type=&quot;password&quot;   name=&quot;password&quot;&gt;&lt;br&gt;
+提交：&lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;&lt;br&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h4 id="dealwithjsp">dealwith.jsp</h4>
+<pre><code class="language-html">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
+    pageEncoding=&quot;UTF-8&quot;%&gt;
+&lt;%@ page import=&quot;java.net.*&quot; %&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;title&gt;Insert title here&lt;/title&gt;
+&lt;/head&gt;
+&lt;% 
+	String address=request.getHeader(&quot;referer&quot;);
+	String pathAdd=&quot;&quot;;
+	if(address!=null){
+		URL urlOne=new URL(address);
+		pathAdd=urlOne.getHost();
+	}
+	String address1=request.getRequestURL().toString();
+	String pathAdd1=&quot;&quot;;
+	if(address1!=null){
+		URL urlTwo=new URL(address1);
+		pathAdd1=urlTwo.getHost();
+	}
+%&gt; 
+&lt;%=address %&gt;&lt;br&gt;
+&lt;%=address1 %&gt;&lt;br&gt;
+&lt;%=pathAdd %&gt;&lt;br&gt;
+&lt;%=pathAdd1 %&gt;&lt;br&gt;
+&lt;%
+if(!pathAdd.equals(pathAdd1)){
+	out.print(&quot;禁止在网址外部提交&quot;);
+}else{
+	%&gt;
+欢迎您：&lt;%=request.getParameter(&quot;username&quot;) %&gt;	
+&lt;% 
+}
+%&gt;
+</code></pre>
+<h4 id="运行截图">运行截图</h4>
+<p>从网站内部提交<br>
+<img src="https://img-blog.csdnimg.cn/20200517150346485.png" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20200517150407630.png" alt="在这里插入图片描述" loading="lazy"><br>
+从网站外部提交则会出现<code>禁止从网站外部提交</code><br>
+从网站外部提交：<br>
+<img src="https://img-blog.csdnimg.cn/20200517150538198.png" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20200517150550160.png" alt="在这里插入图片描述" loading="lazy"></p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://906571331.github.io/yx.github.io/post/1N5V8iIDb/">
+              <h3 class="post-title">
+                下一篇：JSP使用javabean计算两个天数的差值
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">成千上万个门口，总有一个人要先走。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://blog.csdn.net/qq_42092076" target="_blank">WYX</a> | <a class="rss" href="https://906571331.github.io/yx.github.io//atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

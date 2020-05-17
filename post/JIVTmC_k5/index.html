@@ -1,0 +1,249 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>JSP判断用户名是否符合规则:用户名只能由字母数字下划线组成,并且首字母必须为字母 | WuXin</title>
+<meta name="description" content="成千上万个门口，总有一个人要先走。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://906571331.github.io/yx.github.io//favicon.ico?v=1589701211473">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://906571331.github.io/yx.github.io//styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://906571331.github.io/yx.github.io/">
+        <img class="avatar" src="https://906571331.github.io/yx.github.io//images/avatar.png?v=1589701211473" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://906571331.github.io/yx.github.io/">
+        <h1 class="site-title">WuXin</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="https://906571331.github.io/yx.github.io/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://906571331.github.io/yx.github.io/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="https://906571331.github.io/yx.github.io/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+            <div class="feature-container" style="background-image: url('https://906571331.github.io/yx.github.io//post-images/JIVTmC_k5.jpg')">
+            </div>
+          
+          <h2 class="post-title">JSP判断用户名是否符合规则:用户名只能由字母数字下划线组成,并且首字母必须为字母</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2020-05-17</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://906571331.github.io/yx.github.io/tag/9zpFSDVIG/">
+                    jsp
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content">
+            <p><code>用户名只能由字母数字下划线组成,并且首字母必须为字母</code><br>
+本程序使用jsp中的<code>javabean</code>判断是否符合用户名规则</p>
+<h4 id="indexjsp">index.jsp</h4>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;ISO-8859-1&quot;&gt;
+&lt;title&gt;Insert title here&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;form action=&quot;checkisvailued.jsp&quot; method=&quot;post&quot;&gt;
+	用户名：&lt;input type=&quot;text&quot; name=&quot;username&quot;&gt;&lt;br&gt;
+	&lt;p style=&quot;font-size:20px;color:red&quot;&gt;注意：用户名只能由字母数字下划线组成,并且首字母必须为字母&lt;/p&gt;
+	&lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h4 id="checkisvailuedjsp">checkisvailued.jsp</h4>
+<pre><code class="language-html">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
+    pageEncoding=&quot;UTF-8&quot;%&gt;
+&lt;%@ page language=&quot;java&quot; import=&quot;java.util.*&quot;%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;title&gt;Insert title here&lt;/title&gt;
+&lt;/head&gt;
+&lt;%
+	request.setCharacterEncoding(&quot;UTF-8&quot;);
+%&gt;
+&lt;body&gt;
+&lt;%
+	String name=request.getParameter(&quot;username&quot;);
+%&gt;
+&lt;jsp:useBean id=&quot;strBean&quot; class=&quot;com.isVaild&quot;&gt;&lt;/jsp:useBean&gt;
+&lt;jsp:setProperty property=&quot;str&quot; name=&quot;strBean&quot; value=&quot;&lt;%=name %&gt;&quot;/&gt;
+&lt;p&gt; 您输入的用户名是：&lt;jsp:getProperty  property=&quot;str&quot; name=&quot;strBean&quot;/&gt;&lt;/p&gt;
+&lt;p&gt; 是否有效：&lt;jsp:getProperty  property=&quot;vaild&quot; name=&quot;strBean&quot;/&gt;&lt;/p&gt;
+&lt;p&gt; 提示信息为：&lt;jsp:getProperty  property=&quot;cue&quot; name=&quot;strBean&quot;/&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h4 id="isvalidjava">isValid.java</h4>
+<pre><code class="language-java">package com;
+public class isVaild {
+	private String str;
+	private boolean vaild;
+	private String cue;
+	public String getStr() {
+		return str;
+	}
+	public void setStr(String str) {
+		this.str=str;
+	}
+	public String getCue() {
+		return cue;
+	}
+	public void setCue(String cue) {
+		this.cue=cue;
+	}
+	public boolean isVaild() {
+		char cArr[]=str.toCharArray();
+		int firstChar=(int)cArr[0];
+		if((firstChar&gt;=65&amp;&amp;firstChar&lt;=90)||(firstChar&gt;=97&amp;&amp;firstChar&lt;=122)) {
+			for(int i=1;i&lt;cArr.length;i++) {
+				int ascii=cArr[i];
+				if(!((ascii&gt;=48&amp;&amp;ascii&lt;=57)||(ascii&gt;=65&amp;&amp;ascii&lt;=90)||
+				(ascii&gt;=97&amp;&amp;ascii&lt;=122)||(ascii==95))) {
+					this.setCue(&quot;用户名格式错误，用户名只能由字母数字下划线组成&quot;);
+					this.vaild=false;
+					return vaild;
+				}
+			}
+			this.setCue(&quot;用户名格式正确&quot;);
+			this.vaild=true;
+			return vaild;
+		}else {
+			this.setCue(&quot;用户名格式错误，首字符必须为字母&quot;);
+			this.vaild=false;
+			return vaild;
+		}
+	}
+}
+
+</code></pre>
+<h5 id="运行截图">运行截图：</h5>
+<p><img src="https://img-blog.csdnimg.cn/20200517145651598.png" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20200517145701637.png" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20200517145715196.png" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20200517145728766.png" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20200517145751271.png" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20200517145759430.png" alt="在这里插入图片描述" loading="lazy"></p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://906571331.github.io/yx.github.io/post/EeOU9ISeC/">
+              <h3 class="post-title">
+                下一篇：阿里云ubuntu安装pandas时报错Command &#34;python setup.py egg_info&#34; failed with error code 1 in /tmp/pip-build-hm
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">成千上万个门口，总有一个人要先走。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://blog.csdn.net/qq_42092076" target="_blank">WYX</a> | <a class="rss" href="https://906571331.github.io/yx.github.io//atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

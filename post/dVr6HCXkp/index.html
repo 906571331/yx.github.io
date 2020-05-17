@@ -1,0 +1,252 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>jsp实现从一个页面提交，第二个页面计算，第三个页面显示结果 | WuXin</title>
+<meta name="description" content="成千上万个门口，总有一个人要先走。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://906571331.github.io/yx.github.io//favicon.ico?v=1589701211473">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://906571331.github.io/yx.github.io//styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://906571331.github.io/yx.github.io/">
+        <img class="avatar" src="https://906571331.github.io/yx.github.io//images/avatar.png?v=1589701211473" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://906571331.github.io/yx.github.io/">
+        <h1 class="site-title">WuXin</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="https://906571331.github.io/yx.github.io/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://906571331.github.io/yx.github.io/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="https://906571331.github.io/yx.github.io/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+            <div class="feature-container" style="background-image: url('https://906571331.github.io/yx.github.io//post-images/dVr6HCXkp.jpg')">
+            </div>
+          
+          <h2 class="post-title">jsp实现从一个页面提交，第二个页面计算，第三个页面显示结果</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2020-05-17</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://906571331.github.io/yx.github.io/tag/9zpFSDVIG/">
+                    jsp
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content">
+            <p>此页面为实现从a.jsp提交，将数的运算提交到b.jsp中进行计算，并将结果返回到c.jsp</p>
+<h4 id="ajsp">a.jsp</h4>
+<pre><code class="language-html">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
+    pageEncoding=&quot;UTF-8&quot;%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;title&gt;Insert title here&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;form action=&quot;b.jsp&quot; method=&quot;post&quot;&gt;
+	本程序将计算（a*b）+(c/d)-a的值&lt;br&gt;
+	a:&lt;input type=&quot;number&quot; name=&quot;count_a&quot;&gt;&lt;br&gt;
+	b:&lt;input type=&quot;number&quot; name=&quot;count_b&quot;&gt;&lt;br&gt;
+	c:&lt;input type=&quot;number&quot; name=&quot;count_c&quot;&gt;&lt;br&gt;
+	d:&lt;input type=&quot;number&quot; name=&quot;count_d&quot;&gt;&lt;br&gt;
+&lt;input type=&quot;submit&quot;&gt;&lt;br&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h4 id="bjsp">b.jsp</h4>
+<pre><code class="language-html">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
+    pageEncoding=&quot;UTF-8&quot;%&gt;
+&lt;%@ page import=&quot;java.io.*,java.util.*&quot; %&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;title&gt;Insert title here&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;%--
+&lt;% String count_A=request.getParameter(&quot;count_a&quot;); %&gt;
+&lt;% String count_B=request.getParameter(&quot;count_b&quot;); %&gt;
+--%&gt;
+&lt;%
+int m=Integer.parseInt(request.getParameter(&quot;count_a&quot;));
+%&gt;
+&lt;%
+int n=Integer.parseInt(request.getParameter(&quot;count_b&quot;));
+%&gt;
+&lt;%
+int k=Integer.parseInt(request.getParameter(&quot;count_c&quot;));
+%&gt;
+&lt;%
+int f=Integer.parseInt(request.getParameter(&quot;count_d&quot;));
+%&gt;
+
+
+
+
+
+&lt;% int C=((m*n)+(k/f)-m); %&gt;
+&lt;%--
+a为:&lt;%=count_A %&gt;&lt;br&gt;
+b为:&lt;%=count_B %&gt;&lt;br&gt;
+
+和为：&lt;%=C %&gt;
+
+&lt;%
+	out.print(m + &quot;+&quot; + n + &quot;=&quot; + (m + n));
+%&gt;
+
+--%&gt;
+&lt;%
+	session.setAttribute(&quot;count&quot;,C);
+%&gt;
+&lt;jsp:forward page=&quot;c.jsp&quot;&gt;
+	&lt;jsp:param value=&quot;&lt;%=C %&gt;&quot; name=&quot;count&quot;/&gt;
+&lt;/jsp:forward&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h4 id="cjsp">c.jsp</h4>
+<pre><code class="language-html">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
+    pageEncoding=&quot;UTF-8&quot;%&gt;
+    &lt;%@ page import=&quot;java.io.*,java.util.*&quot; %&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;title&gt;Insert title here&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;%  
+	String COUNT=request.getParameter(&quot;count&quot;);
+	out.print(&quot;本程序将计算（a*b）+(c/d)-a的值为：&quot;+COUNT);
+%&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h5 id="运行结果截图">运行结果截图：</h5>
+<p><img src="https://img-blog.csdnimg.cn/20200517151240204.png" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20200517151252699.png" alt="在这里插入图片描述" loading="lazy"></p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://906571331.github.io/yx.github.io/post/HSMUx2oTA/">
+              <h3 class="post-title">
+                下一篇：JSP禁止表单从服务器外部提交，并判断提交地址
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">成千上万个门口，总有一个人要先走。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://blog.csdn.net/qq_42092076" target="_blank">WYX</a> | <a class="rss" href="https://906571331.github.io/yx.github.io//atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

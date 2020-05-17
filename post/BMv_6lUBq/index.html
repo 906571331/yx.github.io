@@ -1,0 +1,371 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>Django实现考试系统优化3 | WuXin</title>
+<meta name="description" content="成千上万个门口，总有一个人要先走。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://906571331.github.io/yx.github.io//favicon.ico?v=1589701211473">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://906571331.github.io/yx.github.io//styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://906571331.github.io/yx.github.io/">
+        <img class="avatar" src="https://906571331.github.io/yx.github.io//images/avatar.png?v=1589701211473" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://906571331.github.io/yx.github.io/">
+        <h1 class="site-title">WuXin</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="https://906571331.github.io/yx.github.io/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://906571331.github.io/yx.github.io/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="https://906571331.github.io/yx.github.io/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+            <div class="feature-container" style="background-image: url('https://906571331.github.io/yx.github.io//post-images/BMv_6lUBq.jpg')">
+            </div>
+          
+          <h2 class="post-title">Django实现考试系统优化3</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2020-05-17</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://906571331.github.io/yx.github.io/tag/ofwJ5Sj6S/">
+                    django
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content">
+            <p>本次优化将针对考题部分，实现计算考试所用时间，并实现没有填写地址不能进行测试的功能。</p>
+<h4 id="modelspy">models.py</h4>
+<pre><code class="language-python">from django.db import models
+from datetime import datetime
+# Create your models here.
+from django.db import models
+from users.models import UserProfile
+# Create your models here.
+from DjangoUeditor.models import UEditorField
+#科目
+class Subject(models.Model):
+	name 			= models.CharField(max_length=255,verbose_name=&quot;科目名称&quot;)
+	description 	= models.TextField(verbose_name=&quot;科目描述&quot;)
+	cover_image 	= models.ImageField(upload_to = 'cover/',blank=True)
+	class Meta:
+		verbose_name=&quot;科目&quot;
+		verbose_name_plural=verbose_name
+	def __str__(self):
+		return self.name
+#题目
+class Question(models.Model):
+	choice = (('A','A'),('B','B'),('C','C'),('D','D'))
+	subject 	= models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
+	statments 	= models.TextField(verbose_name=&quot;问题描述&quot;)
+	op_A 	= models.CharField(max_length=1000,verbose_name=&quot;A选项&quot;)
+	op_B 	= models.CharField(max_length=1000,verbose_name=&quot;B选项&quot;)
+	op_C 	= models.CharField(max_length=1000,verbose_name=&quot;C选项&quot;)
+	op_D 	= models.CharField(max_length=1000,verbose_name=&quot;D选项&quot;)
+	correct_op 	= models.CharField(choices=choice,max_length=10,verbose_name=&quot;正确选项&quot;)
+	mark 		= models.IntegerField(default=1,verbose_name=&quot;本题分数&quot;)
+	class Meta:
+		verbose_name=&quot;题目&quot;
+		verbose_name_plural=verbose_name
+	def __str__(self):
+		return self.statments
+
+
+class Exam(models.Model):
+	user = models.ForeignKey(UserProfile,on_delete=models.CASCADE,verbose_name=&quot;用户&quot;)
+	subject = models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
+	name = models.CharField(max_length=100,blank=True,verbose_name=&quot;本次考试名称&quot;)
+	class Meta:
+		verbose_name=&quot;考试&quot;
+		verbose_name_plural=verbose_name
+	def __str__(self):
+		return self.name
+
+class Mark(models.Model):
+	user = models.ForeignKey(UserProfile,on_delete=models.CASCADE,verbose_name=&quot;用户&quot;)
+	subject = models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
+	exam = models.ForeignKey(Exam,on_delete=models.CASCADE,verbose_name=&quot;考试名称&quot;)
+	total_mark = models.IntegerField(verbose_name=&quot;总分数&quot;)
+	base_mark = models.IntegerField(verbose_name=&quot;基础分数&quot;)
+	promote_mark = models.IntegerField(verbose_name=&quot;提升分数&quot;)
+	major_mark = models.IntegerField(verbose_name=&quot;专业分数&quot;)
+	jinglishijian=models.CharField(verbose_name=&quot;经历时间&quot;,max_length=200)
+	class Meta:
+		verbose_name=&quot;分数&quot;
+		verbose_name_plural=verbose_name
+	def __str__(self):
+		return str(self.total_mark)
+
+class Keshi(models.Model):
+    keshi = models.CharField(max_length=10, verbose_name=&quot;分数可视化&quot;)
+    class Meta:
+        verbose_name = &quot;分数可视化&quot;
+        verbose_name_plural = verbose_name
+</code></pre>
+<h4 id="viewspy">views.py</h4>
+<pre><code class="language-bash">
+from django.shortcuts import render
+from django.views.generic import View
+from django.http import HttpResponse
+from .models import Question,Exam,Subject,Mark
+from django.db.models import Count
+from django.contrib.auth.decorators import login_required
+from users.models import UserProfile
+import time
+
+from django.utils.decorators import method_decorator
+@method_decorator(login_required,name='dispatch')
+class ExamView(View):
+    def get(self,request):
+        uid = request.user
+        #查看是否已经进行过该考试，如果进行过该次考试，则不能再次考试,显示成绩
+        if uid.is_exam==True:
+            mark = Mark.objects.get(user=uid)
+            return render(request, &quot;score1.html&quot;, context={&quot;mark&quot;: mark})
+        else:
+            #设置开始时间
+            print(uid.province)
+            if uid.province=='' or uid.city=='':
+                alert=&quot;您还未填写省市信息，还不能进行测试,请填写相关信息后开始测试&quot;
+                return render(request,&quot;usercenter-info.html&quot;,context={&quot;alert1&quot;:alert})
+            else:
+                c=request.session['starttime'] = time.time()
+                print(c)
+                #获取id=1的科目
+                subjetcs1=Subject.objects.get(id=1)
+                #打印这个科目的名称，可省去
+                print(subjetcs1)
+                #获取到这个科目下的所有试题
+                question=Question.objects.filter(subject=subjetcs1)
+                context={
+                    &quot;question&quot;:question,
+                }
+                return render(request, &quot;exam005.html&quot;,context=context)
+    def post(self,request):
+        #设置结束时间
+        a=request.session.get('starttime')
+        print(a)
+        dtime = rtdtime(request.session.get('starttime'), time.time())
+        #考试获取经历时间
+        lijingtime=rttime(dtime)
+        print(&quot;考试经历时间为：&quot;,lijingtime)
+        #获取是哪个用户
+        uid = request.user
+        print(uid.is_exam)
+        #获取当前用户的昵称
+        uname=request.user.nick_name
+        #获取当前考试的学科
+        subjetcs1 = Subject.objects.get(id=1)
+        #获取是哪次考试
+        current_exam=Exam.objects.get(id=1)
+        print(&quot;本次考试的科目为：&quot;,subjetcs1)
+        print(&quot;本次考试名称为：&quot;, current_exam)
+        print(uid)
+        print(uname)
+        #获取用户的答案
+        my_answer = []
+        #这里获取总的题目数量，添加题目数量后无需继续修改这里的数据
+        count_question = Question.objects.aggregate(count=Count(&quot;id&quot;))
+        for c in count_question.values():
+            print(c)
+        count1=c
+        print(count1)
+        for i in range(1,count1+1):
+            answer1 = request.POST.get('%s'%i)
+            my_answer.append(answer1)
+            i+=1
+        print(&quot;用户答案为：&quot;,my_answer)
+        # 打印所有题目的正确答案
+        correct_answer=re(request)
+        timu_fenshu=fenshu(request)
+        print(&quot;题目分数为：&quot;, timu_fenshu)
+        print(&quot;正确答案为：&quot;,correct_answer)
+        #基础，提升，专业分数,总分数均初始化为0
+        base_mark=0
+        promote_mark=0
+        major_mark=0
+        total_mark=0
+        i=0
+        while i &lt;=count1-1 :
+            if i &lt;= 0:
+                if correct_answer[i] == my_answer[i]:
+                    base_mark += timu_fenshu[i]
+                    total_mark = total_mark + timu_fenshu[i]
+            elif i &lt;= 1:
+                if correct_answer[i] == my_answer[i]:
+                    total_mark = total_mark+timu_fenshu[i]
+                    promote_mark += timu_fenshu[i]
+            else:
+                if correct_answer[i] == my_answer[i]:
+                    total_mark = total_mark+timu_fenshu[i]
+                    print(timu_fenshu[i])
+                    major_mark += timu_fenshu[i]
+            i = i + 1
+        print(&quot;总分数为：&quot;, total_mark)
+        print(&quot;基础分数为：&quot;, base_mark)
+        print(&quot;提升分数为：&quot;, promote_mark)
+        print(&quot;专业分数为：&quot;, major_mark)
+        mark=Mark(user=uid,subject=subjetcs1,total_mark=total_mark,exam=current_exam,base_mark=base_mark,promote_mark=promote_mark,major_mark=major_mark,jinglishijian=lijingtime)
+        uid.is_exam=True
+        uid.save()
+        mark.save()
+        return render(request,'score.html',context={&quot;total_mark&quot;:total_mark,&quot;base_mark&quot;:base_mark,&quot;promote_mark&quot;:promote_mark,&quot;major_mark&quot;:major_mark})
+#打印所有题目的正确答案
+def re(request):
+    option_list = []
+    options=Question.objects.all()
+    for option in options:
+        option_list.append(option.correct_op)
+    return option_list
+#获取每一道题的分数
+def fenshu(request):
+    fenshu_list = []
+    fenshus=Question.objects.all()
+    for fenshu in fenshus:
+        fenshu_list.append(fenshu.mark)
+    return fenshu_list
+#返回用了多长时间
+def rtdtime(s, e):
+    return e - s
+#返回时间分钟
+def rttime(s):
+    if not s//60:
+        return '{:.0f}秒'.format( s % 60)
+    else:
+        return '{:.0f}分,{:.0f}秒'.format(s // 60, s % 60)
+#返回分数页面
+def mark01(request):
+    uid=request.user
+    print(&quot;uid:&quot;,uid)
+    mark = Mark.objects.get(user=uid)
+    print(&quot;mark:&quot;,mark)
+    print(&quot;major_mark:&quot;,mark.major_mark)
+    return render(request,&quot;score1.html&quot;,context={&quot;mark&quot;:mark})
+</code></pre>
+<p><code>1.</code><a href="https://blog.csdn.net/qq_42092076/article/details/105797627">django获取各种形式的表单内容</a><br>
+<code>2.</code><a href="https://blog.csdn.net/qq_42092076/article/details/105792049">django的日志器引入的方法</a><br>
+<code>3.</code><a href="https://blog.csdn.net/qq_42092076/article/details/105754124">migrate出错时处理</a><br>
+<code>4.</code><a href="https://blog.csdn.net/qq_42092076/article/details/105774939">django实现考试系统优化2</a><br>
+<code>5.</code><a href="https://blog.csdn.net/qq_42092076/article/details/105664258">django考试试卷的实现【1】</a><br>
+<code>6.</code><a href="https://blog.csdn.net/qq_42092076/article/details/105649783">计算分数算法</a><br>
+<code>7.</code><a href="https://blog.csdn.net/qq_42092076/article/details/105574060">Django+xadmin+echarts在后台动态显示echarts图表，实现后台定制化开发</a></p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://906571331.github.io/yx.github.io/post/dVr6HCXkp/">
+              <h3 class="post-title">
+                下一篇：jsp实现从一个页面提交，第二个页面计算，第三个页面显示结果
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">成千上万个门口，总有一个人要先走。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://blog.csdn.net/qq_42092076" target="_blank">WYX</a> | <a class="rss" href="https://906571331.github.io/yx.github.io//atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

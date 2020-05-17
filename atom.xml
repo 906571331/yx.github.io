@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://906571331.github.io/yx.github.io/</id>
     <title>WuXin</title>
-    <updated>2020-05-08T09:04:32.074Z</updated>
+    <updated>2020-05-17T07:41:45.278Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://906571331.github.io/yx.github.io/"/>
     <link rel="self" href="https://906571331.github.io/yx.github.io/atom.xml"/>
@@ -10,6 +10,800 @@
     <logo>https://906571331.github.io/yx.github.io/images/avatar.png</logo>
     <icon>https://906571331.github.io/yx.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, WuXin</rights>
+    <entry>
+        <title type="html"><![CDATA[Django中使用省市联动模型详解]]></title>
+        <id>https://906571331.github.io/yx.github.io/post/uyWR0VvJm/</id>
+        <link href="https://906571331.github.io/yx.github.io/post/uyWR0VvJm/">
+        </link>
+        <updated>2020-05-17T07:39:27.000Z</updated>
+        <content type="html"><![CDATA[<p>本程序实现在Django中使用省市联动模型，并实现地址值允许输入一次的效果：</p>
+<h6 id="1前端引入">1.前端引入</h6>
+<pre><code class="language-html">##html中引入
+ {% if request.user.province %}
+  &lt;li class=&quot; p_infor_city&quot;&gt;地&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;址：&amp;nbsp;&amp;nbsp;&lt;input type=&quot;text&quot; value=&quot;{{request.user.province}}{{request.user.city}}&quot; readonly=&quot;readonly&quot;/&gt;
+  &lt;/li&gt;
+  {% else %}
+  &lt;li class=&quot; p_infor_city&quot;&gt;地&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;址：
+  &amp;nbsp;&amp;nbsp;&lt;select id=&quot;province&quot; style=&quot;width:140px&quot; name=&quot;province&quot;&gt;
+      &lt;option value=&quot;0&quot;&gt;--请选择--&lt;/option&gt;
+  &lt;/select&gt;
+  &lt;select id=&quot;city&quot; style=&quot;width:140px;&quot; name=&quot;city&quot;&gt;
+      &lt;option value=&quot;0&quot;&gt;--请选择1--&lt;/option&gt;
+  &lt;/select&gt;
+  &lt;script src=&quot;{% static 'js/pcld6.js' %}&quot;&gt;&lt;/script&gt;
+  &lt;i class=&quot;error-tips&quot;&gt;&lt;/i&gt;
+  &lt;/li&gt;
+  {% endif %}
+</code></pre>
+<pre><code class="language-html">#js/pcld6.js
+var cityArr = new Array();
+var countryArr = new Array();
+//省份数组
+var provinceArr = ['北京市', '天津市', '上海市', '重庆市', '河北省', '河南省', '云南省', '辽宁省', '黑龙江省', '湖南省', '安徽省', '山东省', '新疆维吾尔自治区', '江苏省', '浙江省', '江西省', '湖北省', '广西壮族自治区', '甘肃省', '山西省', '内蒙古自治区', '陕西省', '吉林省', '福建省', '贵州省', '广东省', '青海省', '西藏', '四川省', '宁夏回族自治区', '海南省', '台湾省', '香港特别行政区', '澳门特别行政区'];
+//城市数组
+cityArr['北京市'] = ['东城区', '西城区', '崇文区', '宣武区', '朝阳区', '丰台区', '石景山区', '海淀区', '门头沟区', '房山区', '通州区', '顺义区', '昌平区', '大兴区', '怀柔区', '平谷区', '密云县', '延庆县'];
+cityArr['天津市'] = ['和平区', '河东区', '河西区', '南开区', '河北区', '红桥区', '塘沽区', '汉沽区', '大港区', '东丽区', '西青区', '津南区', '北辰区',
+    '武清区', '宝坻区', '宁河县', '静海县', '蓟县'
+];
+cityArr['上海市'] = ['黄浦区', '卢湾区', '徐汇区', '长宁区', '静安区', '普陀区', '闸北区', '虹口区', '杨浦区', '闵行区', '宝山区', '嘉定区', '浦东新区', '金山区',
+    '松江区', '青浦区', '南汇区', '奉贤区', '崇明县'
+];
+cityArr['重庆市'] = ['万州区', '涪陵区', '渝中区', '大渡口区', '江北区', '沙坪坝区', '九龙坡区', '南岸区', '北碚区', '万盛区', '双桥区', '渝北区', '巴南区', '黔江区', '长寿区', '江津区', '合川区', '永川区', '南川区', '綦江县', '潼南县', '铜梁县', '大足县', '荣昌县', '璧山县', '梁平县', '城口县', '丰都县', '垫江县', '武隆县', '忠县', '开县', '云阳县', '奉节县', '巫山县', '巫溪县', '石柱土家族自治县', '秀山土家族苗族自治县', '酉阳土家族苗族自治县', '彭水苗族土家族自治县'];
+cityArr['河北省'] = ['石家庄市', '唐山市', '秦皇岛市', '邯郸市', '邢台市', '保定市', '张家口市', '承德市', '沧州市', '廊坊市', '衡水市'];
+cityArr['河南省'] = ['郑州市', '开封市', '洛阳市', '平顶山市', '安阳市', '鹤壁市', '新乡市', '焦作市', '济源市', '濮阳市', '许昌市', '漯河市', '三门峡市',
+    '南阳市', '商丘市', '信阳市', '周口市', '驻马店市'
+];
+cityArr['云南省'] = ['昆明市', '曲靖市', '玉溪市', '保山市', '昭通市', '丽江市', '思茅市', '临沧市', '楚雄彝族自治州', '红河哈尼族彝族自治州', '文山壮族苗族自治州', '西双版纳傣族自治州', '大理白族自治州', '德宏傣族景颇族自治州', '怒江傈僳族自治州', '迪庆藏族自治州'];
+cityArr['辽宁省'] = ['沈阳市', '大连市', '鞍山市', '抚顺市', '本溪市', '丹东市', '锦州市', '营口市', '阜新市', '辽阳市', '盘锦市', '铁岭市', '朝阳市', '葫芦岛市'];
+cityArr['黑龙江省'] = ['哈尔滨市', '齐齐哈尔市', '鸡西市', '鹤岗市', '双鸭山市', '大庆市', '伊春市', '佳木斯市', '七台河市', '牡丹江市', '黑河市', '绥化市',
+    '大兴安岭地区'
+];
+cityArr['湖南省'] = ['长沙市', '株洲市', '湘潭市', '衡阳市', '邵阳市', '岳阳市', '常德市', '张家界市', '益阳市', '郴州市', '永州市', '怀化市', '娄底市',
+    '湘西土家族苗族自治州'
+];
+cityArr['安徽省'] = ['合肥市', '芜湖市', '蚌埠市', '淮南市', '马鞍山市', '淮北市', '铜陵市', '安庆市', '黄山市', '滁州市', '阜阳市', '宿州市', '巢湖市',
+    '六安市', '亳州市', '池州', '宣城市'
+];
+cityArr['山东省'] = ['济南市', '青岛市', '淄博市', '枣庄市', '东营市', '烟台市', '潍坊市', '济宁市', '泰安市', '威海市', '日照市', '莱芜市', '临沂市', '德州市', '聊城市', '滨州市', '菏泽市'];
+cityArr['新疆维吾尔自治区'] = ['乌鲁木齐市', '克拉玛依市', '吐鲁番地区', '哈密地区', '昌吉回族自治州 ', '博尔塔拉蒙古自治州 ', '巴音郭楞蒙古自治州 ', '阿克苏地区',
+    '克孜勒苏柯尔克孜自治州 ', '喀什地区', '和田地区', '伊犁哈萨克自治州', '塔城地区', '阿勒泰地区', '石河子市', '阿拉尔市', '图木舒克市', '五家渠市'
+];
+cityArr['江苏省'] = ['南京市', '无锡市', '徐州市', '常州市', '苏州市', '南通市', '连云港市', '淮安市', '盐城市', '扬州市', '镇江市', '泰州市', '宿迁市'];
+cityArr['浙江省'] = ['杭州市', '宁波市', '温州市', '嘉兴市', '湖州市', '绍兴市', '金华市', '衢州市', '舟山市', '台州市', '丽水市'];
+cityArr['江西省'] = ['南昌市', '景德镇市', '萍乡市', '九江市', '新余市', '鹰潭市', '赣州市', '吉安市', '宜春市', '抚州市', '上饶市'];
+cityArr['湖北省'] = ['武汉市', '黄石市', '十堰市', '宜昌市', '襄樊市', '鄂州市', '荆门市', '孝感市', '荆州市', '黄冈市', '咸宁市', '随州市',
+    '恩施土家族苗族自治州', '仙桃市', '潜江市', '天门市', '神农架林区'
+];
+cityArr['广西壮族自治区'] = ['南宁市', '柳州市', '桂林市', '梧州市', '北海市', '防城港市', '钦州市', '贵港市', '玉林市', '百色市', '贺州市', '河池市', '来宾市', '崇左市'];
+cityArr['甘肃省'] = ['兰州市', '嘉峪关市', '金昌市', '白银市', '天水市', '武威市', '张掖市', '平凉市', '酒泉市', '庆阳市', '定西市', '陇南市',
+    '临夏回族自治州', '甘南藏族自治州'
+];
+cityArr['山西省'] = ['太原市', '大同市', '阳泉市', '长治市', '晋城市', '朔州市', '晋中市', '运城市', '忻州市', '临汾市', '吕梁市'];
+cityArr['内蒙古自治区'] = ['呼和浩特市', '包头市', '乌海市', '赤峰市', '通辽市', '鄂尔多斯市', '呼伦贝尔市', '巴彦淖尔市', '乌兰察布市', '兴安盟', '锡林郭勒盟',
+    '阿拉善盟'
+];
+cityArr['陕西省'] = ['西安市', '铜川市', '宝鸡市', '咸阳市', '渭南市', '延安市', '汉中市', '榆林市', '安康市', '商洛市'];
+cityArr['吉林省'] = ['长春市', '吉林市', '四平市', '辽源市', '通化市', '白山市', '松原市', '白城市', '延边朝鲜族自治州'];
+cityArr['福建省'] = ['福州市', '厦门市', '莆田市', '三明市', '泉州市', '漳州市', '南平市', '龙岩市', '宁德市'];
+cityArr['贵州省'] = ['贵阳市', '六盘水市', '遵义市', '安顺市', '铜仁地区', '黔西南布依族苗族自治州', '毕节地区', '黔东南苗族侗族自治州', '黔南布依族苗族自治州'];
+cityArr['广东省'] = ['广州市', '韶关市', '深圳市', '珠海市', '汕头市', '佛山市', '江门市', '湛江市', '茂名市', '肇庆市', '惠州市', '梅州市', '汕尾市', '河源市', '阳江市', '清远市', '东莞市', '中山市', '潮州市', '揭阳市', '云浮市'];
+cityArr['青海省'] = ['西宁市', '海东地区', '海北藏族自治州', '黄南藏族自治州', '海南藏族自治州', '果洛藏族自治州', '玉树藏族自治州', '海西蒙古族藏族自治州'];
+cityArr['西藏'] = ['拉萨市', '昌都地区', '山南地区', '日喀则地市', '那曲地区', '阿里地区', '林芝地区'];
+cityArr['四川省'] = ['成都市', '自贡市', '攀枝花市', '泸州市', '德阳市', '绵阳市', '广元市', '遂宁市', '内江市', '乐山市', '南充市', '眉山市', '宜宾市',
+    '广安市', '达州市', '雅安市', '巴中市', '资阳市', '阿坝藏族羌族自治州', '甘孜藏族自治州', '凉山彝族自治州'
+];
+cityArr['宁夏回族自治区'] = ['银川市', '石嘴山市', '吴忠市', '固原市', '中卫市'];
+cityArr['海南省'] = ['海口市', '三亚市', '五指山市', '琼海市', '儋州市', '文昌市', '万宁市', '东方市', '定安县', '屯昌县', '澄迈县', '临高县',
+    '白沙黎族自治县', '昌江黎族自治县', '乐东黎族自治县', '陵水黎族自治县', '保亭黎族苗族自治县', '琼中黎族苗族自治县'
+];
+cityArr['台湾省'] = ['台北市', '高雄市', '基隆市', '台中市', '台南市', '新竹市', '嘉义市'];
+cityArr['香港特别行政区'] = ['中西区', '湾仔区', '东区', '南区', '油尖旺区', '深水埗区', '九龙城区', '黄大仙区', '观塘区', '荃湾区', '葵青区', '沙田区',
+    '西贡区', '大埔区', '北区', '元朗区', '屯门区', '离岛区'
+];
+cityArr['澳门特别行政区'] = ['澳门'];
+//区域数组
+//countryArr['南京'] = ['1', '2'];
+//countryArr['连云港'] = ['3', '4'];
+//countryArr['青岛'] = ['5', '6'];
+//countryArr['烟台'] = ['7', '8'];
+//countryArr['济南'] = ['9', '10'];
+//alert(countryArr[南京])
+var province = document.getElementById('province');
+var city = document.getElementById('city');
+//var country = document.getElementById('country');
+//第一步 new option(&quot;文本&quot;,&quot;值&quot;)
+//window.onload=creatOption(province,provinceArr);
+for (let i in provinceArr) {
+    //元素对象.add()添加选项
+    province.add(new Option(provinceArr[i], provinceArr[i]))
+}
+
+function creatOption(obj, data) {
+    for (var i in data) {
+        var op = new Option(data[i], data[i]); //创建下拉列表中的option
+        obj.add(op); //将选项添加到下拉列表
+    }
+}
+//添加市，省发生变化，市区清空然后循环添加,onchange事件是下拉选项发生变化时触发
+province.onchange = function () {
+    city.length = 0; //清空city原有的&lt;option&gt;
+    creatOption(city, cityArr[province.value]);
+    //city.onchange();
+}
+//添加区
+/*city.onchange = function () {
+    country.length = 0; //清空country原有的&lt;option&gt;
+    creatOption(country, countryArr[city.value]);
+}*/
+</code></pre>
+<h4 id="2后台处理">2.后台处理</h4>
+<p>后台处理时，只允许用户进行一次地址修改</p>
+<pre><code class="language-python">#forms.py
+class UserInfoForm(forms.ModelForm):
+    '''个人中心信息第一次修改，可以修改省市信息'''
+    class Meta:
+        model = UserProfile
+        fields = ['nick_name','gender','birthday','mobile','city','province']
+
+class UserInfoFormdizhi(forms.ModelForm):
+    '''以后的修改，不能修改省市信息'''
+    class Meta:
+        model = UserProfile
+        fields = ['nick_name','gender','birthday','mobile']
+</code></pre>
+<pre><code class="language-python">#models.py  
+province=models.CharField(max_length=200,verbose_name=&quot;省份&quot;)
+city=models.CharField(max_length=200,verbose_name=&quot;市&quot;)
+</code></pre>
+<pre><code class="language-python">#views.py
+from .forms import UserInfoForm,UserInfoFormdizhi
+class UserinfoView(LoginRequiredMixin, View):
+    &quot;&quot;&quot;&quot;
+    用户个人信息
+    &quot;&quot;&quot;
+    def get(self, request):
+        uid = request.user
+        print(uid)
+        return render(request, 'usercenter-info.html', {})
+
+    def post(self, request):
+        uid = request.user
+        province=request.POST.get('province')
+        city=request.POST.get('city')
+        user_info_form = UserInfoForm(request.POST, instance=request.user)
+        user_info_form1=UserInfoFormdizhi(request.POST, instance=request.user)
+        if user_info_form.is_valid():
+            user_info_form.save()
+            return HttpResponse('{&quot;status&quot;:&quot;success&quot;}', content_type='application/json')
+        else:
+            if user_info_form1.is_valid():
+                user_info_form1.save()
+                return HttpResponse('{&quot;status&quot;:&quot;success&quot;}', content_type='application/json')
+            else:
+                return HttpResponse(json.dumps(user_info_form.errors), content_type='application/json')
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Django实现考试系统优化3]]></title>
+        <id>https://906571331.github.io/yx.github.io/post/BMv_6lUBq/</id>
+        <link href="https://906571331.github.io/yx.github.io/post/BMv_6lUBq/">
+        </link>
+        <updated>2020-05-17T07:27:01.000Z</updated>
+        <content type="html"><![CDATA[<p>本次优化将针对考题部分，实现计算考试所用时间，并实现没有填写地址不能进行测试的功能。</p>
+<h4 id="modelspy">models.py</h4>
+<pre><code class="language-python">from django.db import models
+from datetime import datetime
+# Create your models here.
+from django.db import models
+from users.models import UserProfile
+# Create your models here.
+from DjangoUeditor.models import UEditorField
+#科目
+class Subject(models.Model):
+	name 			= models.CharField(max_length=255,verbose_name=&quot;科目名称&quot;)
+	description 	= models.TextField(verbose_name=&quot;科目描述&quot;)
+	cover_image 	= models.ImageField(upload_to = 'cover/',blank=True)
+	class Meta:
+		verbose_name=&quot;科目&quot;
+		verbose_name_plural=verbose_name
+	def __str__(self):
+		return self.name
+#题目
+class Question(models.Model):
+	choice = (('A','A'),('B','B'),('C','C'),('D','D'))
+	subject 	= models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
+	statments 	= models.TextField(verbose_name=&quot;问题描述&quot;)
+	op_A 	= models.CharField(max_length=1000,verbose_name=&quot;A选项&quot;)
+	op_B 	= models.CharField(max_length=1000,verbose_name=&quot;B选项&quot;)
+	op_C 	= models.CharField(max_length=1000,verbose_name=&quot;C选项&quot;)
+	op_D 	= models.CharField(max_length=1000,verbose_name=&quot;D选项&quot;)
+	correct_op 	= models.CharField(choices=choice,max_length=10,verbose_name=&quot;正确选项&quot;)
+	mark 		= models.IntegerField(default=1,verbose_name=&quot;本题分数&quot;)
+	class Meta:
+		verbose_name=&quot;题目&quot;
+		verbose_name_plural=verbose_name
+	def __str__(self):
+		return self.statments
+
+
+class Exam(models.Model):
+	user = models.ForeignKey(UserProfile,on_delete=models.CASCADE,verbose_name=&quot;用户&quot;)
+	subject = models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
+	name = models.CharField(max_length=100,blank=True,verbose_name=&quot;本次考试名称&quot;)
+	class Meta:
+		verbose_name=&quot;考试&quot;
+		verbose_name_plural=verbose_name
+	def __str__(self):
+		return self.name
+
+class Mark(models.Model):
+	user = models.ForeignKey(UserProfile,on_delete=models.CASCADE,verbose_name=&quot;用户&quot;)
+	subject = models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
+	exam = models.ForeignKey(Exam,on_delete=models.CASCADE,verbose_name=&quot;考试名称&quot;)
+	total_mark = models.IntegerField(verbose_name=&quot;总分数&quot;)
+	base_mark = models.IntegerField(verbose_name=&quot;基础分数&quot;)
+	promote_mark = models.IntegerField(verbose_name=&quot;提升分数&quot;)
+	major_mark = models.IntegerField(verbose_name=&quot;专业分数&quot;)
+	jinglishijian=models.CharField(verbose_name=&quot;经历时间&quot;,max_length=200)
+	class Meta:
+		verbose_name=&quot;分数&quot;
+		verbose_name_plural=verbose_name
+	def __str__(self):
+		return str(self.total_mark)
+
+class Keshi(models.Model):
+    keshi = models.CharField(max_length=10, verbose_name=&quot;分数可视化&quot;)
+    class Meta:
+        verbose_name = &quot;分数可视化&quot;
+        verbose_name_plural = verbose_name
+</code></pre>
+<h4 id="viewspy">views.py</h4>
+<pre><code class="language-bash">
+from django.shortcuts import render
+from django.views.generic import View
+from django.http import HttpResponse
+from .models import Question,Exam,Subject,Mark
+from django.db.models import Count
+from django.contrib.auth.decorators import login_required
+from users.models import UserProfile
+import time
+
+from django.utils.decorators import method_decorator
+@method_decorator(login_required,name='dispatch')
+class ExamView(View):
+    def get(self,request):
+        uid = request.user
+        #查看是否已经进行过该考试，如果进行过该次考试，则不能再次考试,显示成绩
+        if uid.is_exam==True:
+            mark = Mark.objects.get(user=uid)
+            return render(request, &quot;score1.html&quot;, context={&quot;mark&quot;: mark})
+        else:
+            #设置开始时间
+            print(uid.province)
+            if uid.province=='' or uid.city=='':
+                alert=&quot;您还未填写省市信息，还不能进行测试,请填写相关信息后开始测试&quot;
+                return render(request,&quot;usercenter-info.html&quot;,context={&quot;alert1&quot;:alert})
+            else:
+                c=request.session['starttime'] = time.time()
+                print(c)
+                #获取id=1的科目
+                subjetcs1=Subject.objects.get(id=1)
+                #打印这个科目的名称，可省去
+                print(subjetcs1)
+                #获取到这个科目下的所有试题
+                question=Question.objects.filter(subject=subjetcs1)
+                context={
+                    &quot;question&quot;:question,
+                }
+                return render(request, &quot;exam005.html&quot;,context=context)
+    def post(self,request):
+        #设置结束时间
+        a=request.session.get('starttime')
+        print(a)
+        dtime = rtdtime(request.session.get('starttime'), time.time())
+        #考试获取经历时间
+        lijingtime=rttime(dtime)
+        print(&quot;考试经历时间为：&quot;,lijingtime)
+        #获取是哪个用户
+        uid = request.user
+        print(uid.is_exam)
+        #获取当前用户的昵称
+        uname=request.user.nick_name
+        #获取当前考试的学科
+        subjetcs1 = Subject.objects.get(id=1)
+        #获取是哪次考试
+        current_exam=Exam.objects.get(id=1)
+        print(&quot;本次考试的科目为：&quot;,subjetcs1)
+        print(&quot;本次考试名称为：&quot;, current_exam)
+        print(uid)
+        print(uname)
+        #获取用户的答案
+        my_answer = []
+        #这里获取总的题目数量，添加题目数量后无需继续修改这里的数据
+        count_question = Question.objects.aggregate(count=Count(&quot;id&quot;))
+        for c in count_question.values():
+            print(c)
+        count1=c
+        print(count1)
+        for i in range(1,count1+1):
+            answer1 = request.POST.get('%s'%i)
+            my_answer.append(answer1)
+            i+=1
+        print(&quot;用户答案为：&quot;,my_answer)
+        # 打印所有题目的正确答案
+        correct_answer=re(request)
+        timu_fenshu=fenshu(request)
+        print(&quot;题目分数为：&quot;, timu_fenshu)
+        print(&quot;正确答案为：&quot;,correct_answer)
+        #基础，提升，专业分数,总分数均初始化为0
+        base_mark=0
+        promote_mark=0
+        major_mark=0
+        total_mark=0
+        i=0
+        while i &lt;=count1-1 :
+            if i &lt;= 0:
+                if correct_answer[i] == my_answer[i]:
+                    base_mark += timu_fenshu[i]
+                    total_mark = total_mark + timu_fenshu[i]
+            elif i &lt;= 1:
+                if correct_answer[i] == my_answer[i]:
+                    total_mark = total_mark+timu_fenshu[i]
+                    promote_mark += timu_fenshu[i]
+            else:
+                if correct_answer[i] == my_answer[i]:
+                    total_mark = total_mark+timu_fenshu[i]
+                    print(timu_fenshu[i])
+                    major_mark += timu_fenshu[i]
+            i = i + 1
+        print(&quot;总分数为：&quot;, total_mark)
+        print(&quot;基础分数为：&quot;, base_mark)
+        print(&quot;提升分数为：&quot;, promote_mark)
+        print(&quot;专业分数为：&quot;, major_mark)
+        mark=Mark(user=uid,subject=subjetcs1,total_mark=total_mark,exam=current_exam,base_mark=base_mark,promote_mark=promote_mark,major_mark=major_mark,jinglishijian=lijingtime)
+        uid.is_exam=True
+        uid.save()
+        mark.save()
+        return render(request,'score.html',context={&quot;total_mark&quot;:total_mark,&quot;base_mark&quot;:base_mark,&quot;promote_mark&quot;:promote_mark,&quot;major_mark&quot;:major_mark})
+#打印所有题目的正确答案
+def re(request):
+    option_list = []
+    options=Question.objects.all()
+    for option in options:
+        option_list.append(option.correct_op)
+    return option_list
+#获取每一道题的分数
+def fenshu(request):
+    fenshu_list = []
+    fenshus=Question.objects.all()
+    for fenshu in fenshus:
+        fenshu_list.append(fenshu.mark)
+    return fenshu_list
+#返回用了多长时间
+def rtdtime(s, e):
+    return e - s
+#返回时间分钟
+def rttime(s):
+    if not s//60:
+        return '{:.0f}秒'.format( s % 60)
+    else:
+        return '{:.0f}分,{:.0f}秒'.format(s // 60, s % 60)
+#返回分数页面
+def mark01(request):
+    uid=request.user
+    print(&quot;uid:&quot;,uid)
+    mark = Mark.objects.get(user=uid)
+    print(&quot;mark:&quot;,mark)
+    print(&quot;major_mark:&quot;,mark.major_mark)
+    return render(request,&quot;score1.html&quot;,context={&quot;mark&quot;:mark})
+</code></pre>
+<p><code>1.</code><a href="https://blog.csdn.net/qq_42092076/article/details/105797627">django获取各种形式的表单内容</a><br>
+<code>2.</code><a href="https://blog.csdn.net/qq_42092076/article/details/105792049">django的日志器引入的方法</a><br>
+<code>3.</code><a href="https://blog.csdn.net/qq_42092076/article/details/105754124">migrate出错时处理</a><br>
+<code>4.</code><a href="https://blog.csdn.net/qq_42092076/article/details/105774939">django实现考试系统优化2</a><br>
+<code>5.</code><a href="https://blog.csdn.net/qq_42092076/article/details/105664258">django考试试卷的实现【1】</a><br>
+<code>6.</code><a href="https://blog.csdn.net/qq_42092076/article/details/105649783">计算分数算法</a><br>
+<code>7.</code><a href="https://blog.csdn.net/qq_42092076/article/details/105574060">Django+xadmin+echarts在后台动态显示echarts图表，实现后台定制化开发</a></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[jsp实现从一个页面提交，第二个页面计算，第三个页面显示结果]]></title>
+        <id>https://906571331.github.io/yx.github.io/post/dVr6HCXkp/</id>
+        <link href="https://906571331.github.io/yx.github.io/post/dVr6HCXkp/">
+        </link>
+        <updated>2020-05-17T07:12:56.000Z</updated>
+        <content type="html"><![CDATA[<p>此页面为实现从a.jsp提交，将数的运算提交到b.jsp中进行计算，并将结果返回到c.jsp</p>
+<h4 id="ajsp">a.jsp</h4>
+<pre><code class="language-html">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
+    pageEncoding=&quot;UTF-8&quot;%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;title&gt;Insert title here&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;form action=&quot;b.jsp&quot; method=&quot;post&quot;&gt;
+	本程序将计算（a*b）+(c/d)-a的值&lt;br&gt;
+	a:&lt;input type=&quot;number&quot; name=&quot;count_a&quot;&gt;&lt;br&gt;
+	b:&lt;input type=&quot;number&quot; name=&quot;count_b&quot;&gt;&lt;br&gt;
+	c:&lt;input type=&quot;number&quot; name=&quot;count_c&quot;&gt;&lt;br&gt;
+	d:&lt;input type=&quot;number&quot; name=&quot;count_d&quot;&gt;&lt;br&gt;
+&lt;input type=&quot;submit&quot;&gt;&lt;br&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h4 id="bjsp">b.jsp</h4>
+<pre><code class="language-html">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
+    pageEncoding=&quot;UTF-8&quot;%&gt;
+&lt;%@ page import=&quot;java.io.*,java.util.*&quot; %&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;title&gt;Insert title here&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;%--
+&lt;% String count_A=request.getParameter(&quot;count_a&quot;); %&gt;
+&lt;% String count_B=request.getParameter(&quot;count_b&quot;); %&gt;
+--%&gt;
+&lt;%
+int m=Integer.parseInt(request.getParameter(&quot;count_a&quot;));
+%&gt;
+&lt;%
+int n=Integer.parseInt(request.getParameter(&quot;count_b&quot;));
+%&gt;
+&lt;%
+int k=Integer.parseInt(request.getParameter(&quot;count_c&quot;));
+%&gt;
+&lt;%
+int f=Integer.parseInt(request.getParameter(&quot;count_d&quot;));
+%&gt;
+
+
+
+
+
+&lt;% int C=((m*n)+(k/f)-m); %&gt;
+&lt;%--
+a为:&lt;%=count_A %&gt;&lt;br&gt;
+b为:&lt;%=count_B %&gt;&lt;br&gt;
+
+和为：&lt;%=C %&gt;
+
+&lt;%
+	out.print(m + &quot;+&quot; + n + &quot;=&quot; + (m + n));
+%&gt;
+
+--%&gt;
+&lt;%
+	session.setAttribute(&quot;count&quot;,C);
+%&gt;
+&lt;jsp:forward page=&quot;c.jsp&quot;&gt;
+	&lt;jsp:param value=&quot;&lt;%=C %&gt;&quot; name=&quot;count&quot;/&gt;
+&lt;/jsp:forward&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h4 id="cjsp">c.jsp</h4>
+<pre><code class="language-html">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
+    pageEncoding=&quot;UTF-8&quot;%&gt;
+    &lt;%@ page import=&quot;java.io.*,java.util.*&quot; %&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;title&gt;Insert title here&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;%  
+	String COUNT=request.getParameter(&quot;count&quot;);
+	out.print(&quot;本程序将计算（a*b）+(c/d)-a的值为：&quot;+COUNT);
+%&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h5 id="运行结果截图">运行结果截图：</h5>
+<p><img src="https://img-blog.csdnimg.cn/20200517151240204.png" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20200517151252699.png" alt="在这里插入图片描述" loading="lazy"></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[JSP禁止表单从服务器外部提交，并判断提交地址]]></title>
+        <id>https://906571331.github.io/yx.github.io/post/HSMUx2oTA/</id>
+        <link href="https://906571331.github.io/yx.github.io/post/HSMUx2oTA/">
+        </link>
+        <updated>2020-05-17T07:05:59.000Z</updated>
+        <content type="html"><![CDATA[<h4 id="indexjsp">index.jsp</h4>
+<pre><code class="language-html">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
+    pageEncoding=&quot;UTF-8&quot;%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;title&gt;Insert title here&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;form action=&quot;dealwith.jsp&quot; method=&quot;post&quot;&gt;
+用户名：&lt;input type=&quot;text&quot; name=&quot;username&quot;&gt;&lt;br&gt;
+密码：&lt;input type=&quot;password&quot;   name=&quot;password&quot;&gt;&lt;br&gt;
+提交：&lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;&lt;br&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h4 id="indexhtml">index.html</h4>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;title&gt;Insert title here&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;form action=&quot;http://localhost:8081/2020年5月13日/dealwith.jsp&quot; method=&quot;post&quot;&gt;
+用户名：&lt;input type=&quot;text&quot; name=&quot;username&quot;&gt;&lt;br&gt;
+密码：&lt;input type=&quot;password&quot;   name=&quot;password&quot;&gt;&lt;br&gt;
+提交：&lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;&lt;br&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h4 id="dealwithjsp">dealwith.jsp</h4>
+<pre><code class="language-html">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
+    pageEncoding=&quot;UTF-8&quot;%&gt;
+&lt;%@ page import=&quot;java.net.*&quot; %&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;title&gt;Insert title here&lt;/title&gt;
+&lt;/head&gt;
+&lt;% 
+	String address=request.getHeader(&quot;referer&quot;);
+	String pathAdd=&quot;&quot;;
+	if(address!=null){
+		URL urlOne=new URL(address);
+		pathAdd=urlOne.getHost();
+	}
+	String address1=request.getRequestURL().toString();
+	String pathAdd1=&quot;&quot;;
+	if(address1!=null){
+		URL urlTwo=new URL(address1);
+		pathAdd1=urlTwo.getHost();
+	}
+%&gt; 
+&lt;%=address %&gt;&lt;br&gt;
+&lt;%=address1 %&gt;&lt;br&gt;
+&lt;%=pathAdd %&gt;&lt;br&gt;
+&lt;%=pathAdd1 %&gt;&lt;br&gt;
+&lt;%
+if(!pathAdd.equals(pathAdd1)){
+	out.print(&quot;禁止在网址外部提交&quot;);
+}else{
+	%&gt;
+欢迎您：&lt;%=request.getParameter(&quot;username&quot;) %&gt;	
+&lt;% 
+}
+%&gt;
+</code></pre>
+<h4 id="运行截图">运行截图</h4>
+<p>从网站内部提交<br>
+<img src="https://img-blog.csdnimg.cn/20200517150346485.png" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20200517150407630.png" alt="在这里插入图片描述" loading="lazy"><br>
+从网站外部提交则会出现<code>禁止从网站外部提交</code><br>
+从网站外部提交：<br>
+<img src="https://img-blog.csdnimg.cn/20200517150538198.png" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20200517150550160.png" alt="在这里插入图片描述" loading="lazy"></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[JSP使用javabean计算两个天数的差值]]></title>
+        <id>https://906571331.github.io/yx.github.io/post/1N5V8iIDb/</id>
+        <link href="https://906571331.github.io/yx.github.io/post/1N5V8iIDb/">
+        </link>
+        <updated>2020-05-17T06:59:05.000Z</updated>
+        <content type="html"><![CDATA[<h4 id="indexjsp">index.jsp</h4>
+<pre><code class="language-html">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
+    pageEncoding=&quot;UTF-8&quot;%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;title&gt;Insert title here&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;form action=&quot;getminus.jsp&quot; method=&quot;post&quot;&gt;
+请输入第一个日期：&lt;input type=&quot;date&quot; name=&quot;date1&quot; value=&quot;2020-05-15&quot;/&gt;&lt;br&gt;
+请输入第二个日期：&lt;input type=&quot;date&quot; name=&quot;date2&quot; value=&quot;2020-05-15&quot;/&gt;&lt;br&gt;
+&lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h4 id="getminusjsp">getminus.jsp</h4>
+<pre><code class="language-html">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
+    pageEncoding=&quot;UTF-8&quot;%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;title&gt;Insert title here&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;%
+	request.setCharacterEncoding(&quot;UTF-8&quot;);
+%&gt;
+&lt;%
+	String datestr1=request.getParameter(&quot;date1&quot;);
+	String datestr2=request.getParameter(&quot;date2&quot;);
+
+%&gt;
+&lt;jsp:useBean id=&quot;strBean&quot; class=&quot;com.StringUtil&quot;&gt;&lt;/jsp:useBean&gt;
+&lt;jsp:setProperty property=&quot;datestr1&quot; name=&quot;strBean&quot; value=&quot;&lt;%=datestr1 %&gt;&quot;/&gt;
+&lt;jsp:setProperty property=&quot;datestr2&quot; name=&quot;strBean&quot; value=&quot;&lt;%=datestr2 %&gt;&quot;/&gt;
+&lt;p&gt;第一个日期为：&lt;jsp:getProperty property=&quot;datestr1&quot; name=&quot;strBean&quot;/&gt;&lt;/p&gt;
+&lt;p&gt;第二个日期为：&lt;jsp:getProperty property=&quot;datestr2&quot; name=&quot;strBean&quot;/&gt;&lt;/p&gt;
+&lt;p&gt;两个日期时间差为：：&lt;jsp:getProperty property=&quot;minus&quot; name=&quot;strBean&quot;/&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h4 id=""></h4>
+<pre><code class="language-java">package com;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+public class StringUtil {
+	private String datestr1;
+	private String datestr2;
+	private int minus;
+	public int getMinus() {
+		Calendar c1=this.getCalendar(datestr1);
+		Calendar c2=this.getCalendar(datestr2);
+		long t1=c1.getTimeInMillis();
+		long t2=c2.getTimeInMillis();
+		long t=1000*60*60*24;
+		minus=(int)((t2-t1)/t); 
+		return minus;
+	}
+	public String getDatestr1() {
+		return datestr1;
+	}
+	public void setDatestr1(String datestr1) {
+		this.datestr1=datestr1;
+	}
+	public String getDatestr2() {
+		return datestr2;
+	}
+	public void setDatestr2(String datestr2) {
+		this.datestr2=datestr2;
+	}
+	public void setMinus(int minus) {
+		this.minus=minus;
+	}
+	private Calendar getCalendar(String datestr) {
+		SimpleDateFormat shijian = new SimpleDateFormat(&quot;yyyyy-MM-dd&quot;);
+		Date date=null;
+		try {
+			date=shijian.parse(datestr);
+		}catch (ParseException e) {
+			e.printStackTrace();
+		}
+		Calendar c=Calendar.getInstance();
+		c.setTime(date);
+		return c;
+	}
+}
+
+</code></pre>
+<h4 id="运行截图">运行截图</h4>
+<p><img src="https://img-blog.csdnimg.cn/20200517144952416.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20200517145011669.png" alt="在这里插入图片描述" loading="lazy"></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[JSP判断用户名是否符合规则:用户名只能由字母数字下划线组成,并且首字母必须为字母]]></title>
+        <id>https://906571331.github.io/yx.github.io/post/JIVTmC_k5/</id>
+        <link href="https://906571331.github.io/yx.github.io/post/JIVTmC_k5/">
+        </link>
+        <updated>2020-05-17T06:58:03.000Z</updated>
+        <content type="html"><![CDATA[<p><code>用户名只能由字母数字下划线组成,并且首字母必须为字母</code><br>
+本程序使用jsp中的<code>javabean</code>判断是否符合用户名规则</p>
+<h4 id="indexjsp">index.jsp</h4>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;ISO-8859-1&quot;&gt;
+&lt;title&gt;Insert title here&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;form action=&quot;checkisvailued.jsp&quot; method=&quot;post&quot;&gt;
+	用户名：&lt;input type=&quot;text&quot; name=&quot;username&quot;&gt;&lt;br&gt;
+	&lt;p style=&quot;font-size:20px;color:red&quot;&gt;注意：用户名只能由字母数字下划线组成,并且首字母必须为字母&lt;/p&gt;
+	&lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h4 id="checkisvailuedjsp">checkisvailued.jsp</h4>
+<pre><code class="language-html">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
+    pageEncoding=&quot;UTF-8&quot;%&gt;
+&lt;%@ page language=&quot;java&quot; import=&quot;java.util.*&quot;%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;title&gt;Insert title here&lt;/title&gt;
+&lt;/head&gt;
+&lt;%
+	request.setCharacterEncoding(&quot;UTF-8&quot;);
+%&gt;
+&lt;body&gt;
+&lt;%
+	String name=request.getParameter(&quot;username&quot;);
+%&gt;
+&lt;jsp:useBean id=&quot;strBean&quot; class=&quot;com.isVaild&quot;&gt;&lt;/jsp:useBean&gt;
+&lt;jsp:setProperty property=&quot;str&quot; name=&quot;strBean&quot; value=&quot;&lt;%=name %&gt;&quot;/&gt;
+&lt;p&gt; 您输入的用户名是：&lt;jsp:getProperty  property=&quot;str&quot; name=&quot;strBean&quot;/&gt;&lt;/p&gt;
+&lt;p&gt; 是否有效：&lt;jsp:getProperty  property=&quot;vaild&quot; name=&quot;strBean&quot;/&gt;&lt;/p&gt;
+&lt;p&gt; 提示信息为：&lt;jsp:getProperty  property=&quot;cue&quot; name=&quot;strBean&quot;/&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h4 id="isvalidjava">isValid.java</h4>
+<pre><code class="language-java">package com;
+public class isVaild {
+	private String str;
+	private boolean vaild;
+	private String cue;
+	public String getStr() {
+		return str;
+	}
+	public void setStr(String str) {
+		this.str=str;
+	}
+	public String getCue() {
+		return cue;
+	}
+	public void setCue(String cue) {
+		this.cue=cue;
+	}
+	public boolean isVaild() {
+		char cArr[]=str.toCharArray();
+		int firstChar=(int)cArr[0];
+		if((firstChar&gt;=65&amp;&amp;firstChar&lt;=90)||(firstChar&gt;=97&amp;&amp;firstChar&lt;=122)) {
+			for(int i=1;i&lt;cArr.length;i++) {
+				int ascii=cArr[i];
+				if(!((ascii&gt;=48&amp;&amp;ascii&lt;=57)||(ascii&gt;=65&amp;&amp;ascii&lt;=90)||
+				(ascii&gt;=97&amp;&amp;ascii&lt;=122)||(ascii==95))) {
+					this.setCue(&quot;用户名格式错误，用户名只能由字母数字下划线组成&quot;);
+					this.vaild=false;
+					return vaild;
+				}
+			}
+			this.setCue(&quot;用户名格式正确&quot;);
+			this.vaild=true;
+			return vaild;
+		}else {
+			this.setCue(&quot;用户名格式错误，首字符必须为字母&quot;);
+			this.vaild=false;
+			return vaild;
+		}
+	}
+}
+
+</code></pre>
+<h5 id="运行截图">运行截图：</h5>
+<p><img src="https://img-blog.csdnimg.cn/20200517145651598.png" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20200517145701637.png" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20200517145715196.png" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20200517145728766.png" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20200517145751271.png" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20200517145759430.png" alt="在这里插入图片描述" loading="lazy"></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[阿里云ubuntu安装pandas时报错Command "python setup.py egg_info" failed with error code 1 in /tmp/pip-build-hm]]></title>
         <id>https://906571331.github.io/yx.github.io/post/EeOU9ISeC/</id>
@@ -185,247 +979,6 @@ vi /etc/hostname    # 获取hostname
 2.<a href="https://blog.csdn.net/qq_42092076/article/details/105960519">ubuntu安装matplotlib时报错处理</a><br>
 3.<a href="https://blog.csdn.net/qq_42092076/article/details/105969420">jupyter重启失败KernelRestarter: restart failed</a><br>
 4.<a href="https://blog.csdn.net/qq_42092076/article/details/105999846">pandas安装报错</a></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[workon: command not found处理方法]]></title>
-        <id>https://906571331.github.io/yx.github.io/post/8i0Lx-8dx/</id>
-        <link href="https://906571331.github.io/yx.github.io/post/8i0Lx-8dx/">
-        </link>
-        <updated>2020-05-06T14:35:31.000Z</updated>
-        <content type="html"><![CDATA[<pre><code class="language-python">$ workon django
-$ workon: command not found
-</code></pre>
-<p>以前安装了虚拟环境，但是使用workon时发现命令不存在，处理方法：重新激活虚拟环境</p>
-<pre><code class="language-python"> source /usr/share/virtualenvwrapper/virtualenvwrapper.sh 
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[ubuntu安装matplotlib时报错处理]]></title>
-        <id>https://906571331.github.io/yx.github.io/post/1Ff4JgIDs/</id>
-        <link href="https://906571331.github.io/yx.github.io/post/1Ff4JgIDs/">
-        </link>
-        <updated>2020-05-06T14:32:43.000Z</updated>
-        <content type="html"><![CDATA[<p>阿里云安装matplotlib时出现如下错误：</p>
-<pre><code class="language-python">(jiqistudy) root@iZ2zeemzp51mlbzarwptwwZ:~# pip install matplotlib
-Collecting matplotlib
-  Downloading http://mirrors.cloud.aliyuncs.com/pypi/packages/4a/30/eb8e7dd8e3609f05c6920fa82f189302c832e5a0f6667aa96f952056bc0c/matplotlib-3.2.1.tar.gz (40.3MB)
-    100% |████████████████████████████████| 40.3MB 29.3MB/s 
-    Complete output from command python setup.py egg_info:
-    Traceback (most recent call last):
-      File &quot;&lt;string&gt;&quot;, line 1, in &lt;module&gt;
-      File &quot;/tmp/pip-build-c_f1ecmg/matplotlib/setup.py&quot;, line 139
-        raise IOError(f&quot;Failed to download jquery-ui.  Please download &quot;
-                                                                       ^
-    SyntaxError: invalid syntax
-    
-    ----------------------------------------
-Command &quot;python setup.py egg_info&quot; failed with error code 1 in /tmp/pip-build-c_f1ecmg/matplotlib/
-You are using pip version 8.1.1, however version 20.1 is available.
-You should consider upgrading via the 'pip install --upgrade pip' command.
-</code></pre>
-<p>解决方案：</p>
-<pre><code class="language-python">pip install --upgrade setuptools
-python -m pip install --upgrade pip
-</code></pre>
-<p>再次安装matplotlib时就不会报错</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[jsp使用request.getParameter时显示乱码的解决方案]]></title>
-        <id>https://906571331.github.io/yx.github.io/post/nBa-pdlbR/</id>
-        <link href="https://906571331.github.io/yx.github.io/post/nBa-pdlbR/">
-        </link>
-        <updated>2020-05-03T06:58:34.000Z</updated>
-        <content type="html"><![CDATA[<p>Tomcat 7在使用request.getParameter获取前面页面传来的参数值时，会出现乱码的现象，解决方案有两种：<br>
-<code>1</code>:使用：</p>
-<pre><code class="language-java">&lt;%=new String(request.getParameter(&quot;username&quot;).getBytes(&quot;iso-8859-1&quot;),&quot;UTF-8&quot;) %&gt;
-</code></pre>
-<p>代替：</p>
-<pre><code class="language-java">&lt;%=request.getParameter(&quot;username&quot;) %&gt;
-</code></pre>
-<p><code>2</code>或者修改server.xml文件，找到此文件，进行修改<br>
-<img src="https://img-blog.csdnimg.cn/20200503145111100.png" alt="在这里插入图片描述" loading="lazy"><br>
-将<code>useBodyEncodingForURI=&quot;true&quot;</code>改为<code>useBodyEncodingForURI=&quot;false&quot;</code>，效果如图所示：</p>
-<pre><code class="language-java">&lt;Connector URIEncoding=&quot;UTF-8&quot; connectionTimeout=&quot;20000&quot; port=&quot;8081&quot; protocol=&quot;HTTP/1.1&quot; redirectPort=&quot;8443&quot; useBodyEncodingForURI=&quot;false&quot;/&gt;
-</code></pre>
-<p><code>useBodyEncodingForURI</code>参数表示是否用<code>request.setCharacterEncoding</code>参数对URL提交的数据和表单中GET方式提交的数据进行重新编码，在默认情况下，该参数为<code>false</code>。<br>
-URIEncoding参数指定对所有GET方式请求进行统一的重新编码（解码）的编码。<br>
-<code>JSP</code>中其他常见的问题<br>
-<code>1</code><a href="https://blog.csdn.net/qq_42092076/article/details/104790088">解决jsp开发中eclipse无法创建Dynamic web project</a></p>
-<p><code>2</code><a href="https://blog.csdn.net/qq_42092076/article/details/104789471">解决JSP开发中出现的Tomcat启动时闪退的问题</a></p>
-<p><code>3</code><a href="https://blog.csdn.net/qq_42092076/article/details/104936671">JSP开发中tomcat访问URL带有中文名称的HTML文件显示404错误</a></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[django获取各种形式的表单内容]]></title>
-        <id>https://906571331.github.io/yx.github.io/post/y4MYiiqzl/</id>
-        <link href="https://906571331.github.io/yx.github.io/post/y4MYiiqzl/">
-        </link>
-        <updated>2020-04-27T11:16:45.000Z</updated>
-        <content type="html"><![CDATA[<p>Django框架获取各种form表单数据</p>
-<h4 id="1django中获取textpassword">1.Django中获取text，password</h4>
-<pre><code class="language-python">　　名字：&lt;input type=&quot;text&quot; name=&quot;name&quot;&gt;&lt;br&gt;&lt;br&gt;
-　　密码：&lt;input type=&quot;password&quot; name=&quot;password&quot;&gt;
-</code></pre>
-<p>Form表单提交数据时使用的是post方式，所以在后端接收参数的时候需要先判断请求方式为post时才能请求到数据</p>
-<pre><code class="language-python">　　name = request.POST.get('name')
-　　password = request.POST.get('password')
-</code></pre>
-<h4 id="2django中获取单选框">2.Django中获取单选框</h4>
-<pre><code class="language-python">　　性别：&lt;input type=&quot;radio&quot; name=&quot;gender&quot; value=&quot;man&quot;&gt;男
-　　　　&lt;input type=&quot;radio&quot; name=&quot;gender&quot; value=&quot;woman&quot;&gt;女
-　　　　#此时获取到的值是woman或者man
-　　　　gender = request.POST.get('gender')
-</code></pre>
-<h4 id="3django中获取单选的复选框">3.Django中获取单选的复选框</h4>
-<p>单选复选框：<input type="checkbox" name="is_tuanyuan" value="is_tuanyuan">是否是团员</p>
-<p>此时如果选中该选项，获取到的值是value后面的，若没有选中即是None</p>
-<pre><code class="language-python">　　is_tuanyuan = request.POST.get('is_tuanyuan')
-</code></pre>
-<p>Django中获取复选框</p>
-<pre><code class="language-python">　　复选框：&lt;input type=&quot;checkbox&quot; name=&quot;joy&quot; value=&quot;sing&quot;&gt;唱歌
-
-　　　　　　&lt;input type=&quot;checkbox&quot; name=&quot;joy&quot; value=&quot;dance&quot;&gt;跳舞
-</code></pre>
-<p>这里应该使用getlist获取多选框，获取到的是列表形式，用get获取只能得到最后一个选项</p>
-<pre><code class="language-python">　　joy = request.POST.getlist('joy')
-</code></pre>
-<h4 id="4django中获取单选下拉框">4.Django中获取单选下拉框</h4>
-<p>去过哪些城市？单选</p>
-<pre><code class="language-python">　　&lt;select name=&quot;city&quot;&gt;
-　　　　&lt;option&gt;北京&lt;/option&gt;
-　　　　&lt;option&gt;天津&lt;/option&gt;
-　　　　&lt;option&gt;南京&lt;/option&gt;
-　　&lt;/select&gt;
-</code></pre>
-<p>这里获取到的就直接是option里面的内容</p>
-<pre><code class="language-python">　　city = request.POST.get('city')
-</code></pre>
-<p>Django中获取多选的下拉框</p>
-<pre><code class="language-python">#去过哪些城市？多选
-　　&lt;select multiple name=&quot;more_city&quot;&gt;
-　　　　&lt;option&gt;北京&lt;/option&gt;
-　　　　&lt;option&gt;天津&lt;/option&gt;
-　　　　&lt;option&gt;南京&lt;/option&gt;
-　　&lt;/select&gt;
-</code></pre>
-<p>这里涉及到多个值得获取，需要使用getlist，获取到的是列表，get依然只能获取到一个值，用户在使用时按住Ctrl即可以实现多选</p>
-<pre><code class="language-python">　　 more_city = request.POST.getlist('more_city') 
-</code></pre>
-<h4 id="5django中获取文本域">5.Django中获取文本域</h4>
-<pre><code class="language-python">　　&lt;textarea name=&quot;more_text&quot; placeholder=&quot;请输入备注&quot;&gt;&lt;/textarea&gt;
-</code></pre>
-<p>获取方法：</p>
-<pre><code class="language-python">　　more_text = request.POST.get('more_text')
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[ueditor在Django中的使用]]></title>
-        <id>https://906571331.github.io/yx.github.io/post/4y-2Nv7x-/</id>
-        <link href="https://906571331.github.io/yx.github.io/post/4y-2Nv7x-/">
-        </link>
-        <updated>2020-04-27T09:10:16.000Z</updated>
-        <content type="html"><![CDATA[<p>在修改models.py中的字段后，需要进行数据库的迁移</p>
-<pre><code class="language-python">#urls.py
-path('ueditor/',include('DjangoUeditor.urls' )),
-</code></pre>
-<pre><code class="language-python">#adminx.py
-class QuestionAdmin(object):
-	#可以显示的列
-    list_display=[&quot;subject&quot;,&quot;statments&quot;,&quot;op_A&quot;,&quot;op_B&quot;,&quot;op_C&quot;,&quot;op_D&quot;]
-    #查找的设置
-    search_fields=[&quot;subject&quot;,&quot;statments&quot;,&quot;op_A&quot;,&quot;op_B&quot;,&quot;op_C&quot;,&quot;op_D&quot;]
-    #过滤器的设置
-    list_filter=[&quot;subject&quot;,&quot;statments&quot;,&quot;op_A&quot;,&quot;op_B&quot;,&quot;op_C&quot;,&quot;op_D&quot;]
-    #可以在当前页面编辑的列，当后台设置为ueditor时，这里设置为不能修改，否则会报错
-    #list_editable=[&quot;subject&quot;,&quot;statments&quot;,&quot;op_A&quot;,&quot;op_B&quot;,&quot;op_C&quot;,&quot;op_D&quot;]
-    model_icon=&quot;fa fa-bath&quot;
-    #将statements字段设置为ueditor类型
-    style_fields = {&quot;statments&quot;: &quot;ueditor&quot;}
-</code></pre>
-<pre><code class="language-python">#models.py中的设置：
-from DjangoUeditor.models import UEditorField
-class Question(models.Model):
-	choice = (('A','A'),('B','B'),('C','C'),('D','D'))
-	subject 	= models.ForeignKey(Subject,on_delete=models.CASCADE,verbose_name=&quot;考试科目&quot;)
-	# statments 	= models.TextField(verbose_name=&quot;问题描述&quot;)
-	statments = UEditorField(verbose_name=u'题目描述', width=600, height=300, imagePath=&quot;exam/ueditor/&quot;,
-						  filePath=&quot;exam/ueditor/&quot;, default='')
-	op_A 	= models.CharField(max_length=1000)
-	op_B 	= models.CharField(max_length=1000)
-	op_C 	= models.CharField(max_length=1000)
-	op_D 	= models.CharField(max_length=1000)
-	correct_op 	= models.CharField(choices=choice,max_length=10)
-	mark 		= models.IntegerField(default=1)
-	class Meta:
-		verbose_name=&quot;题目&quot;
-		verbose_name_plural=verbose_name
-	def __str__(self):
-		return self.statments
-</code></pre>
-<pre><code class="language-html">        {#每一道题的描述#}
-        &lt;td&gt;{% autoescape off %}
-             {{ foo.statments}}
-             {% endautoescape %}&lt;/td&gt;
-           &lt;br&gt;
-</code></pre>
-<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20200427171242288.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[在Django中引入日志功能：]]></title>
-        <id>https://906571331.github.io/yx.github.io/post/XOKY2QSij/</id>
-        <link href="https://906571331.github.io/yx.github.io/post/XOKY2QSij/">
-        </link>
-        <updated>2020-04-27T07:39:16.000Z</updated>
-        <content type="html"><![CDATA[<p><code>在Django中引入日志功能：</code><br>
-<code>1.</code>在settings.py中加入以下代码：</p>
-<pre><code class="language-python">LOGGING = {
-    # 版本
-    'version': 1,
-    # 是否禁用已存在的日志器
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'formrat': '%(levelname)s %(asctime)s %(module)s %(lineno)d %(message)s'
-        },
-        'simple': {
-            'format': '%(levelname)s %(module)s %(lineno)d %(message)s'
-        },
-    },
-    'filters': {
-        'require_debug_true': {
-            '()': 'django.utils.log.RequireDebugTrue',
-        },
-    },
-    'handlers': {
-        'console': {
-            'level': 'DEBUG',
-            'filters': ['require_debug_true'],
-            'class': 'logging.StreamHandler',
-            'formatter': 'simple'
-        },
-        'file': {
-            'level': 'INFO',
-            'class': 'logging.handlers.RotatingFileHandler',
-            'filename': os.path.join(BASE_DIR, &quot;logs/user.log&quot;),  # 日志文件的位置
-            'maxBytes': 300 * 1024 * 1024,
-            'backupCount': 10,
-            'formatter': 'verbose'
-        },
-    },
-    'loggers': {
-        'django': {  # 定义了一个名为django的日志器
-            'handlers': ['console', 'file'],
-            'propagate': True,
-            'level': 'INFO',  # 日志器接收的最低日志级别
-        },
-    }
-</code></pre>
-<p><code>2.</code>新建一个名为logs的文件夹，重新启动Django项目即可将日志记录到user.logs的文件中</p>
 ]]></content>
     </entry>
 </feed>

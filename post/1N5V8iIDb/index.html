@@ -1,0 +1,255 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>JSP使用javabean计算两个天数的差值 | WuXin</title>
+<meta name="description" content="成千上万个门口，总有一个人要先走。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://906571331.github.io/yx.github.io//favicon.ico?v=1589701211473">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://906571331.github.io/yx.github.io//styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://906571331.github.io/yx.github.io/">
+        <img class="avatar" src="https://906571331.github.io/yx.github.io//images/avatar.png?v=1589701211473" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://906571331.github.io/yx.github.io/">
+        <h1 class="site-title">WuXin</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="https://906571331.github.io/yx.github.io/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://906571331.github.io/yx.github.io/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="https://906571331.github.io/yx.github.io/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+            <div class="feature-container" style="background-image: url('https://906571331.github.io/yx.github.io//post-images/1N5V8iIDb.jpg')">
+            </div>
+          
+          <h2 class="post-title">JSP使用javabean计算两个天数的差值</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2020-05-17</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://906571331.github.io/yx.github.io/tag/9zpFSDVIG/">
+                    jsp
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content">
+            <h4 id="indexjsp">index.jsp</h4>
+<pre><code class="language-html">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
+    pageEncoding=&quot;UTF-8&quot;%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;title&gt;Insert title here&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;form action=&quot;getminus.jsp&quot; method=&quot;post&quot;&gt;
+请输入第一个日期：&lt;input type=&quot;date&quot; name=&quot;date1&quot; value=&quot;2020-05-15&quot;/&gt;&lt;br&gt;
+请输入第二个日期：&lt;input type=&quot;date&quot; name=&quot;date2&quot; value=&quot;2020-05-15&quot;/&gt;&lt;br&gt;
+&lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h4 id="getminusjsp">getminus.jsp</h4>
+<pre><code class="language-html">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
+    pageEncoding=&quot;UTF-8&quot;%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;title&gt;Insert title here&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;%
+	request.setCharacterEncoding(&quot;UTF-8&quot;);
+%&gt;
+&lt;%
+	String datestr1=request.getParameter(&quot;date1&quot;);
+	String datestr2=request.getParameter(&quot;date2&quot;);
+
+%&gt;
+&lt;jsp:useBean id=&quot;strBean&quot; class=&quot;com.StringUtil&quot;&gt;&lt;/jsp:useBean&gt;
+&lt;jsp:setProperty property=&quot;datestr1&quot; name=&quot;strBean&quot; value=&quot;&lt;%=datestr1 %&gt;&quot;/&gt;
+&lt;jsp:setProperty property=&quot;datestr2&quot; name=&quot;strBean&quot; value=&quot;&lt;%=datestr2 %&gt;&quot;/&gt;
+&lt;p&gt;第一个日期为：&lt;jsp:getProperty property=&quot;datestr1&quot; name=&quot;strBean&quot;/&gt;&lt;/p&gt;
+&lt;p&gt;第二个日期为：&lt;jsp:getProperty property=&quot;datestr2&quot; name=&quot;strBean&quot;/&gt;&lt;/p&gt;
+&lt;p&gt;两个日期时间差为：：&lt;jsp:getProperty property=&quot;minus&quot; name=&quot;strBean&quot;/&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h4 id=""></h4>
+<pre><code class="language-java">package com;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+public class StringUtil {
+	private String datestr1;
+	private String datestr2;
+	private int minus;
+	public int getMinus() {
+		Calendar c1=this.getCalendar(datestr1);
+		Calendar c2=this.getCalendar(datestr2);
+		long t1=c1.getTimeInMillis();
+		long t2=c2.getTimeInMillis();
+		long t=1000*60*60*24;
+		minus=(int)((t2-t1)/t); 
+		return minus;
+	}
+	public String getDatestr1() {
+		return datestr1;
+	}
+	public void setDatestr1(String datestr1) {
+		this.datestr1=datestr1;
+	}
+	public String getDatestr2() {
+		return datestr2;
+	}
+	public void setDatestr2(String datestr2) {
+		this.datestr2=datestr2;
+	}
+	public void setMinus(int minus) {
+		this.minus=minus;
+	}
+	private Calendar getCalendar(String datestr) {
+		SimpleDateFormat shijian = new SimpleDateFormat(&quot;yyyyy-MM-dd&quot;);
+		Date date=null;
+		try {
+			date=shijian.parse(datestr);
+		}catch (ParseException e) {
+			e.printStackTrace();
+		}
+		Calendar c=Calendar.getInstance();
+		c.setTime(date);
+		return c;
+	}
+}
+
+</code></pre>
+<h4 id="运行截图">运行截图</h4>
+<p><img src="https://img-blog.csdnimg.cn/20200517144952416.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20200517145011669.png" alt="在这里插入图片描述" loading="lazy"></p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://906571331.github.io/yx.github.io/post/JIVTmC_k5/">
+              <h3 class="post-title">
+                下一篇：JSP判断用户名是否符合规则:用户名只能由字母数字下划线组成,并且首字母必须为字母
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">成千上万个门口，总有一个人要先走。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://blog.csdn.net/qq_42092076" target="_blank">WYX</a> | <a class="rss" href="https://906571331.github.io/yx.github.io//atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>
