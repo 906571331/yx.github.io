@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://906571331.github.io/yx.github.io/</id>
     <title>WuXin</title>
-    <updated>2020-05-18T08:13:20.735Z</updated>
+    <updated>2020-05-18T14:08:23.962Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://906571331.github.io/yx.github.io/"/>
     <link rel="self" href="https://906571331.github.io/yx.github.io/atom.xml"/>
@@ -10,6 +10,88 @@
     <logo>https://906571331.github.io/yx.github.io/images/avatar.png</logo>
     <icon>https://906571331.github.io/yx.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, WuXin</rights>
+    <entry>
+        <title type="html"><![CDATA[jsp统计对一个页面的访问次数]]></title>
+        <id>https://906571331.github.io/yx.github.io/post/zSfkxSPZg/</id>
+        <link href="https://906571331.github.io/yx.github.io/post/zSfkxSPZg/">
+        </link>
+        <updated>2020-05-18T14:07:43.000Z</updated>
+        <content type="html"><![CDATA[<p>原文链接：<a href="https://blog.csdn.net/c_major/article/details/45285995">https://blog.csdn.net/c_major/article/details/45285995</a></p>
+<pre><code class="language-html">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
+    pageEncoding=&quot;UTF-8&quot;%&gt;
+&lt;%@ page import=&quot;java.io.*,java.util.*&quot; %&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;换个浏览器访问也算是一次访问&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;%     
+	Integer dianjiCount = (Integer)application.getAttribute(&quot;dianjiliang&quot;);     
+	if( dianjiCount ==null || dianjiCount == 0 ){              
+    out.println(&quot;欢迎您第一次访问我的网站&quot;);  //用户第一次访问页面     
+    dianjiCount = 1;     
+    }else{              
+    out.println(&quot;欢迎您再次访问我的网站&quot;);        //用户多次访问页面，每次访问后点击量+1
+    dianjiCount += 1;     
+    }     
+    application.setAttribute(&quot;dianjiliang&quot;, dianjiCount); 
+%&gt;
+您的访问次数为: &lt;%= dianjiCount%&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>JSP：用隐式对象统计网站访问次数<br>
+jsp 隐式对象 赵振江</p>
+<p>隐式对象 application对象</p>
+<p>利用隐式对象为某一网站编写一个JSP程序，统计该网站的访问次数。</p>
+<p>一种情况是：按照客户进行统计（按照浏览器进行统计，一个浏览器如果访问网站的话，就算一次访问，换句话说如果这个浏览器刷新多次网站的话，也算是一次访问）；</p>
+<p>另一种情况：刷新一次页面，就算是一次访问。</p>
+<p>要求用隐式对象去实现。<br>
+counter.jsp</p>
+<pre><code class="language-html">&lt;%@ page language=&quot;java&quot; import=&quot;java.util.*&quot; pageEncoding=&quot;UTF-8&quot;%&gt;
+&lt;%
+String path = request.getContextPath();
+String basePath = request.getScheme()+&quot;://&quot;+request.getServerName()+&quot;:&quot;+request.getServerPort()+path+&quot;/&quot;;
+%&gt;
+ 
+&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;base href=&quot;&lt;%=basePath%&gt;&quot;&gt;
+ 
+    &lt;title&gt;My JSP 'counter.jsp' starting page&lt;/title&gt;
+ 
+    &lt;meta http-equiv=&quot;pragma&quot; content=&quot;no-cache&quot;&gt;
+    &lt;meta http-equiv=&quot;cache-control&quot; content=&quot;no-cache&quot;&gt;
+    &lt;meta http-equiv=&quot;expires&quot; content=&quot;0&quot;&gt;    
+    &lt;meta http-equiv=&quot;keywords&quot; content=&quot;keyword1,keyword2,keyword3&quot;&gt;
+    &lt;meta http-equiv=&quot;description&quot; content=&quot;This is my page&quot;&gt;
+    &lt;!--
+    &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;styles.css&quot;&gt;
+    --&gt;
+ 
+  &lt;/head&gt;
+  &lt;%
+  if(application.getAttribute(&quot;counter&quot;)==null){
+    String counter=&quot;0&quot;;
+    application.setAttribute(&quot;counter&quot;,counter);
+  }
+  else{
+  int count=Integer.valueOf((String)application.getAttribute(&quot;counter&quot;)).intValue();
+  count++;
+  application.setAttribute(&quot;counter&quot;,count+&quot;&quot;);
+  }
+   %&gt;
+ 
+  &lt;body&gt;
+    This is my JSP page. &lt;br&gt;
+ 
+    该网站共被访问：&lt;%=application.getAttribute(&quot;counter&quot;) %&gt;次。
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[django.db.utils.OperationalError: (1426]]></title>
         <id>https://906571331.github.io/yx.github.io/post/iHYDvtQ1R/</id>
@@ -858,39 +940,6 @@ public class isVaild {
 <img src="https://img-blog.csdnimg.cn/20200517145728766.png" alt="在这里插入图片描述" loading="lazy"><br>
 <img src="https://img-blog.csdnimg.cn/20200517145751271.png" alt="在这里插入图片描述" loading="lazy"><br>
 <img src="https://img-blog.csdnimg.cn/20200517145759430.png" alt="在这里插入图片描述" loading="lazy"></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[阿里云ubuntu安装pandas时报错Command "python setup.py egg_info" failed with error code 1 in /tmp/pip-build-hm]]></title>
-        <id>https://906571331.github.io/yx.github.io/post/EeOU9ISeC/</id>
-        <link href="https://906571331.github.io/yx.github.io/post/EeOU9ISeC/">
-        </link>
-        <updated>2020-05-08T08:24:51.000Z</updated>
-        <content type="html"><![CDATA[<p>阿里云ubuntu安装pandas时报错Command &quot;python setup.py egg_info&quot; failed with error code 1 in /tmp/pip-build-hmsdpo52/pandas/</p>
-<pre><code class="language-bash">Collecting pandas
-  Downloading http://mirrors.cloud.aliyuncs.com/pypi/packages/2f/79/f236ab1cfde94bac03d7b58f3f2ab0b1cc71d6a8bda3b25ce370a9fe4ab1/pandas-1.0.3.tar.gz (5.0MB)
-    100% |████████████████████████████████| 5.0MB 43.7MB/s 
-    Complete output from command python setup.py egg_info:
-    Traceback (most recent call last):
-      File &quot;&lt;string&gt;&quot;, line 1, in &lt;module&gt;
-      File &quot;/tmp/pip-build-hmsdpo52/pandas/setup.py&quot;, line 42
-        f&quot;numpy &gt;= {min_numpy_ver}&quot;,
-                                  ^
-    SyntaxError: invalid syntax
-    
-    ----------------------------------------
-Command &quot;python setup.py egg_info&quot; failed with error code 1 in /tmp/pip-build-hmsdpo52/pandas/
-You are using pip version 8.1.1, however version 20.1 is available.
-You should consider upgrading via the 'pip install --upgrade pip' command.
-
-</code></pre>
-<p><img src="https://img-blog.csdnimg.cn/20200508161534370.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-解决方案：</p>
-<pre><code class="language-bash">python -m pip install --upgrade pip
-</code></pre>
-<p>再次使用pip安装时即可正确安装pandas</p>
-<pre><code class="language-bash">pip install pandas
-</code></pre>
 ]]></content>
     </entry>
 </feed>

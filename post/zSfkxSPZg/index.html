@@ -5,7 +5,7 @@
     
 <meta charset="utf-8" >
 
-<title>JSP使用javabean计算两个天数的差值 | WuXin</title>
+<title>jsp统计对一个页面的访问次数 | WuXin</title>
 <meta name="description" content="成千上万个门口，总有一个人要先走。">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -80,12 +80,12 @@
       <div class="content-container">
         <div class="post-detail">
           
-            <div class="feature-container" style="background-image: url('https://906571331.github.io/yx.github.io//post-images/1N5V8iIDb.jpg')">
+            <div class="feature-container" style="background-image: url('https://906571331.github.io/yx.github.io//post-images/zSfkxSPZg.jpg')">
             </div>
           
-          <h2 class="post-title">JSP使用javabean计算两个天数的差值</h2>
+          <h2 class="post-title">jsp统计对一个页面的访问次数</h2>
           <div class="post-info post-detail-info">
-            <span><i class="icon-calendar-outline"></i> 2020-05-17</span>
+            <span><i class="icon-calendar-outline"></i> 2020-05-18</span>
             
               <span>
                 <i class="icon-pricetags-outline"></i>
@@ -99,114 +99,89 @@
             
           </div>
           <div class="post-content">
-            <h4 id="indexjsp">index.jsp</h4>
+            <p>原文链接：<a href="https://blog.csdn.net/c_major/article/details/45285995">https://blog.csdn.net/c_major/article/details/45285995</a></p>
 <pre><code class="language-html">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
     pageEncoding=&quot;UTF-8&quot;%&gt;
-&lt;!DOCTYPE html&gt;
+&lt;%@ page import=&quot;java.io.*,java.util.*&quot; %&gt;
 &lt;html&gt;
 &lt;head&gt;
-&lt;meta charset=&quot;UTF-8&quot;&gt;
-&lt;title&gt;Insert title here&lt;/title&gt;
+&lt;title&gt;换个浏览器访问也算是一次访问&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
-&lt;form action=&quot;getminus.jsp&quot; method=&quot;post&quot;&gt;
-请输入第一个日期：&lt;input type=&quot;date&quot; name=&quot;date1&quot; value=&quot;2020-05-15&quot;/&gt;&lt;br&gt;
-请输入第二个日期：&lt;input type=&quot;date&quot; name=&quot;date2&quot; value=&quot;2020-05-15&quot;/&gt;&lt;br&gt;
-&lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;
-&lt;/form&gt;
+&lt;%     
+	Integer dianjiCount = (Integer)application.getAttribute(&quot;dianjiliang&quot;);     
+	if( dianjiCount ==null || dianjiCount == 0 ){              
+    out.println(&quot;欢迎您第一次访问我的网站&quot;);  //用户第一次访问页面     
+    dianjiCount = 1;     
+    }else{              
+    out.println(&quot;欢迎您再次访问我的网站&quot;);        //用户多次访问页面，每次访问后点击量+1
+    dianjiCount += 1;     
+    }     
+    application.setAttribute(&quot;dianjiliang&quot;, dianjiCount); 
+%&gt;
+您的访问次数为: &lt;%= dianjiCount%&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
-<h4 id="getminusjsp">getminus.jsp</h4>
-<pre><code class="language-html">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
-    pageEncoding=&quot;UTF-8&quot;%&gt;
-&lt;!DOCTYPE html&gt;
+<p>JSP：用隐式对象统计网站访问次数<br>
+jsp 隐式对象 赵振江</p>
+<p>隐式对象 application对象</p>
+<p>利用隐式对象为某一网站编写一个JSP程序，统计该网站的访问次数。</p>
+<p>一种情况是：按照客户进行统计（按照浏览器进行统计，一个浏览器如果访问网站的话，就算一次访问，换句话说如果这个浏览器刷新多次网站的话，也算是一次访问）；</p>
+<p>另一种情况：刷新一次页面，就算是一次访问。</p>
+<p>要求用隐式对象去实现。<br>
+counter.jsp</p>
+<pre><code class="language-html">&lt;%@ page language=&quot;java&quot; import=&quot;java.util.*&quot; pageEncoding=&quot;UTF-8&quot;%&gt;
+&lt;%
+String path = request.getContextPath();
+String basePath = request.getScheme()+&quot;://&quot;+request.getServerName()+&quot;:&quot;+request.getServerPort()+path+&quot;/&quot;;
+%&gt;
+ 
+&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;&gt;
 &lt;html&gt;
-&lt;head&gt;
-&lt;meta charset=&quot;UTF-8&quot;&gt;
-&lt;title&gt;Insert title here&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;%
-	request.setCharacterEncoding(&quot;UTF-8&quot;);
-%&gt;
-&lt;%
-	String datestr1=request.getParameter(&quot;date1&quot;);
-	String datestr2=request.getParameter(&quot;date2&quot;);
-
-%&gt;
-&lt;jsp:useBean id=&quot;strBean&quot; class=&quot;com.StringUtil&quot;&gt;&lt;/jsp:useBean&gt;
-&lt;jsp:setProperty property=&quot;datestr1&quot; name=&quot;strBean&quot; value=&quot;&lt;%=datestr1 %&gt;&quot;/&gt;
-&lt;jsp:setProperty property=&quot;datestr2&quot; name=&quot;strBean&quot; value=&quot;&lt;%=datestr2 %&gt;&quot;/&gt;
-&lt;p&gt;第一个日期为：&lt;jsp:getProperty property=&quot;datestr1&quot; name=&quot;strBean&quot;/&gt;&lt;/p&gt;
-&lt;p&gt;第二个日期为：&lt;jsp:getProperty property=&quot;datestr2&quot; name=&quot;strBean&quot;/&gt;&lt;/p&gt;
-&lt;p&gt;两个日期时间差为：：&lt;jsp:getProperty property=&quot;minus&quot; name=&quot;strBean&quot;/&gt;&lt;/p&gt;
-&lt;/body&gt;
+  &lt;head&gt;
+    &lt;base href=&quot;&lt;%=basePath%&gt;&quot;&gt;
+ 
+    &lt;title&gt;My JSP 'counter.jsp' starting page&lt;/title&gt;
+ 
+    &lt;meta http-equiv=&quot;pragma&quot; content=&quot;no-cache&quot;&gt;
+    &lt;meta http-equiv=&quot;cache-control&quot; content=&quot;no-cache&quot;&gt;
+    &lt;meta http-equiv=&quot;expires&quot; content=&quot;0&quot;&gt;    
+    &lt;meta http-equiv=&quot;keywords&quot; content=&quot;keyword1,keyword2,keyword3&quot;&gt;
+    &lt;meta http-equiv=&quot;description&quot; content=&quot;This is my page&quot;&gt;
+    &lt;!--
+    &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;styles.css&quot;&gt;
+    --&gt;
+ 
+  &lt;/head&gt;
+  &lt;%
+  if(application.getAttribute(&quot;counter&quot;)==null){
+    String counter=&quot;0&quot;;
+    application.setAttribute(&quot;counter&quot;,counter);
+  }
+  else{
+  int count=Integer.valueOf((String)application.getAttribute(&quot;counter&quot;)).intValue();
+  count++;
+  application.setAttribute(&quot;counter&quot;,count+&quot;&quot;);
+  }
+   %&gt;
+ 
+  &lt;body&gt;
+    This is my JSP page. &lt;br&gt;
+ 
+    该网站共被访问：&lt;%=application.getAttribute(&quot;counter&quot;) %&gt;次。
+  &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
-<h4 id=""></h4>
-<pre><code class="language-java">package com;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
-public class StringUtil {
-	private String datestr1;
-	private String datestr2;
-	private int minus;
-	public int getMinus() {
-		Calendar c1=this.getCalendar(datestr1);
-		Calendar c2=this.getCalendar(datestr2);
-		long t1=c1.getTimeInMillis();
-		long t2=c2.getTimeInMillis();
-		long t=1000*60*60*24;
-		minus=(int)((t2-t1)/t); 
-		return minus;
-	}
-	public String getDatestr1() {
-		return datestr1;
-	}
-	public void setDatestr1(String datestr1) {
-		this.datestr1=datestr1;
-	}
-	public String getDatestr2() {
-		return datestr2;
-	}
-	public void setDatestr2(String datestr2) {
-		this.datestr2=datestr2;
-	}
-	public void setMinus(int minus) {
-		this.minus=minus;
-	}
-	private Calendar getCalendar(String datestr) {
-		SimpleDateFormat shijian = new SimpleDateFormat(&quot;yyyyy-MM-dd&quot;);
-		Date date=null;
-		try {
-			date=shijian.parse(datestr);
-		}catch (ParseException e) {
-			e.printStackTrace();
-		}
-		Calendar c=Calendar.getInstance();
-		c.setTime(date);
-		return c;
-	}
-}
-
-</code></pre>
-<h4 id="运行截图">运行截图</h4>
-<p><img src="https://img-blog.csdnimg.cn/20200517144952416.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-<img src="https://img-blog.csdnimg.cn/20200517145011669.png" alt="在这里插入图片描述" loading="lazy"></p>
 
           </div>
         </div>
 
         
           <div class="next-post">
-            <a class="purple-link" href="https://906571331.github.io/yx.github.io/post/JIVTmC_k5/">
+            <a class="purple-link" href="https://906571331.github.io/yx.github.io/post/iHYDvtQ1R/">
               <h3 class="post-title">
-                下一篇：JSP判断用户名是否符合规则:用户名只能由字母数字下划线组成,并且首字母必须为字母
+                下一篇：django.db.utils.OperationalError: (1426
               </h3>
             </a>
           </div>
