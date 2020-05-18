@@ -5,7 +5,7 @@
     
 <meta charset="utf-8" >
 
-<title>Django中引入echarts图表做数据可视化 | WuXin</title>
+<title>django开发中报错1366, Incorrect string value | WuXin</title>
 <meta name="description" content="成千上万个门口，总有一个人要先走。">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -80,25 +80,25 @@
       <div class="content-container">
         <div class="post-detail">
           
-            <div class="feature-container" style="background-image: url('https://906571331.github.io/yx.github.io//post-images/django-zhong-yin-ru-echarts-tu-biao-zuo-shu-ju-ke-shi-hua.jpg')">
+            <div class="feature-container" style="background-image: url('https://906571331.github.io/yx.github.io//post-images/cOpczx-5R.jpg')">
             </div>
           
-          <h2 class="post-title">Django中引入echarts图表做数据可视化</h2>
+          <h2 class="post-title">django开发中报错1366, Incorrect string value</h2>
           <div class="post-info post-detail-info">
-            <span><i class="icon-calendar-outline"></i> 2020-03-30</span>
+            <span><i class="icon-calendar-outline"></i> 2020-05-18</span>
             
               <span>
                 <i class="icon-pricetags-outline"></i>
                 
-                  <a href="https://906571331.github.io/yx.github.io/tag/ENxH7AZ31/">
-                    echarts
+                  <a href="https://906571331.github.io/yx.github.io/tag/ofwJ5Sj6S/">
+                    django
                     
                       ，
                     
                   </a>
                 
-                  <a href="https://906571331.github.io/yx.github.io/tag/sR-2jrK5Z/">
-                    Django
+                  <a href="https://906571331.github.io/yx.github.io/tag/IOUFjN4sc/">
+                    解决问题
                     
                   </a>
                 
@@ -106,56 +106,21 @@
             
           </div>
           <div class="post-content">
-            <h3 id="本篇博客将详细介绍django中如何引入echarts库">本篇博客将详细介绍Django中如何引入echarts库：</h3>
-<h4 id="从echarts官网中选择所需要的图表的样式">从echarts官网中选择所需要的图表的样式</h4>
-<p><img src="https://img-blog.csdnimg.cn/20200330212900765.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-选择好样式打开此页面，将红框中代码放入前端页面中<br>
-<img src="https://img-blog.csdnimg.cn/2020033021302261.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-需要放入的位置：</p>
-<pre><code class="language-bash">&lt;script type=&quot;text/javascript&quot;&gt;
-var myChart = echarts.init(document.getElementById('chart_1'));
-#将option代码放入这个位置
- myChart.setOption(option);   
- &lt;/script&gt;
+            <p>Django开发中出现如下错误：<br>
+<code>(1366, &quot;Incorrect string value: '\\xD0\\x9A\\xD0\\xB0\\xD1\\x82...' for column 'name' at row 1&quot;)</code></p>
+<h4 id="解决方案">解决方案</h4>
+<p>创建数据库时使用utf-8,编码：</p>
+<pre><code class="language-bash">create database 数据库名 default charset utf8 collate utf8_general_ci;
 </code></pre>
-<p>在html文件&lt; head&gt;&lt; /head&gt;标签中引入echats库</p>
-<pre><code class="language-bash">&lt;script src=&quot;{% static 'js/echarts.min.js' %}&quot;  charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-</code></pre>
-<p>views.py设置方法,前提是models.py中有User这个表,name和base_ mark是表中的两个字段</p>
-<pre><code class="language-bash">def anaylize(request):
-    users=User.objects.all()#获取表中的所有对象
-    base_list = [] #设置为list类型，一会儿将其填入data中
-    name_list= []#设置为list类型，一会儿将其填入data中
-    for user in users:# 遍历
-        name_list.append(user.name)
-        base_list.append(user.base_mark)
-    return render(request,&quot;anaylize.html&quot;,{'name_list':name_list,'base_list':base_list})#在anaylize.html中接收两个参数，一个是name_list,一个是base_list
-</code></pre>
-<p>anaylize.html中data接收的方法：</p>
-<h4 id="注意name是字符串对象这里必须加上safe否则将会报错uncaught-syntaxerror-unexpected-token-同时data中的数据被js解析为-39">注意：name是字符串对象，这里必须加上|safe，否则将会报错（Uncaught SyntaxError: Unexpected token &amp;），同时data中的数据被js解析为： &amp; #39;</h4>
-<pre><code class="language-bash">    xAxis: {
-        type: 'category',
-        boundaryGap: false,
-        data: {{ name_list|safe }}
-    },
-</code></pre>
-<p>而普通的int型的数据接收方法：（不需要|safe）</p>
-<pre><code class="language-bash">    series: [{
-        data:{{base_list}},
-        type: 'line',
-        areaStyle: {}
-    }]
-</code></pre>
-<p>向数据库中输入两条数据，重启Django应用，即可正确显示图表</p>
 
           </div>
         </div>
 
         
           <div class="next-post">
-            <a class="purple-link" href="https://906571331.github.io/yx.github.io/post/shi-yong-gitee-jie-jue-github-xia-zai-cang-ku-xia-zai-su-du-huan-man-de-wen-ti/">
+            <a class="purple-link" href="https://906571331.github.io/yx.github.io/post/UK5F5_H8x/">
               <h3 class="post-title">
-                下一篇：使用gitee解决github下载仓库下载速度缓慢的问题
+                下一篇：Django开发中出现的问题总结
               </h3>
             </a>
           </div>
