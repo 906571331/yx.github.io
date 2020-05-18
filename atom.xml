@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://906571331.github.io/yx.github.io/</id>
     <title>WuXin</title>
-    <updated>2020-05-17T07:41:45.278Z</updated>
+    <updated>2020-05-18T07:33:33.499Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://906571331.github.io/yx.github.io/"/>
     <link rel="self" href="https://906571331.github.io/yx.github.io/atom.xml"/>
@@ -10,6 +10,34 @@
     <logo>https://906571331.github.io/yx.github.io/images/avatar.png</logo>
     <icon>https://906571331.github.io/yx.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, WuXin</rights>
+    <entry>
+        <title type="html"><![CDATA[Django开发中出现的问题总结]]></title>
+        <id>https://906571331.github.io/yx.github.io/post/UK5F5_H8x/</id>
+        <link href="https://906571331.github.io/yx.github.io/post/UK5F5_H8x/">
+        </link>
+        <updated>2020-05-18T07:31:22.000Z</updated>
+        <content type="html"><![CDATA[<h4 id="django开发中出现">Django开发中出现：</h4>
+<p><code>No module named 'corsheaders</code></p>
+<h4 id="解决方案">解决方案：</h4>
+<pre><code class="language-bash">pip install django-cors-headers
+</code></pre>
+<h4 id="django开发中出现-2">Django开发中出现：</h4>
+<p><code>No module named 'rest_framework'</code></p>
+<h4 id="解决方案-2">解决方案：</h4>
+<pre><code class="language-bash">pip install djangorestframework
+</code></pre>
+<h4 id="django开发中出现-3">Django开发中出现：</h4>
+<p><code>import mysql.connector ImportError: No module named 'mysql'</code></p>
+<h4 id="解决方案-3">解决方案：</h4>
+<pre><code class="language-bash">pip install mysql-connector
+</code></pre>
+<h4 id="django开发中出现-4">Django开发中出现：</h4>
+<p><code>ImportError: No module named '_tkinter', please install the python3-tk package</code></p>
+<h4 id="解决方案-4">解决方案：</h4>
+<pre><code class="language-bash">sudo apt-get install python3-tk
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Django中使用省市联动模型详解]]></title>
         <id>https://906571331.github.io/yx.github.io/post/uyWR0VvJm/</id>
@@ -910,75 +938,6 @@ rmvirtualenv [虚拟环境名称]
 #列出所有的虚拟环境
 lsvirtualenv [虚拟环境名称]
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[阿里云服务器下jupyter notebook 安装、远程访问以及处理错误]]></title>
-        <id>https://906571331.github.io/yx.github.io/post/4dpJZ8owu/</id>
-        <link href="https://906571331.github.io/yx.github.io/post/4dpJZ8owu/">
-        </link>
-        <updated>2020-05-06T14:51:49.000Z</updated>
-        <content type="html"><![CDATA[<h4 id="一安装所需的环境">一.安装所需的环境</h4>
-<ol>
-<li>首先需要在<a href="https://blog.csdn.net/qq_42092076/article/details/105549408">ubuntu安装虚拟环境</a>，点击链接即可查看如何在ubuntu中安装虚拟环境</li>
-</ol>
-<pre><code class="language-python">1.	在虚拟环境中安装jupyter
-(jiqistudy)&gt; pip install jupyter -i  https://pypi.tuna.tsinghua.edu.cn/simple/
-2.	安装所需的python库
-(jiqistudy)&gt; pip install numpy -i  https://pypi.tuna.tsinghua.edu.cn/simple/
-(jiqistudy)&gt; pip install matplotlib -i https://pypi.tuna.tsinghua.edu.cn/simple/
-(jiqistudy)&gt; pip install pandas -i  https://pypi.tuna.tsinghua.edu.cn/simple/
-(jiqistudy)&gt; pip install sklearn -i  https://pypi.tuna.tsinghua.edu.cn/simple/
-3.	创建目标目录并进入
-(jiqistudy)&gt; mkdir algorithm
-(jiqistudy)&gt; cd algorithm
-4.	启动jupyter notebook
-(jiqistudy)&gt; jupyter notebook
-</code></pre>
-<h4 id="二-jupyter远程访问配置">二、jupyter远程访问配置</h4>
-<p>1、生成配置文件（~/.jupyter/jupyter_notebook_config.py）</p>
-<pre><code class="language-python">jupyter notebook --generate-config
-</code></pre>
-<p>2、生成密钥</p>
-<pre><code class="language-python">jupyter notebook password  # 自己造一个密码输入一确认一次
-vim ~/.jupyter/jupyter_notebook_config.json
-</code></pre>
-<p>记下密钥，sha1:...<br>
-3、编辑配置文件</p>
-<pre><code class="language-python">vim ~/.jupyter/jupyter_notebook_config.py
-</code></pre>
-<p>修改以下几项：</p>
-<pre><code class="language-python">c.NotebookApp.ip='*'                                  # 就是设置所有ip皆可访问  
-c.NotebookApp.password = u'sha1:03...       # 刚才复制的那个密文'  
-c.NotebookApp.open_browser = False       # 禁止自动打开浏览器  
-c.NotebookApp.port =1234                         #随便指定一个端口  
-</code></pre>
-<p>设置端口后要在阿里云控制台把这个端口打开<br>
-<img src="https://img-blog.csdnimg.cn/20200506224226754.png" alt="在这里插入图片描述" loading="lazy"><br>
-在浏览器中输入：公网ip:刚刚指定的端口，输入密码，即可进入<br>
-<img src="https://img-blog.csdnimg.cn/20200506224300542.png" alt="在这里插入图片描述" loading="lazy"><br>
-<img src="https://img-blog.csdnimg.cn/20200506224417486.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-<code>注</code>：若出现错误</p>
-<pre><code class="language-python">OSError: [Errno 99]Cannot assign requested address
-</code></pre>
-<p>解决方法修改/etc/hosts<br>
-首先获取本机内网ip和本机hostname</p>
-<pre><code class="language-python">ifconfig    # 获取本机内网ip
-vi /etc/hostname    # 获取hostname
-</code></pre>
-<p><img src="https://img-blog.csdnimg.cn/20200506224605998.png" alt="在这里插入图片描述" loading="lazy"><br>
-进入/etc/hosts，添加上一行内容</p>
-<pre><code class="language-python">内网ip   hostname   # 上面获取的那两个
-</code></pre>
-<p>启动：</p>
-<pre><code class="language-python">启动jupyter notebook
-(jiqistudy)&gt; jupyter notebook
-</code></pre>
-<p><code>若出现如下错误，请参考：</code><br>
-1.<a href="https://blog.csdn.net/qq_42092076/article/details/105961463">workon: command not found处理方法</a><br>
-2.<a href="https://blog.csdn.net/qq_42092076/article/details/105960519">ubuntu安装matplotlib时报错处理</a><br>
-3.<a href="https://blog.csdn.net/qq_42092076/article/details/105969420">jupyter重启失败KernelRestarter: restart failed</a><br>
-4.<a href="https://blog.csdn.net/qq_42092076/article/details/105999846">pandas安装报错</a></p>
 ]]></content>
     </entry>
 </feed>
