@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://906571331.github.io/yx.github.io/</id>
     <title>WuXin</title>
-    <updated>2020-05-18T14:08:23.962Z</updated>
+    <updated>2020-05-21T08:00:45.314Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://906571331.github.io/yx.github.io/"/>
     <link rel="self" href="https://906571331.github.io/yx.github.io/atom.xml"/>
@@ -10,6 +10,48 @@
     <logo>https://906571331.github.io/yx.github.io/images/avatar.png</logo>
     <icon>https://906571331.github.io/yx.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, WuXin</rights>
+    <entry>
+        <title type="html"><![CDATA[手动给Django项目重命名]]></title>
+        <id>https://906571331.github.io/yx.github.io/post/jPfwXDXIj/</id>
+        <link href="https://906571331.github.io/yx.github.io/post/jPfwXDXIj/">
+        </link>
+        <updated>2020-05-21T08:00:03.000Z</updated>
+        <content type="html"><![CDATA[<p>实现给Django项目重命名，至少需要修改一下六个地方：<br>
+1.项目名称：<code>直接在根目录进行修改</code><br>
+2.settings.py中两项：<br>
+<code>WSGI_APPLICATION = 'ExamOnline.wsgi.application'</code><br>
+<code>ROOT_URLCONF = 'ExamOnline.urls'</code><br>
+3.urls.py<br>
+<code>from ExamOnline.settings import MEDIA_ROOT</code><br>
+4.wisg.py<br>
+<code>os.environ.setdefault(&quot;DJANGO_SETTINGS_MODULE&quot;, &quot;ExamOnline.settings&quot;)</code><br>
+5.manage.py<br>
+<code>os.environ.setdefault(&quot;DJANGO_SETTINGS_MODULE&quot;, &quot;ExamOnline.settings&quot;)</code></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[django获取前端button点击事件]]></title>
+        <id>https://906571331.github.io/yx.github.io/post/z93Xwvgj_/</id>
+        <link href="https://906571331.github.io/yx.github.io/post/z93Xwvgj_/">
+        </link>
+        <updated>2020-05-21T02:48:21.000Z</updated>
+        <content type="html"><![CDATA[<pre><code class="language-html">&lt;form action=&quot;&quot; method=&quot;post&quot;&gt;
+{% csrf_token %}
+&lt;input type=&quot;hidden&quot; name=&quot;shoucang&quot; value=1&gt; 
+&lt;button name=&quot;shoucang1&quot;&gt;shoucang&lt;button&gt;
+&lt;/form&gt;
+</code></pre>
+<p>思路是将前端form表单第一个input框隐藏，填入默认值，提交按钮类型为submmit，Django views.py中post请求获取name=&quot;shoucang&quot;的值（即为默认值），在终端进行输出。</p>
+<pre><code class="language-python">class CssjView(View):
+    def get(self,request):
+        return render(request,&quot;ucssj.html&quot;)
+    def post(self,request):
+        is_shoucang=request.POST.get(&quot;shoucang&quot;)
+        print(is_shoucang)
+        return HttpResponse(&quot;yijing jiancewanbi&quot;)
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[jsp统计对一个页面的访问次数]]></title>
         <id>https://906571331.github.io/yx.github.io/post/zSfkxSPZg/</id>
@@ -732,214 +774,6 @@ if(!pathAdd.equals(pathAdd1)){
 从网站外部提交：<br>
 <img src="https://img-blog.csdnimg.cn/20200517150538198.png" alt="在这里插入图片描述" loading="lazy"><br>
 <img src="https://img-blog.csdnimg.cn/20200517150550160.png" alt="在这里插入图片描述" loading="lazy"></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[JSP使用javabean计算两个天数的差值]]></title>
-        <id>https://906571331.github.io/yx.github.io/post/1N5V8iIDb/</id>
-        <link href="https://906571331.github.io/yx.github.io/post/1N5V8iIDb/">
-        </link>
-        <updated>2020-05-17T06:59:05.000Z</updated>
-        <content type="html"><![CDATA[<h4 id="indexjsp">index.jsp</h4>
-<pre><code class="language-html">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
-    pageEncoding=&quot;UTF-8&quot;%&gt;
-&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-&lt;meta charset=&quot;UTF-8&quot;&gt;
-&lt;title&gt;Insert title here&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;form action=&quot;getminus.jsp&quot; method=&quot;post&quot;&gt;
-请输入第一个日期：&lt;input type=&quot;date&quot; name=&quot;date1&quot; value=&quot;2020-05-15&quot;/&gt;&lt;br&gt;
-请输入第二个日期：&lt;input type=&quot;date&quot; name=&quot;date2&quot; value=&quot;2020-05-15&quot;/&gt;&lt;br&gt;
-&lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;
-&lt;/form&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-<h4 id="getminusjsp">getminus.jsp</h4>
-<pre><code class="language-html">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
-    pageEncoding=&quot;UTF-8&quot;%&gt;
-&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-&lt;meta charset=&quot;UTF-8&quot;&gt;
-&lt;title&gt;Insert title here&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;%
-	request.setCharacterEncoding(&quot;UTF-8&quot;);
-%&gt;
-&lt;%
-	String datestr1=request.getParameter(&quot;date1&quot;);
-	String datestr2=request.getParameter(&quot;date2&quot;);
-
-%&gt;
-&lt;jsp:useBean id=&quot;strBean&quot; class=&quot;com.StringUtil&quot;&gt;&lt;/jsp:useBean&gt;
-&lt;jsp:setProperty property=&quot;datestr1&quot; name=&quot;strBean&quot; value=&quot;&lt;%=datestr1 %&gt;&quot;/&gt;
-&lt;jsp:setProperty property=&quot;datestr2&quot; name=&quot;strBean&quot; value=&quot;&lt;%=datestr2 %&gt;&quot;/&gt;
-&lt;p&gt;第一个日期为：&lt;jsp:getProperty property=&quot;datestr1&quot; name=&quot;strBean&quot;/&gt;&lt;/p&gt;
-&lt;p&gt;第二个日期为：&lt;jsp:getProperty property=&quot;datestr2&quot; name=&quot;strBean&quot;/&gt;&lt;/p&gt;
-&lt;p&gt;两个日期时间差为：：&lt;jsp:getProperty property=&quot;minus&quot; name=&quot;strBean&quot;/&gt;&lt;/p&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-<h4 id=""></h4>
-<pre><code class="language-java">package com;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
-public class StringUtil {
-	private String datestr1;
-	private String datestr2;
-	private int minus;
-	public int getMinus() {
-		Calendar c1=this.getCalendar(datestr1);
-		Calendar c2=this.getCalendar(datestr2);
-		long t1=c1.getTimeInMillis();
-		long t2=c2.getTimeInMillis();
-		long t=1000*60*60*24;
-		minus=(int)((t2-t1)/t); 
-		return minus;
-	}
-	public String getDatestr1() {
-		return datestr1;
-	}
-	public void setDatestr1(String datestr1) {
-		this.datestr1=datestr1;
-	}
-	public String getDatestr2() {
-		return datestr2;
-	}
-	public void setDatestr2(String datestr2) {
-		this.datestr2=datestr2;
-	}
-	public void setMinus(int minus) {
-		this.minus=minus;
-	}
-	private Calendar getCalendar(String datestr) {
-		SimpleDateFormat shijian = new SimpleDateFormat(&quot;yyyyy-MM-dd&quot;);
-		Date date=null;
-		try {
-			date=shijian.parse(datestr);
-		}catch (ParseException e) {
-			e.printStackTrace();
-		}
-		Calendar c=Calendar.getInstance();
-		c.setTime(date);
-		return c;
-	}
-}
-
-</code></pre>
-<h4 id="运行截图">运行截图</h4>
-<p><img src="https://img-blog.csdnimg.cn/20200517144952416.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDkyMDc2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-<img src="https://img-blog.csdnimg.cn/20200517145011669.png" alt="在这里插入图片描述" loading="lazy"></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[JSP判断用户名是否符合规则:用户名只能由字母数字下划线组成,并且首字母必须为字母]]></title>
-        <id>https://906571331.github.io/yx.github.io/post/JIVTmC_k5/</id>
-        <link href="https://906571331.github.io/yx.github.io/post/JIVTmC_k5/">
-        </link>
-        <updated>2020-05-17T06:58:03.000Z</updated>
-        <content type="html"><![CDATA[<p><code>用户名只能由字母数字下划线组成,并且首字母必须为字母</code><br>
-本程序使用jsp中的<code>javabean</code>判断是否符合用户名规则</p>
-<h4 id="indexjsp">index.jsp</h4>
-<pre><code class="language-html">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-&lt;meta charset=&quot;ISO-8859-1&quot;&gt;
-&lt;title&gt;Insert title here&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;form action=&quot;checkisvailued.jsp&quot; method=&quot;post&quot;&gt;
-	用户名：&lt;input type=&quot;text&quot; name=&quot;username&quot;&gt;&lt;br&gt;
-	&lt;p style=&quot;font-size:20px;color:red&quot;&gt;注意：用户名只能由字母数字下划线组成,并且首字母必须为字母&lt;/p&gt;
-	&lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;
-&lt;/form&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-<h4 id="checkisvailuedjsp">checkisvailued.jsp</h4>
-<pre><code class="language-html">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
-    pageEncoding=&quot;UTF-8&quot;%&gt;
-&lt;%@ page language=&quot;java&quot; import=&quot;java.util.*&quot;%&gt;
-&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-&lt;meta charset=&quot;UTF-8&quot;&gt;
-&lt;title&gt;Insert title here&lt;/title&gt;
-&lt;/head&gt;
-&lt;%
-	request.setCharacterEncoding(&quot;UTF-8&quot;);
-%&gt;
-&lt;body&gt;
-&lt;%
-	String name=request.getParameter(&quot;username&quot;);
-%&gt;
-&lt;jsp:useBean id=&quot;strBean&quot; class=&quot;com.isVaild&quot;&gt;&lt;/jsp:useBean&gt;
-&lt;jsp:setProperty property=&quot;str&quot; name=&quot;strBean&quot; value=&quot;&lt;%=name %&gt;&quot;/&gt;
-&lt;p&gt; 您输入的用户名是：&lt;jsp:getProperty  property=&quot;str&quot; name=&quot;strBean&quot;/&gt;&lt;/p&gt;
-&lt;p&gt; 是否有效：&lt;jsp:getProperty  property=&quot;vaild&quot; name=&quot;strBean&quot;/&gt;&lt;/p&gt;
-&lt;p&gt; 提示信息为：&lt;jsp:getProperty  property=&quot;cue&quot; name=&quot;strBean&quot;/&gt;&lt;/p&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-<h4 id="isvalidjava">isValid.java</h4>
-<pre><code class="language-java">package com;
-public class isVaild {
-	private String str;
-	private boolean vaild;
-	private String cue;
-	public String getStr() {
-		return str;
-	}
-	public void setStr(String str) {
-		this.str=str;
-	}
-	public String getCue() {
-		return cue;
-	}
-	public void setCue(String cue) {
-		this.cue=cue;
-	}
-	public boolean isVaild() {
-		char cArr[]=str.toCharArray();
-		int firstChar=(int)cArr[0];
-		if((firstChar&gt;=65&amp;&amp;firstChar&lt;=90)||(firstChar&gt;=97&amp;&amp;firstChar&lt;=122)) {
-			for(int i=1;i&lt;cArr.length;i++) {
-				int ascii=cArr[i];
-				if(!((ascii&gt;=48&amp;&amp;ascii&lt;=57)||(ascii&gt;=65&amp;&amp;ascii&lt;=90)||
-				(ascii&gt;=97&amp;&amp;ascii&lt;=122)||(ascii==95))) {
-					this.setCue(&quot;用户名格式错误，用户名只能由字母数字下划线组成&quot;);
-					this.vaild=false;
-					return vaild;
-				}
-			}
-			this.setCue(&quot;用户名格式正确&quot;);
-			this.vaild=true;
-			return vaild;
-		}else {
-			this.setCue(&quot;用户名格式错误，首字符必须为字母&quot;);
-			this.vaild=false;
-			return vaild;
-		}
-	}
-}
-
-</code></pre>
-<h5 id="运行截图">运行截图：</h5>
-<p><img src="https://img-blog.csdnimg.cn/20200517145651598.png" alt="在这里插入图片描述" loading="lazy"><br>
-<img src="https://img-blog.csdnimg.cn/20200517145701637.png" alt="在这里插入图片描述" loading="lazy"><br>
-<img src="https://img-blog.csdnimg.cn/20200517145715196.png" alt="在这里插入图片描述" loading="lazy"><br>
-<img src="https://img-blog.csdnimg.cn/20200517145728766.png" alt="在这里插入图片描述" loading="lazy"><br>
-<img src="https://img-blog.csdnimg.cn/20200517145751271.png" alt="在这里插入图片描述" loading="lazy"><br>
-<img src="https://img-blog.csdnimg.cn/20200517145759430.png" alt="在这里插入图片描述" loading="lazy"></p>
 ]]></content>
     </entry>
 </feed>
